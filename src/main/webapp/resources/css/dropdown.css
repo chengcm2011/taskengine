@@ -1,0 +1,65 @@
+* 									{ margin: 0; padding: 0; }
+body								{ font: 15px Helvetica, Sans-Serif;  } 
+html                                {  /* overflow-y: scroll; */ }
+#page-wrap							{
+	width: auto;
+	margin: 0px 0px 0px;
+	
+} 
+p                                   { margin: 0 0 8px 0; }
+a									{ text-decoration: none; }
+img                                 { vertical-align: middle; }
+a img                               { border: 0; 150px}
+ul									{
+	list-style: none;
+}
+h1                                  { margin: 0 0 10px 0; }
+
+/* 
+	LEVEL ONE
+*/
+ul.dropdown                         {
+	position: relative;
+	width: 100%;
+	
+	
+}
+ul.dropdown li                      {
+	font-weight: bold;
+	float: left;
+	width: 150px;
+	background: rgba(255, 255, 255, 0.1) none repeat scroll 0 0 !important;;
+	position: relative;
+}
+ul.dropdown a:hover		            { color: #000; }
+ul.dropdown li a                    {
+	display: block;
+	padding: 15px 8px;
+	color: #000;
+	position: relative;
+	z-index: 2000;
+	font-size: 18px;
+	background:rgba(255, 255, 255, 0.5) none repeat scroll 0 0 !important;;
+	text-align: center;
+}
+ul.dropdown li a:hover,
+ul.dropdown li a.hover              { background:#F3F3F3 ; position: relative; }
+
+
+/* 
+	LEVEL TWO   background:rgba(255, 255, 255, 0.1) none repeat scroll 0 0 !important;
+*/
+ul.dropdown ul 						{ display: none; position: absolute; top: 0; left: 0; width: 150px; z-index: 1000; }
+ul.dropdown ul li 					{ font-weight: normal; background:#F3F3F3; color: #000; border-bottom: 1px solid #ccc; }
+ul.dropdown ul li a					{
+	display: block;
+	background: rgba(255, 255, 255, 0.1) none repeat scroll 0 0  !important;
+	color: #000;
+} 
+ul.dropdown ul li a:hover			{
+	display: block;
+	color: #000;
+	background: rgba(255, 255, 255, 0.3) none repeat scroll 0 0  !important;
+	border: 0px solid rgba(255, 255, 255, 0.5)!important;
+	font-weight: bolder;
+} 
