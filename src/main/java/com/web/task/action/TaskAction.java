@@ -110,7 +110,7 @@ public class TaskAction extends BusinessCommonAction{
 	
 	@RequestMapping("deploy/edit")
 	public String detail(HttpServletRequest request,String pk,Model model) throws Exception {
-		if(Verification.isSignlessnumber(pk)){
+		if(StringUtils.isNotBlank(pk)){
 			TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, pk);
 			TaskPluginModel taskPluginModel = dataBaseService.queryByPK(TaskPluginModel.class, taskDeployModel.getPk_taskplugin());
 			taskDeployModel.setVdef1(taskPluginModel.getPluginname());

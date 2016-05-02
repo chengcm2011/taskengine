@@ -78,27 +78,27 @@ public class DefaultTaskFactory extends AbstractTaskFactory {
 	@Override
 	public boolean updateJob(ScheduleJobVo scheduleJobVo) throws SchedulerException {
 		if(!scheduleJobVo.isJobstatus()){
-			scheduler.deleteJob(scheduleJobVo.getJobKey());
+		    getScheduler().deleteJob(scheduleJobVo.getJobKey());
 		}else {
-			ScheduleUtils.updateScheduleJob(scheduler, scheduleJobVo);
+			ScheduleUtils.updateScheduleJob(getScheduler(), scheduleJobVo);
 		}
 		return false;
 	}
 
 	@Override
 	public boolean runOnce(ScheduleJobVo scheduleJobVo) throws SchedulerException {
-		ScheduleUtils.runOnce(scheduler, scheduleJobVo.getJobCode(), scheduleJobVo.getJobGroupCode());
+		ScheduleUtils.runOnce(getScheduler(), scheduleJobVo.getJobCode(), scheduleJobVo.getJobGroupCode());
 		return true;
 	}
 
 	@Override
 	public boolean stop(ScheduleJobVo scheduleJobVo) throws SchedulerException {
-		scheduler.deleteJob(scheduleJobVo.getJobKey());
+		getScheduler().deleteJob(scheduleJobVo.getJobKey());
 		return false;
 	}
 	@Override
 	public boolean stop(JobKey jobKey) throws SchedulerException {
-		scheduler.deleteJob(jobKey);
+	    getScheduler().deleteJob(jobKey);
 		return true;
 	}
 	@Override
@@ -109,13 +109,13 @@ public class DefaultTaskFactory extends AbstractTaskFactory {
 
 	@Override
 	public boolean pauseJob(ScheduleJobVo scheduleJobVo) throws SchedulerException {
-		ScheduleUtils.pauseJob(scheduler,scheduleJobVo.getJobKey());
+		ScheduleUtils.pauseJob(getScheduler(),scheduleJobVo.getJobKey());
 		return true;
 	}
 
 	@Override
 	public boolean resumeJob(ScheduleJobVo scheduleJobVo) throws SchedulerException {
-		ScheduleUtils.resumeJob(scheduler,scheduleJobVo.getJobKey());
+		ScheduleUtils.resumeJob(getScheduler(),scheduleJobVo.getJobKey());
 		return true;
 	}
 
