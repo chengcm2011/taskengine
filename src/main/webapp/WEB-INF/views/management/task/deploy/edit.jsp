@@ -4,12 +4,12 @@
 <div class="pageContent">
 	<form method="post" action="management/task/deploy/save" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
 		<div class="pageFormContent" layoutH="56">
-			<input type="hidden" name="id_taskdeploy" value="${item.id_taskdeploy}">
+			<input type="hidden" name="pk_taskdeploy" value="${item.pk_taskdeploy}">
 			<p>
 				<label>任务插件名称：</label>
-				<input type="hidden" id="orgLookup.id_taskplugin" name="id_taskplugin" value="${item.id_taskplugin}" />
-				<input type="text" value="${item.vdef1}" style="float: left"  readonly="readonly" class="required" id="orgLookup.orgNameid_taskplugin" />
-				<a class="btnLook" href="management/uicomponent/ref/index?reftype=taskplugin&itemkey=id_taskplugin" rel="id_taskplugin" lookupGroup="orgLookup">查找带回</a>
+				<input type="hidden" id="orgLookup.pk_taskplugin" name="pk_taskplugin" value="${item.pk_taskplugin}" />
+				<input type="text" value="${item.vdef1}" style="float: left"  readonly="readonly" class="required" id="orgLookup.orgNamepk_taskplugin" />
+				<a class="btnLook" href="management/uicomponent/ref/index?reftype=taskplugin&itemkey=pk_taskplugin" rel="pk_taskplugin" lookupGroup="orgLookup">查找带回</a>
 			</p>
 			<p>
 				<label>任务名称：</label>

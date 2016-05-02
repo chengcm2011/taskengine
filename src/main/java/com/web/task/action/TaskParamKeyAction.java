@@ -1,5 +1,6 @@
 package com.web.task.action;
 
+import cheng.lib.exception.BusinessException;
 import cheng.lib.lang.PageVO;
 import cheng.lib.util.BeanUtil;
 import cheng.lib.util.TimeToolkit;
@@ -24,10 +25,10 @@ public class TaskParamKeyAction extends BusinessCommonAction {
 	@RequestMapping("paramkey/index")
 	public String index(HttpServletRequest request,PageVO pageVO, Model model) throws Exception {
 		String pk = request.getParameter("pk");
-		if(!Verification.isSignlessnumber(pk)){
-			return "";
+		if(StringUtils.isEmpty(pk)){
+			throw new BusinessException("");
 		}
-		pageVO.setCondition(" dr=0 and id_taskplugin="+Integer.valueOf(pk));
+		pageVO.setCondition(" dr=0 and pk_taskplugin='"+pk+"'");
 		pageVO = dataBaseService.queryByPage(TaskParamKeyModel.class,pageVO);
 		model.addAttribute("pageVO",pageVO);
 		model.addAttribute("pk",pk);

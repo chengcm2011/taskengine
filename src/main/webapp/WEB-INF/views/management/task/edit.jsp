@@ -4,7 +4,7 @@
 <div class="pageContent">
 	<form method="post" action="management/task/save" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
 		<div class="pageFormContent" layoutH="56">
-			<input type="hidden" name="id_taskplugin" value="${item.id_taskplugin}">
+			<input type="hidden" name="pk_taskplugin" value="${item.pk_taskplugin}">
 			<p>
 				<label>任务插件名称：</label>
 				<input type="text"  name="pluginname" value="${item.pluginname}" class="required"  />

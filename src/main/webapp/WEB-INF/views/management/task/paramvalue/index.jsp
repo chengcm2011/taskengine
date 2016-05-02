@@ -38,9 +38,9 @@
 
 <div class="panelBar">
 	<ul class="toolBar">
-		<%--<li><a class="add" href="management/task/paramvalue/edit?id_taskdeploy=${pk}" target="dialog"><span>增加</span></a></li>--%>
+		<%--<li><a class="add" href="management/task/paramvalue/edit?pk_taskdeploy=${pk}" target="dialog"><span>增加</span></a></li>--%>
        <%--<li class="line">line</li>--%>
-		<li><a class="edit" href="management/task/paramvalue/edit?id_taskdeploy=${pk}&pk={pk}" target="dialog"><span>编辑</span></a></li>
+		<li><a class="edit" href="management/task/paramvalue/edit?pk_taskdeploy=${pk}&pk={pk}" target="dialog"><span>编辑</span></a></li>
 	</ul>
 </div>
 
@@ -58,7 +58,7 @@
       <tbody>
 	      <c:if test="${not empty pageVO.data }">
 	        <c:forEach var="item" items="${pageVO.data }" varStatus="sta">
-	          <tr target="pk" rel="${item.id_taskparamkey };${item.id_taskdeploy}">
+	          <tr target="pk" rel="${item.pk_taskparamkey };${item.pk_taskdeploy}">
 	            <td>${(pageVO.pageNum-1)*pageVO.pageSize+sta.count}</td>
 	            <td>${item.paramname }</td>
 	            <td>${item.paramkey }</td>

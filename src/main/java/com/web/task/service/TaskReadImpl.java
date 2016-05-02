@@ -63,13 +63,13 @@ public class TaskReadImpl implements ITaskRead {
 			StringBuffer stringBuffer = new StringBuffer();
 			stringBuffer.append(" SELECT p.pluginclass,d.* ");
 			stringBuffer.append(" FROM task_taskdeploy as d  ");
-			stringBuffer.append(" INNER JOIN task_taskplugin as p ON d.id_taskplugin=p.id_taskplugin ");
+			stringBuffer.append(" INNER JOIN task_taskplugin as p ON d.pk_taskplugin=p.pk_taskplugin ");
 			stringBuffer.append(" WHERE  p.dr=0 AND d.dr=0 and d.runnable='Y' ");
 			if(StringUtils.isNotBlank(jobCode)){
-				stringBuffer.append(" and d.id_taskdeploy=").append(jobCode);
+				stringBuffer.append(" and d.pk_taskdeploy='").append(jobCode).append("'");
 			}
 			if(StringUtils.isNotBlank(groupCode)){
-				stringBuffer.append(" and d.id_taskplugin=").append(groupCode);
+				stringBuffer.append(" and d.pk_taskplugin='").append(groupCode).append("'");
 			}
 			List<Map<String,Object>> mapList = ApplicationServiceLocator.getBean(IDataBaseService.class).queryMapList(stringBuffer.toString());
 			for (int i = 0; i < mapList.size(); i++) {
