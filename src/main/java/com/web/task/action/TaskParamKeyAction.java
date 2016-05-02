@@ -1,21 +1,19 @@
 package com.web.task.action;
 
-import arch.util.lang.BeanUtil;
-import arch.util.lang.PageVO;
-import arch.util.lang.Predef;
-import arch.util.lang.TimeToolkit;
+import cheng.lib.lang.PageVO;
+import cheng.lib.util.BeanUtil;
+import cheng.lib.util.TimeToolkit;
+import cheng.lib.validate.Verification;
 import com.application.action.vo.AjaxDone;
-import com.application.util.validate.Verification;
 import com.web.common.BusinessCommonAction;
 import com.web.task.model.TaskParamKeyModel;
-import com.web.task.model.TaskPluginModel;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * Created by cheng on 2015/8/28.
@@ -30,7 +28,7 @@ public class TaskParamKeyAction extends BusinessCommonAction {
 			return "";
 		}
 		pageVO.setCondition(" dr=0 and id_taskplugin="+Integer.valueOf(pk));
-		pageVO = getDbrunner().queryBeanByPage(TaskParamKeyModel.class,pageVO);
+		pageVO = dataBaseService.queryByPage(TaskParamKeyModel.class,pageVO);
 		model.addAttribute("pageVO",pageVO);
 		model.addAttribute("pk",pk);
 		return "management/task/paramkey/index";
@@ -38,15 +36,15 @@ public class TaskParamKeyAction extends BusinessCommonAction {
 	@RequestMapping("paramkey/edit")
 	public String edit(HttpServletRequest request, Model model) throws Exception {
 		String pk = request.getParameter("pk");
-		String id_taskplugin = request.getParameter("id_taskplugin");
+		String pk_taskplugin = request.getParameter("pk_taskplugin");
 		if(Verification.isSignlessnumber(pk)){
-			TaskParamKeyModel taskParamKeyModel = getDbrunner().queryBeanById(TaskParamKeyModel.class,Integer.valueOf(pk));
+			TaskParamKeyModel taskParamKeyModel = dataBaseService.queryByPK(TaskParamKeyModel.class, pk);
 			if(taskParamKeyModel!=null){
-				taskParamKeyModel.setId_taskplugin(Predef.toInt(id_taskplugin));
+				taskParamKeyModel.setPk_taskplugin(pk_taskplugin);
 				model.addAttribute(ITEM,taskParamKeyModel);
 			}
 		}else {
-			model.addAttribute("id_taskplugin",id_taskplugin);
+			model.addAttribute("pk_taskplugin",pk_taskplugin);
 		}
 		return "management/task/paramkey/edit";
 	}
@@ -54,13 +52,13 @@ public class TaskParamKeyAction extends BusinessCommonAction {
 	@RequestMapping("paramkey/save")
 	@ResponseBody
 	public AjaxDone save(HttpServletRequest request, Model model) throws Exception {
-		TaskParamKeyModel taskParamKeyModel = BeanUtil.objMapToBean(getParamFromReq(request),TaskParamKeyModel.class);
+		TaskParamKeyModel taskParamKeyModel = BeanUtil.objMapToBean(getParamFromReq(request), TaskParamKeyModel.class);
 		taskParamKeyModel.setTs(TimeToolkit.getCurrentTs());
 		taskParamKeyModel.setDr(0);
-		if(taskParamKeyModel.getId_taskparamkey()<=0){
-			getDbrunner().insertModel(taskParamKeyModel);
+		if(StringUtils.isEmpty(taskParamKeyModel.getPk_taskparamkey())){
+			dataBaseService.insert(taskParamKeyModel);
 		}else {
-			getDbrunner().update(taskParamKeyModel);
+			dataBaseService.update(taskParamKeyModel);
 		}
 		return AjaxDoneSucc("保存成功");
 	}

@@ -1,10 +1,10 @@
 package com.web.task.service;
 
 
-import arch.util.lang.BeanUtil;
-import arch.util.toolkit.DBRunner;
+import cheng.lib.util.BeanUtil;
 import com.application.common.context.ApplicationServiceLocator;
-import com.web.task.TaskJobCacheManager;
+import com.application.module.jdbc.SQLParameter;
+import com.application.module.jdbc.itf.IDataBaseService;
 import com.web.task.itf.ITaskRead;
 import com.web.task.model.TaskDeployModel;
 import com.web.task.model.TaskParamValueModel;
@@ -43,14 +43,16 @@ public class TaskReadImpl implements ITaskRead {
 	}
 
 
-	private Map<String,Object> getParams (int id_taskdeploy) throws Exception{
+	private Map<String,Object> getParams (String pk_taskdeploy) throws Exception{
 		Map<String,Object> taskunitmap = new HashMap<>();
-		List<TaskParamValueModel> taskParamValueModels = ApplicationServiceLocator.getBDRunner().queryBeans2(TaskParamValueModel.class, " dr=0 and id_taskdeploy=?", id_taskdeploy);
+		SQLParameter sqlParameter = new SQLParameter();
+		sqlParameter.addParam(pk_taskdeploy);
+		List<TaskParamValueModel> taskParamValueModels = ApplicationServiceLocator.getBean(IDataBaseService.class).queryByClause(TaskParamValueModel.class, " dr=0 and pk_taskdeploy=?", sqlParameter);
 		for (int j=0;j<taskParamValueModels.size();j++){
 			TaskParamValueModel t = taskParamValueModels.get(j);
 			taskunitmap.put(t.getParamkey(),t.getParamvalue());
 		}
-		taskunitmap.put("id_taskdeploy",id_taskdeploy);
+		taskunitmap.put("pk_taskdeploy",pk_taskdeploy);
 		return taskunitmap ;
 	}
 
@@ -69,12 +71,12 @@ public class TaskReadImpl implements ITaskRead {
 			if(StringUtils.isNotBlank(groupCode)){
 				stringBuffer.append(" and d.id_taskplugin=").append(groupCode);
 			}
-			List<Map<String,Object>> mapList = ApplicationServiceLocator.getBDRunner().queryMapList(stringBuffer.toString());
+			List<Map<String,Object>> mapList = ApplicationServiceLocator.getBean(IDataBaseService.class).queryMapList(stringBuffer.toString());
 			for (int i = 0; i < mapList.size(); i++) {
 				Map<String,Object> taskunitmap = mapList.get(i);
 				TaskPluginModel taskPluginModel = BeanUtil.objMapToBean(taskunitmap, TaskPluginModel.class);
 				TaskDeployModel taskDeployModel = BeanUtil.objMapToBean(taskunitmap, TaskDeployModel.class);
-				data.add(ScheduleUtils.createScheduleJob(taskDeployModel.getTaskname(), taskDeployModel.getId_taskdeploy() + "", taskDeployModel.getId_taskplugin() + "", taskDeployModel.getTriggerstr(), taskPluginModel.getPluginclass(),taskDeployModel.getRunnable(),getParams(taskDeployModel.getId_taskdeploy())));
+				data.add(ScheduleUtils.createScheduleJob(taskDeployModel.getTaskname(), taskDeployModel.getPk_taskdeploy() + "", taskDeployModel.getPk_taskplugin() + "", taskDeployModel.getTriggerstr(), taskPluginModel.getPluginclass(),taskDeployModel.getRunnable(),getParams(taskDeployModel.getPk_taskdeploy())));
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();

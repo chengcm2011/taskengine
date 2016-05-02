@@ -2,7 +2,6 @@ package com.web.common;
 
 import com.application.config.contextloader.IUserDefinedApplicationContextLoaderListener;
 import com.web.task.AbstractTaskFactory;
-import com.web.task.DefaultTaskFactory;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletContextEvent;

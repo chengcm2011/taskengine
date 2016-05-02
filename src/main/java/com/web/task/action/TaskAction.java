@@ -1,15 +1,14 @@
 package com.web.task.action;
 
-import arch.util.lang.BeanUtil;
-import arch.util.lang.PageVO;
-import arch.util.lang.TimeToolkit;
+import cheng.lib.lang.PageVO;
+import cheng.lib.util.BeanUtil;
+import cheng.lib.util.TimeToolkit;
+import cheng.lib.validate.Verification;
 import com.application.action.vo.AjaxDone;
-import com.application.util.validate.Verification;
+import com.application.module.jdbc.SQLParameter;
 import com.web.common.BusinessCommonAction;
 import com.web.task.itf.ITaskService;
 import com.web.task.model.TaskDeployModel;
-import com.web.task.model.TaskParamKeyModel;
-import com.web.task.model.TaskParamValueModel;
 import com.web.task.model.TaskPluginModel;
 import com.web.task.vo.TaskPluginVO;
 import org.apache.commons.lang.StringUtils;
@@ -43,7 +42,7 @@ public class TaskAction extends BusinessCommonAction{
 	@RequestMapping("index")
 	public String index(HttpServletRequest request,PageVO pageVO, Model model) throws Exception {
 		pageVO.setCondition(" dr=0 ");
-		pageVO = getDbrunner().queryBeanByPage(TaskPluginModel.class,pageVO);
+		pageVO = dataBaseService.queryByPage(TaskPluginModel.class, pageVO);
 		List<TaskPluginModel> list = (List<TaskPluginModel>)pageVO.getData();
 		List<Map<String,Object>> data = new ArrayList<>();
 		for(TaskPluginModel taskPluginModel:list){
@@ -58,7 +57,7 @@ public class TaskAction extends BusinessCommonAction{
 	@RequestMapping("edit")
 	public String listadd(String action,String pk,Model model) throws Exception {
 		if(Verification.isSignlessnumber(pk)){
-			model.addAttribute(ITEM,getDbrunner().queryBeanById(TaskPluginModel.class,Integer.valueOf(pk)));
+			model.addAttribute(ITEM,dataBaseService.queryByPK(TaskPluginModel.class, pk));
 		}
 		return "/management/task/edit";
 	}
@@ -66,10 +65,10 @@ public class TaskAction extends BusinessCommonAction{
 	@ResponseBody
 	public AjaxDone listsave(HttpServletRequest request,Model model) throws Exception {
 		TaskPluginModel taskPluginModel = BeanUtil.objMapToBean(getParamFromReq(request), TaskPluginModel.class);
-		if(taskPluginModel.getId_taskplugin()<=0){
-			getDbrunner().insertModel(taskPluginModel);
+		if(StringUtils.isEmpty(taskPluginModel.getPk_taskplugin())){
+			dataBaseService.insert(taskPluginModel);
 		}else {
-			getDbrunner().update(taskPluginModel);
+			dataBaseService.update(taskPluginModel);
 		}
 		return AjaxDoneSucc("保存成功");
 	}
@@ -77,26 +76,28 @@ public class TaskAction extends BusinessCommonAction{
 	@ResponseBody
 	public AjaxDone del(HttpServletRequest request,String pk,Model model) throws Exception {
 		if(Verification.isSignlessnumber(pk)){
-			TaskPluginModel taskPluginModel = getDbrunner().queryBeanById(TaskPluginModel.class,Integer.valueOf(pk));
-			List<TaskDeployModel> list = getDbrunner().queryBeans2(TaskDeployModel.class, " dr=0 and id_taskplugin=?", taskPluginModel.getPrimaryKey());
+			TaskPluginModel taskPluginModel = dataBaseService.queryByPK(TaskPluginModel.class, pk);
+			SQLParameter sqlParameter = new SQLParameter();
+			sqlParameter.addParam(taskPluginModel.getPrimaryKey());
+			List<TaskDeployModel> list = dataBaseService.queryByClause(TaskDeployModel.class, " dr=0 and pk_taskplugin=?",sqlParameter);
 			if(list!=null && list.size()>0 ){
 				return AjaxDoneError("删除失败，该插件已部署。");
 			}
 			taskPluginModel.setDr(1);
 			taskPluginModel.setTs(TimeToolkit.getCurrentTs());
-			getDbrunner().update(taskPluginModel,new String[]{"dr","ts"});
+			dataBaseService.update(taskPluginModel, new String[]{"dr", "ts"});
 		}
 		return AjaxDoneSuccNotcloseCurrent("保存成功");
 	}
 	@RequestMapping("deploy/index")
 	public String deployindex(HttpServletRequest request,PageVO pageVO, Model model) throws Exception {
 		;pageVO.setCondition(" dr=0 ");
-		pageVO = getDbrunner().queryBeanByPage(TaskDeployModel.class,pageVO);
+		pageVO = dataBaseService.queryByPage(TaskDeployModel.class, pageVO);
 		List<TaskDeployModel> list = (List<TaskDeployModel>)pageVO.getData();
 		List<Map<String,Object>> data = new ArrayList<>();
 		for(TaskDeployModel taskDeployModel:list){
 			Map<String,Object> item = BeanUtil.getValueMap(taskDeployModel);
-			TaskPluginModel taskPluginModel = getDbrunner().queryBeanById(TaskPluginModel.class, taskDeployModel.getId_taskplugin());
+			TaskPluginModel taskPluginModel = dataBaseService.queryByPK(TaskPluginModel.class, taskDeployModel.getPk_taskplugin());
 			if(taskPluginModel!=null){
 				item.put("pluginname",taskPluginModel.getPluginname());
 			}
@@ -110,8 +111,8 @@ public class TaskAction extends BusinessCommonAction{
 	@RequestMapping("deploy/edit")
 	public String detail(HttpServletRequest request,String pk,Model model) throws Exception {
 		if(Verification.isSignlessnumber(pk)){
-			TaskDeployModel taskDeployModel = getDbrunner().queryBeanById(TaskDeployModel.class,Integer.valueOf(pk));
-			TaskPluginModel taskPluginModel = getDbrunner().queryBeanById(TaskPluginModel.class, taskDeployModel.getId_taskplugin());
+			TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, pk);
+			TaskPluginModel taskPluginModel = dataBaseService.queryByPK(TaskPluginModel.class, taskDeployModel.getPk_taskplugin());
 			taskDeployModel.setVdef1(taskPluginModel.getPluginname());
 
 			model.addAttribute(ITEM,taskDeployModel);
@@ -122,7 +123,7 @@ public class TaskAction extends BusinessCommonAction{
 	@ResponseBody
 	public AjaxDone deploysave(HttpServletRequest request,TaskPluginVO vo,Model model) throws Exception {
 		TaskDeployModel taskDeployModel = BeanUtil.objMapToBean(getParamFromReq(request), TaskDeployModel.class);
-		if(taskDeployModel.getId_taskdeploy()<=0){
+		if(StringUtils.isEmpty(taskDeployModel.getPk_taskdeploy())){
 			taskService.createScheduleJob(taskDeployModel);
 		}else {
 			taskService.updateScheduleJob(taskDeployModel);
@@ -133,11 +134,11 @@ public class TaskAction extends BusinessCommonAction{
 	@RequestMapping("deploy/start")
 	@ResponseBody
 	public AjaxDone deploystart(HttpServletRequest request,String pk ,Model model) throws Exception {
-		TaskDeployModel taskDeployModel = getDbrunner().queryBeanById(TaskDeployModel.class,Integer.valueOf(pk));
+		TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, pk);
 		if("N".equals(taskDeployModel.getRunnable())){
 			taskDeployModel.setRunnable("Y");
 			taskDeployModel.setTs(TimeToolkit.getCurrentTs());
-			getDbrunner().update(taskDeployModel,new String[]{"ts","runnable"});
+			dataBaseService.update(taskDeployModel, new String[]{"ts", "runnable"});
 			taskService.startScheduleJob(taskDeployModel);
 		}
 		return AjaxDoneSuccNotcloseCurrent("启动成功");
@@ -145,11 +146,11 @@ public class TaskAction extends BusinessCommonAction{
 	@RequestMapping("deploy/stop")
 	@ResponseBody
 	public AjaxDone deploystop(HttpServletRequest request,String pk ,Model model) throws Exception {
-		TaskDeployModel taskDeployModel = getDbrunner().queryBeanById(TaskDeployModel.class,Integer.valueOf(pk));
+		TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, pk);
 		if("Y".equals(taskDeployModel.getRunnable())){
 			taskDeployModel.setRunnable("N");
 			taskDeployModel.setTs(TimeToolkit.getCurrentTs());
-			getDbrunner().update(taskDeployModel,new String[]{"ts","runnable"});
+			dataBaseService.update(taskDeployModel, new String[]{"ts", "runnable"});
 			taskService.deleteScheduleJob(taskDeployModel);
 		}
 		return AjaxDoneSuccNotcloseCurrent("停止成功");
@@ -157,11 +158,11 @@ public class TaskAction extends BusinessCommonAction{
 	@RequestMapping("deploy/pause")
 	@ResponseBody
 	public AjaxDone deploypause(HttpServletRequest request,String pk ,Model model) throws Exception {
-		TaskDeployModel taskDeployModel = getDbrunner().queryBeanById(TaskDeployModel.class,Integer.valueOf(pk));
+		TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, pk);
 		if("Y".equals(taskDeployModel.getRunnable())){
 			taskDeployModel.setRunnable("N");
 			taskDeployModel.setTs(TimeToolkit.getCurrentTs());
-			getDbrunner().update(taskDeployModel,new String[]{"ts","runnable"});
+			dataBaseService.update(taskDeployModel, new String[]{"ts", "runnable"});
 			taskService.pauseJob(taskDeployModel);
 		}
 		return AjaxDoneSuccNotcloseCurrent("停止成功");
@@ -169,11 +170,11 @@ public class TaskAction extends BusinessCommonAction{
 	@RequestMapping("deploy/resume")
 	@ResponseBody
 	public AjaxDone deployresume(HttpServletRequest request,String pk ,Model model) throws Exception {
-		TaskDeployModel taskDeployModel = getDbrunner().queryBeanById(TaskDeployModel.class,Integer.valueOf(pk));
+		TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, pk);
 		if("Y".equals(taskDeployModel.getRunnable())){
 			taskDeployModel.setRunnable("N");
 			taskDeployModel.setTs(TimeToolkit.getCurrentTs());
-			getDbrunner().update(taskDeployModel,new String[]{"ts","runnable"});
+			dataBaseService.update(taskDeployModel, new String[]{"ts", "runnable"});
 			taskService.pauseJob(taskDeployModel);
 		}
 		return AjaxDoneSuccNotcloseCurrent("停止成功");
@@ -181,12 +182,12 @@ public class TaskAction extends BusinessCommonAction{
 	@RequestMapping("deploy/del")
 	@ResponseBody
 	public AjaxDone deploydel(HttpServletRequest request,String pk ,Model model) throws Exception {
-		TaskDeployModel taskDeployModel = getDbrunner().queryBeanById(TaskDeployModel.class,Integer.valueOf(pk));
+		TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, pk);
 		if(taskDeployModel!=null){
 			taskDeployModel.setRunnable("N");
 			taskDeployModel.setDr(1);
 			taskDeployModel.setTs(TimeToolkit.getCurrentTs());
-			getDbrunner().update(taskDeployModel,new String[]{"dr","ts","runnable"});
+			dataBaseService.update(taskDeployModel, new String[]{"dr", "ts", "runnable"});
 			taskService.deleteScheduleJob(taskDeployModel);
 		}
 		return AjaxDoneSuccNotcloseCurrent("删除成功");

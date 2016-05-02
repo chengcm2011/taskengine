@@ -1,13 +1,14 @@
 package com.web.task.model;
 
-import arch.util.lang.SuperModel;
+
+import cheng.lib.lang.SuperModel;
 
 /**
  * Created by cheng on 2015/8/28.
  */
 public class TaskParamKeyModel extends SuperModel {
-	private int id_taskplugin ;
-	private int id_taskparamkey ;
+	private String pk_taskplugin ;
+	private String pk_taskparamkey ;
 	private String paramname ;
 	private String paramkey ;
 
@@ -20,24 +21,29 @@ public class TaskParamKeyModel extends SuperModel {
 	}
 
 	@Override
+	public String getParentPKFieldName() {
+		return "pk_taskplugin";
+	}
+
+	@Override
 	public String getPKFieldName() {
-		return "id_taskparamkey";
+		return "pk_taskparamkey";
 	}
 
-	public int getId_taskplugin() {
-		return id_taskplugin;
+	public String getPk_taskplugin() {
+		return pk_taskplugin;
 	}
 
-	public void setId_taskplugin(int id_taskplugin) {
-		this.id_taskplugin = id_taskplugin;
+	public void setPk_taskplugin(String pk_taskplugin) {
+		this.pk_taskplugin = pk_taskplugin;
 	}
 
-	public int getId_taskparamkey() {
-		return id_taskparamkey;
+	public String getPk_taskparamkey() {
+		return pk_taskparamkey;
 	}
 
-	public void setId_taskparamkey(int id_taskparamkey) {
-		this.id_taskparamkey = id_taskparamkey;
+	public void setPk_taskparamkey(String pk_taskparamkey) {
+		this.pk_taskparamkey = pk_taskparamkey;
 	}
 
 	public String getParamname() {

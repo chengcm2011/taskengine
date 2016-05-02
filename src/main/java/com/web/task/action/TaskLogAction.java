@@ -1,11 +1,10 @@
 package com.web.task.action;
 
-import arch.util.lang.BeanUtil;
-import arch.util.lang.PageVO;
+import cheng.lib.lang.PageVO;
+import cheng.lib.util.BeanUtil;
 import com.web.common.BusinessCommonAction;
 import com.web.task.model.TaskDeployModel;
 import com.web.task.model.TaskLogModel;
-import com.web.task.model.TaskPluginModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,12 +28,12 @@ public class TaskLogAction extends BusinessCommonAction {
 	@RequestMapping("index")
 	public String index(HttpServletRequest request,PageVO pageVO, Model model) throws Exception {
 		pageVO.setCondition(" dr=0 ");
-		pageVO = getDbrunner().queryBeanByPage(TaskLogModel.class,pageVO);
+		pageVO = dataBaseService.queryByPage(TaskLogModel.class,pageVO);
 		List<TaskLogModel> list = (List<TaskLogModel>)pageVO.getData();
 		List<Map<String,Object>> data = new ArrayList<>();
 		for(TaskLogModel taskLogModel:list){
 			Map<String,Object> mdata = BeanUtil.getValueMap(taskLogModel);
-			TaskDeployModel taskDeployModel = getDbrunner().queryBeanById(TaskDeployModel.class,taskLogModel.getId_taskdeploy());
+			TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class,taskLogModel.getPrimaryKey());
 			mdata.put("taskname",taskDeployModel.getTaskname());
 			data.add(mdata);
 		}

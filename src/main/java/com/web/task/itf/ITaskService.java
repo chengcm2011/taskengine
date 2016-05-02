@@ -1,7 +1,7 @@
 package com.web.task.itf;
 
-import com.application.common.exception.BusinessException;
-import com.application.itf.IService;
+import cheng.lib.exception.BusinessException;
+import cheng.lib.itf.IService;
 import com.web.task.model.TaskDeployModel;
 
 public interface ITaskService extends IService {

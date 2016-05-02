@@ -1,7 +1,7 @@
 package com.web.task.vo;
 
 
-import arch.util.lang.SuperVO;
+import cheng.lib.lang.SuperVO;
 
 /**
  * 任务插件信息 

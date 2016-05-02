@@ -1,7 +1,6 @@
 package com.web.common;
 
-import arch.util.lang.PageVO;
-import com.web.common.BusinessCommonAction;
+import cheng.lib.lang.PageVO;
 import com.web.task.model.TaskPluginModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +21,7 @@ public class RefAction extends BusinessCommonAction {
 		String reftype = request.getParameter("reftype");
 		String itemkey = request.getParameter("itemkey");
 		model.addAttribute("itemkey",itemkey);
-		List<TaskPluginModel> data = getDbrunner().queryBeans2(TaskPluginModel.class,"dr=0");
+		List<TaskPluginModel> data = dataBaseService.queryByClause(TaskPluginModel.class,"dr=0");
 		model.addAttribute(DATA,data);
 		return "management/uicomponent/ref/index";
 	}

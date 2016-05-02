@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>mh</groupId>
+		<groupId>com.cheng</groupId>
 		<artifactId>parent</artifactId>
 		<version>1.0</version>
 	</parent>
@@ -12,25 +12,25 @@
 	<packaging>war</packaging>
 	<name>taskengine</name>
 	<dependencies>
-		<!--<dependency>-->
-			<!--<groupId>cheng</groupId>-->
-			<!--<artifactId>Spider</artifactId>-->
-			<!--<version>SNAPSHOT</version>-->
-		<!--</dependency>-->
 		<dependency>
-			<groupId>mh</groupId>
-			<artifactId>super-diamond-client</artifactId>
-			<version>[1.0, 2.0)</version>
+			<groupId>com.cheng</groupId>
+			<artifactId>lib</artifactId>
+			<version>1.0.0</version>
 		</dependency>
-		<!--<dependency>-->
-			<!--<groupId>mysql</groupId>-->
-			<!--<artifactId>mysql-connector-java</artifactId>-->
-			<!--<version>5.1.37</version>-->
-		<!--</dependency>-->
 		<dependency>
-			<groupId>mh</groupId>
-			<artifactId>webcommon</artifactId>
-			<version>SNAPSHOT</version>
+			<groupId>com.cheng</groupId>
+			<artifactId>base</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.cheng</groupId>
+			<artifactId>jdbc</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.cheng</groupId>
+			<artifactId>web</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>javax</groupId>
@@ -38,19 +38,9 @@
 			<version>7.0</version>
 			<scope>provided</scope>
 		</dependency>
+
 	</dependencies>
-	<repositories>
-		<repository>
-			<id>nexus</id>
-			<url>http://123.57.254.66:8081/nexus/content/groups/public</url>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>nexus</id>
-			<url>http://123.57.254.66:8081/nexus/content/groups/public</url>
-		</pluginRepository>
-	</pluginRepositories>
+
 </project>
 
 

@@ -1,16 +1,17 @@
 package com.web.task.model;
 
-import arch.util.lang.SuperModel;
+
+import cheng.lib.lang.SuperModel;
 
 /**
  * Created by cheng on 2015/8/28.
  */
 public class TaskParamValueModel extends SuperModel {
 
-	private int id_tasparamvalue ;
+	private String pk_taskparamvalue ;
 
-	private int id_taskdeploy ;
-	private int id_taskparamkey ;
+	private String pk_taskdeploy ;
+	private String pk_taskparamkey ;
 	private String paramkey ;
 	private String paramname ;
 	private String paramvalue ;
@@ -24,24 +25,13 @@ public class TaskParamValueModel extends SuperModel {
 	}
 
 	@Override
+	public String getParentPKFieldName() {
+		return "pk_taskparamkey";
+	}
+
+	@Override
 	public String getPKFieldName() {
-		return "id_tasparamvalue";
-	}
-
-	public int getId_tasparamvalue() {
-		return id_tasparamvalue;
-	}
-
-	public void setId_tasparamvalue(int id_tasparamvalue) {
-		this.id_tasparamvalue = id_tasparamvalue;
-	}
-
-	public int getId_taskdeploy() {
-		return id_taskdeploy;
-	}
-
-	public void setId_taskdeploy(int id_taskdeploy) {
-		this.id_taskdeploy = id_taskdeploy;
+		return "pk_taskparamvalue";
 	}
 
 	public String getParamkey() {
@@ -60,12 +50,28 @@ public class TaskParamValueModel extends SuperModel {
 		this.paramname = paramname;
 	}
 
-	public int getId_taskparamkey() {
-		return id_taskparamkey;
+	public String getPk_taskparamvalue() {
+		return pk_taskparamvalue;
 	}
 
-	public void setId_taskparamkey(int id_taskparamkey) {
-		this.id_taskparamkey = id_taskparamkey;
+	public void setPk_taskparamvalue(String pk_taskparamvalue) {
+		this.pk_taskparamvalue = pk_taskparamvalue;
+	}
+
+	public String getPk_taskdeploy() {
+		return pk_taskdeploy;
+	}
+
+	public void setPk_taskdeploy(String pk_taskdeploy) {
+		this.pk_taskdeploy = pk_taskdeploy;
+	}
+
+	public String getPk_taskparamkey() {
+		return pk_taskparamkey;
+	}
+
+	public void setPk_taskparamkey(String pk_taskparamkey) {
+		this.pk_taskparamkey = pk_taskparamkey;
 	}
 
 	public String getParamvalue() {

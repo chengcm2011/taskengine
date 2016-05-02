@@ -1,18 +1,16 @@
 package com.web.common;
 
-import arch.util.lang.Predef;
-import arch.util.toolkit.DBRunner;
+import cheng.lib.exception.BusinessException;
+import cheng.lib.util.Predef;
 import com.application.action.AbstractCommonAction;
-import com.application.action.AjaxJsonView;
 import com.application.action.vo.AjaxDone;
-import com.application.common.exception.BusinessException;
 import com.application.common.util.HttpRequestUtil;
 import com.application.common.vo.UserSessionVO;
+import com.application.module.jdbc.itf.IDataBaseService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
@@ -33,11 +31,8 @@ public class BusinessCommonAction extends AbstractCommonAction {
 	public static final String Login = "login";
 	public static final String Register = "register";
 
-	public DBRunner getDbrunner() {
-		return dbrunner;
-	}
 	@Resource
-	protected DBRunner dbrunner ;
+	public IDataBaseService dataBaseService ;
 	public BusinessCommonAction() {
 	}
 	protected String getMsgTipPage(){
@@ -71,7 +66,7 @@ public class BusinessCommonAction extends AbstractCommonAction {
 	 * @return
 	 */
 	protected TaskSession getTaskSession(HttpServletRequest request){
-		return  (TaskSession)HttpRequestUtil.getUserFromSession(request);
+		return  (TaskSession) HttpRequestUtil.getUserFromSession(request);
 	}
 	/**
 	 * 

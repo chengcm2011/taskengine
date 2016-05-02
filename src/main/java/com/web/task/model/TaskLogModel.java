@@ -1,12 +1,13 @@
 package com.web.task.model;
 
-import arch.util.lang.SuperModel;
+
+import cheng.lib.lang.SuperModel;
 
 public class TaskLogModel extends SuperModel {
 
 	private static final long serialVersionUID = 1L;
-	private int id_task_tasklog ;
-	private int id_taskdeploy ;
+	private String pk_tasklog ;
+	private String pk_taskdeploy ;
 	private String returnstr ;
 	private boolean issuccess ;
 	private String runtime ;
@@ -20,8 +21,13 @@ public class TaskLogModel extends SuperModel {
 	private int dr;
 
 	@Override
+	public String getParentPKFieldName() {
+		return "pk_taskdeploy";
+	}
+
+	@Override
 	public String getPKFieldName() {
-		return "id_task_tasklog";
+		return "pk_tasklog";
 	}
 
 	@Override
@@ -29,24 +35,24 @@ public class TaskLogModel extends SuperModel {
 		return "task_tasklog";
 	}
 
-	public static long getSerialVersionUID() {
-		return serialVersionUID;
+	public String getPk_tasklog() {
+		return pk_tasklog;
 	}
 
-	public int getId_task_tasklog() {
-		return id_task_tasklog;
+	public void setPk_tasklog(String pk_tasklog) {
+		this.pk_tasklog = pk_tasklog;
 	}
 
-	public void setId_task_tasklog(int id_task_tasklog) {
-		this.id_task_tasklog = id_task_tasklog;
+	public String getPk_taskdeploy() {
+		return pk_taskdeploy;
 	}
 
-	public int getId_taskdeploy() {
-		return id_taskdeploy;
+	public void setPk_taskdeploy(String pk_taskdeploy) {
+		this.pk_taskdeploy = pk_taskdeploy;
 	}
 
-	public void setId_taskdeploy(int id_taskdeploy) {
-		this.id_taskdeploy = id_taskdeploy;
+	public boolean issuccess() {
+		return issuccess;
 	}
 
 	public String getReturnstr() {

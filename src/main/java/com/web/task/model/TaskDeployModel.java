@@ -1,12 +1,12 @@
 package com.web.task.model;
 
 
-import arch.util.lang.SuperModel;
+import cheng.lib.lang.SuperModel;
 
 public class TaskDeployModel extends SuperModel {
 
-	private int id_taskdeploy;
-	private int id_taskplugin;
+	private String pk_taskdeploy;
+	private String pk_taskplugin;
 	private int tasktype ;
 	private String taskname;
 	private String taskdescription;
@@ -63,18 +63,17 @@ public class TaskDeployModel extends SuperModel {
 	public String getTableName() {
 		return "task_taskdeploy";
 	}
+
+	@Override
+	public String getParentPKFieldName() {
+		return "pk_taskplugin";
+	}
+
 	@Override
 	public String getPKFieldName() {
-		return "id_taskdeploy";
+		return "pk_taskdeploy";
 	}
 
-	public int getId_taskdeploy() {
-		return id_taskdeploy;
-	}
-
-	public void setId_taskdeploy(int id_taskdeploy) {
-		this.id_taskdeploy = id_taskdeploy;
-	}
 
 	public String getVdef1() {
 		return vdef1;
@@ -132,12 +131,36 @@ public class TaskDeployModel extends SuperModel {
 		this.vdef5 = vdef5;
 	}
 
-	public int getId_taskplugin() {
-		return id_taskplugin;
+	public String getPk_taskdeploy() {
+		return pk_taskdeploy;
 	}
 
-	public void setId_taskplugin(int id_taskplugin) {
-		this.id_taskplugin = id_taskplugin;
+	public void setPk_taskdeploy(String pk_taskdeploy) {
+		this.pk_taskdeploy = pk_taskdeploy;
+	}
+
+	public String getPk_taskplugin() {
+		return pk_taskplugin;
+	}
+
+	public void setPk_taskplugin(String pk_taskplugin) {
+		this.pk_taskplugin = pk_taskplugin;
+	}
+
+	public String getStardatetime() {
+		return stardatetime;
+	}
+
+	public void setStardatetime(String stardatetime) {
+		this.stardatetime = stardatetime;
+	}
+
+	public String getOverdatetime() {
+		return overdatetime;
+	}
+
+	public void setOverdatetime(String overdatetime) {
+		this.overdatetime = overdatetime;
 	}
 
 	public String getTaskname() {

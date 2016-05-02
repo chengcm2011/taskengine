@@ -1,6 +1,5 @@
 package com.web.common;
 
-import com.application.utils.Common;
 
 /**
  * Created by cheng on 2015/4/10.

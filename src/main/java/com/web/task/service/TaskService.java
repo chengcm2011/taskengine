@@ -1,8 +1,8 @@
 package com.web.task.service;
 
-import arch.util.toolkit.DBRunner;
-import com.application.common.context.ApplicationServiceLocator;
-import com.application.common.exception.BusinessException;
+import cheng.lib.exception.BusinessException;
+import com.application.module.jdbc.SQLParameter;
+import com.application.module.jdbc.itf.IDataBaseService;
 import com.web.task.DefaultTaskFactory;
 import com.web.task.TaskJobCacheManager;
 import com.web.task.itf.ITaskService;
@@ -12,7 +12,6 @@ import com.web.task.model.TaskParamValueModel;
 import com.web.task.util.ScheduleUtils;
 import com.web.task.vo.ScheduleJobVo;
 import org.apache.commons.lang.StringUtils;
-import org.quartz.SchedulerException;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -24,7 +23,7 @@ public class TaskService implements ITaskService {
 	@Resource
 	TaskReadImpl taskRead ;
 	@Resource
-	DBRunner dbRunner ;
+	IDataBaseService dataBaseService ;
 
 	/**
 	 * 保存任务
@@ -40,23 +39,25 @@ public class TaskService implements ITaskService {
 				deploymodel.setRunnable("N");
 			}
 			//得到所有的参数
-			List<TaskParamKeyModel> data = dbRunner.queryBeans2(TaskParamKeyModel.class, " dr=0 and id_taskplugin=?", deploymodel.getId_taskplugin());
+			SQLParameter sqlParameter = new SQLParameter();
+			sqlParameter.addParam(deploymodel.getPk_taskplugin());
+			List<TaskParamKeyModel> data = dataBaseService.queryByClause(TaskParamKeyModel.class, " dr=0 and pk_taskplugin=?",sqlParameter);
 			if(data==null || data.size()<=0){
 				throw  new BusinessException("保存失败，没有设置参数");
 			}
-			dbRunner.insertModel(deploymodel);
+			dataBaseService.insert(deploymodel);
 			for (TaskParamKeyModel item:data){
 				TaskParamValueModel taskParamValueModel = new TaskParamValueModel();
-				taskParamValueModel.setId_taskdeploy(deploymodel.getId_taskdeploy());
-				taskParamValueModel.setId_taskparamkey(item.getId_taskparamkey());
+				taskParamValueModel.setPk_taskdeploy(deploymodel.getPk_taskdeploy());
+				taskParamValueModel.setPk_taskparamkey(item.getPk_taskparamkey());
 				taskParamValueModel.setParamkey(item.getParamkey());
 				taskParamValueModel.setParamname(item.getParamname());
-				dbRunner.insertModel(taskParamValueModel);
+				dataBaseService.insert(taskParamValueModel);
 			}
 			//查询具体的任务插件
-			ScheduleJobVo scheduleJobVo = taskRead.read(deploymodel.getId_taskdeploy()+"",deploymodel.getId_taskplugin()+"");
+			ScheduleJobVo scheduleJobVo = taskRead.read(deploymodel.getPk_taskdeploy()+"",deploymodel.getPk_taskplugin()+"");
 
-			TaskJobCacheManager.getInstance().set(deploymodel.getId_taskdeploy()+deploymodel.getId_taskplugin()+"",scheduleJobVo);
+			TaskJobCacheManager.getInstance().set(deploymodel.getPk_taskdeploy()+deploymodel.getPk_taskplugin()+"",scheduleJobVo);
 
 			DefaultTaskFactory.getFactory().initTask(scheduleJobVo);
 		} catch (Exception e) {
@@ -69,9 +70,9 @@ public class TaskService implements ITaskService {
 	@Override
 	public boolean startScheduleJob(TaskDeployModel deploymodel) throws BusinessException {
 		try {
-			ScheduleJobVo scheduleJobVo = taskRead.read(deploymodel.getId_taskdeploy()+"",deploymodel.getId_taskplugin()+"");
+			ScheduleJobVo scheduleJobVo = taskRead.read(deploymodel.getPk_taskdeploy()+"",deploymodel.getPk_taskplugin()+"");
 
-			TaskJobCacheManager.getInstance().set(deploymodel.getId_taskdeploy()+deploymodel.getId_taskplugin()+"",scheduleJobVo);
+			TaskJobCacheManager.getInstance().set(deploymodel.getPk_taskdeploy()+deploymodel.getPk_taskplugin()+"",scheduleJobVo);
 
 			DefaultTaskFactory.getFactory().initTask(scheduleJobVo);
 		}catch (Exception e){
@@ -89,9 +90,9 @@ public class TaskService implements ITaskService {
 	@Override
 	public boolean updateScheduleJob(TaskDeployModel deploymodel) throws BusinessException {
 		try {
-			ApplicationServiceLocator.getBDRunner().update(deploymodel);
-			ScheduleJobVo scheduleJobVo = taskRead.read(deploymodel.getId_taskdeploy()+"",deploymodel.getId_taskplugin()+"");
-			String key = deploymodel.getId_taskdeploy() + deploymodel.getId_taskplugin() + "";
+			dataBaseService.update(deploymodel);
+			ScheduleJobVo scheduleJobVo = taskRead.read(deploymodel.getPk_taskdeploy()+"",deploymodel.getPk_taskplugin()+"");
+			String key = deploymodel.getPk_taskdeploy() + deploymodel.getPk_taskplugin() + "";
 			TaskJobCacheManager.getInstance().set(key,scheduleJobVo);
 			DefaultTaskFactory.getFactory().updateJob(scheduleJobVo);
 		} catch (Exception e) {
@@ -105,7 +106,7 @@ public class TaskService implements ITaskService {
 	public boolean deleteScheduleJob(TaskDeployModel deploymodel) throws BusinessException {
 		//把任务从任务中心删除
 		try {
-			DefaultTaskFactory.getFactory().stop(ScheduleUtils.getJobKey(deploymodel.getId_taskdeploy() + "", deploymodel.getId_taskplugin() + ""));
+			DefaultTaskFactory.getFactory().stop(ScheduleUtils.getJobKey(deploymodel.getPk_taskdeploy() + "", deploymodel.getPk_taskplugin() + ""));
 		}catch (Exception e){
 			throw new BusinessException(e);
 		}
@@ -117,7 +118,7 @@ public class TaskService implements ITaskService {
 	@Override
 	public boolean pauseJob(TaskDeployModel deploymodel) throws BusinessException {
 		try {
-			ScheduleJobVo scheduleJobVo = taskRead.read(deploymodel.getId_taskdeploy()+"",deploymodel.getId_taskplugin()+"");
+			ScheduleJobVo scheduleJobVo = taskRead.read(deploymodel.getPk_taskdeploy()+"",deploymodel.getPk_taskplugin()+"");
 			DefaultTaskFactory.getFactory().pauseJob(scheduleJobVo);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -129,7 +130,7 @@ public class TaskService implements ITaskService {
 	@Override
 	public boolean resumeJob(TaskDeployModel deploymodel) throws BusinessException {
 		try {
-			ScheduleJobVo scheduleJobVo = taskRead.read(deploymodel.getId_taskdeploy()+"",deploymodel.getId_taskplugin()+"");
+			ScheduleJobVo scheduleJobVo = taskRead.read(deploymodel.getPk_taskdeploy()+"",deploymodel.getPk_taskplugin()+"");
 			DefaultTaskFactory.getFactory().resumeJob(scheduleJobVo);
 		} catch (Exception e) {
 			e.printStackTrace();

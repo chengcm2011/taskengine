@@ -13,19 +13,6 @@
 
 
 
-	<!-- 属性文件读入 -->
-	<bean id="propertyConfigurer"
-		  class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
-		<property name="ignoreResourceNotFound" value="true" /> <!-- 忽略属性文件找不到 -->
-		<property name="ignoreUnresolvablePlaceholders" value="true" /> <!-- 忽略属性找不到 -->
-		<property name="fileEncoding" value="UTF-8"></property>
-		<property name="locations">
-			<list>
-			</list>
-		</property>
-	</bean>
-
 	<!-- @Controller, @Service, @Configuration, etc. <mvc:resources mapping="/resources/**" location="/resources/" />-->
 	<context:component-scan base-package="com" />
 	<mvc:resources mapping="/resources/**" location="/resources/" />
@@ -33,8 +20,31 @@
 	<mvc:annotation-driven />
 	<context:annotation-config />
 
-	<bean id="dbRunner" class="com.application.config.Env" factory-method="db" />
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations" value="classpath*:/jdbc.properties" />
+	</bean>
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<!-- Connection Pooling Info -->
+		<property name="maxActive" value="${dbcp.maxActive}" />
+		<property name="maxIdle" value="${dbcp.maxIdle}" />
+		<property name="defaultAutoCommit" value="false" />
+		<property name="timeBetweenEvictionRunsMillis" value="3600000" />
+		<property name="minEvictableIdleTimeMillis" value="3600000" />
+	</bean>
 
+	<bean id="transactionManager"  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- 将所有具有@Transactional注解的Bean自动配置为声明式事务支持 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!--<bean id="dbRunner" class="com.application.config.Env" factory-method="db" />-->
+／
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".jsp" />

@@ -1,8 +1,7 @@
 package com.web.test;
 
-import arch.util.lang.Predef;
-import arch.util.toolkit.DBRunner;
-import com.application.common.exception.BusinessException;
+import cheng.lib.exception.BusinessException;
+import cheng.lib.util.Predef;
 import com.web.task.AbstractTaskImpl;
 import org.quartz.JobDataMap;
 import org.slf4j.Logger;
@@ -15,7 +14,7 @@ public class TestTask extends AbstractTaskImpl {
 	protected Logger logger = LoggerFactory.getLogger(TestTask.class);
 
 	@Override
-	public String doexecute(DBRunner dbRunner, JobDataMap jobDataMap) throws BusinessException {
+	public String doexecute(JobDataMap jobDataMap) throws BusinessException {
 		logger.info(" task run begin ");
 		Predef.p(jobDataMap);
 		logger.info(" task run end ");

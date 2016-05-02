@@ -1,11 +1,11 @@
 package com.web.task.model;
 
 
-import arch.util.lang.SuperModel;
+import cheng.lib.lang.SuperModel;
 
 public class TaskPluginModel extends SuperModel {
 	private static final long serialVersionUID = 1L;
-	private int id_taskplugin;
+	private String pk_taskplugin;
 	private String pluginname;
 	private String pluginclass;
 	private String plugindescription;
@@ -14,8 +14,13 @@ public class TaskPluginModel extends SuperModel {
 	private int dr;
 	private String ts;
 
+	@Override
+	public String getParentPKFieldName() {
+		return null;
+	}
+
 	public String getPKFieldName() {
-		return "id_taskplugin";
+		return "pk_taskplugin";
 	}
 
 	public String getTableName() {
@@ -26,12 +31,12 @@ public class TaskPluginModel extends SuperModel {
 		return serialVersionUID;
 	}
 
-	public int getId_taskplugin() {
-		return id_taskplugin;
+	public String getPk_taskplugin() {
+		return pk_taskplugin;
 	}
 
-	public void setId_taskplugin(int id_taskplugin) {
-		this.id_taskplugin = id_taskplugin;
+	public void setPk_taskplugin(String pk_taskplugin) {
+		this.pk_taskplugin = pk_taskplugin;
 	}
 
 	public String getPluginname() {

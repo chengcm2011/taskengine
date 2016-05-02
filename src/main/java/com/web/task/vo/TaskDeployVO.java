@@ -1,7 +1,7 @@
 package com.web.task.vo;
 
 
-import arch.util.lang.SuperVO;
+import cheng.lib.lang.SuperVO;
 
 /**
  * 任务部署信息  一个任务插件可以部署多次 。会产生多少部署信息

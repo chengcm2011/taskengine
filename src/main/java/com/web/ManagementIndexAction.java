@@ -15,13 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/management")
 public class ManagementIndexAction extends BusinessCommonAction {
 
+
 	@RequestMapping("/index")
 	public String index(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 		if (!login(request, response)) {
 			return redirect(response, "/login?url=management/index");
 		}
 		String sql = " select * from task_taskparamkey " ;
-		getDbrunner().queryMap(sql);
 		return "management/index";
 	}
 }
