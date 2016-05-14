@@ -1,19 +1,17 @@
 package com.web.task;
 
 import cheng.lib.exception.BusinessException;
+import cheng.lib.util.SystemInfoUtil;
 import cheng.lib.util.TimeToolkit;
 import com.application.common.context.ApplicationServiceLocator;
 import com.application.module.jdbc.itf.IDataBaseService;
 import com.web.task.model.TaskLogModel;
-import com.web.task.util.SystemInfoUtil;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.sql.SQLException;
 
 public abstract class AbstractTaskImpl implements Job {
 

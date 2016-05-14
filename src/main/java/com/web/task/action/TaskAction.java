@@ -7,7 +7,6 @@ import cheng.lib.validate.Verification;
 import com.application.action.vo.AjaxDone;
 import com.application.module.jdbc.SQLParameter;
 import com.web.common.BusinessCommonAction;
-import com.web.task.itf.ITaskService;
 import com.web.task.model.TaskDeployModel;
 import com.web.task.model.TaskPluginModel;
 import com.web.task.vo.TaskPluginVO;
@@ -32,8 +31,6 @@ import java.util.Map;
 @RequestMapping("/management/task/")
 public class TaskAction extends BusinessCommonAction{
 
-	@Resource
-	ITaskService taskService ;
 	/**
 	 * 加载所以的注册的任务
 	 * @param model
@@ -124,9 +121,7 @@ public class TaskAction extends BusinessCommonAction{
 	public AjaxDone deploysave(HttpServletRequest request,TaskPluginVO vo,Model model) throws Exception {
 		TaskDeployModel taskDeployModel = BeanUtil.objMapToBean(getParamFromReq(request), TaskDeployModel.class);
 		if(StringUtils.isEmpty(taskDeployModel.getPk_taskdeploy())){
-			taskService.createScheduleJob(taskDeployModel);
 		}else {
-			taskService.updateScheduleJob(taskDeployModel);
 		}
 		return AjaxDoneSucc("保存成功");
 	}
@@ -139,7 +134,6 @@ public class TaskAction extends BusinessCommonAction{
 			taskDeployModel.setRunnable("Y");
 			taskDeployModel.setTs(TimeToolkit.getCurrentTs());
 			dataBaseService.update(taskDeployModel, new String[]{"ts", "runnable"});
-			taskService.startScheduleJob(taskDeployModel);
 		}
 		return AjaxDoneSuccNotcloseCurrent("启动成功");
 	}
@@ -151,7 +145,6 @@ public class TaskAction extends BusinessCommonAction{
 			taskDeployModel.setRunnable("N");
 			taskDeployModel.setTs(TimeToolkit.getCurrentTs());
 			dataBaseService.update(taskDeployModel, new String[]{"ts", "runnable"});
-			taskService.deleteScheduleJob(taskDeployModel);
 		}
 		return AjaxDoneSuccNotcloseCurrent("停止成功");
 	}
@@ -163,7 +156,6 @@ public class TaskAction extends BusinessCommonAction{
 			taskDeployModel.setRunnable("N");
 			taskDeployModel.setTs(TimeToolkit.getCurrentTs());
 			dataBaseService.update(taskDeployModel, new String[]{"ts", "runnable"});
-			taskService.pauseJob(taskDeployModel);
 		}
 		return AjaxDoneSuccNotcloseCurrent("停止成功");
 	}
@@ -175,7 +167,6 @@ public class TaskAction extends BusinessCommonAction{
 			taskDeployModel.setRunnable("N");
 			taskDeployModel.setTs(TimeToolkit.getCurrentTs());
 			dataBaseService.update(taskDeployModel, new String[]{"ts", "runnable"});
-			taskService.pauseJob(taskDeployModel);
 		}
 		return AjaxDoneSuccNotcloseCurrent("停止成功");
 	}
@@ -188,7 +179,6 @@ public class TaskAction extends BusinessCommonAction{
 			taskDeployModel.setDr(1);
 			taskDeployModel.setTs(TimeToolkit.getCurrentTs());
 			dataBaseService.update(taskDeployModel, new String[]{"dr", "ts", "runnable"});
-			taskService.deleteScheduleJob(taskDeployModel);
 		}
 		return AjaxDoneSuccNotcloseCurrent("删除成功");
 	}

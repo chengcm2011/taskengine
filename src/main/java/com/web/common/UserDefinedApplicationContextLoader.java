@@ -1,7 +1,6 @@
 package com.web.common;
 
 import com.application.config.contextloader.IUserDefinedApplicationContextLoaderListener;
-import com.web.task.AbstractTaskFactory;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletContextEvent;
@@ -18,12 +17,7 @@ public class UserDefinedApplicationContextLoader implements IUserDefinedApplicat
 
 	@Override
 	public void definedContextDestroyed(ServletContextEvent servletContextEvent) {
-		try {
-			AbstractTaskFactory factory = AbstractTaskFactory.getFactory();
-			factory.stopTaskCentery();
-		}catch (Exception e){
-			e.printStackTrace();
-		}
+
 	}
 	/**
 	 * 初始化任务中心
@@ -33,13 +27,6 @@ public class UserDefinedApplicationContextLoader implements IUserDefinedApplicat
 	 * @param event
 	 */
 	private void initTaskCentry(ServletContextEvent event) {
-		try {
-			AbstractTaskFactory factory = AbstractTaskFactory.getFactory();
-			factory.initTasks();
-			factory.startTaskCentery();
-		} catch (Exception e) {
-			e.printStackTrace();
-			event.getServletContext().log("ConfigurationException: ", e);
-		}
+
 	}
 }
