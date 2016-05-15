@@ -18,5 +18,9 @@
                 <property name="maxUploadSize" value="-1"/> <!-- 最大文件大小，-1为无限止(-1) -->
         </bean>
 
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
 
 </beans>

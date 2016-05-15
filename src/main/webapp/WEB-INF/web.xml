@@ -7,7 +7,7 @@
     <param-value>/WEB-INF/classes/spring/*.xml</param-value>
   </context-param>
   <listener>
-    <listener-class>com.application.config.contextloader.ApplicationContextLoaderListener</listener-class>
+    <listener-class>com.web.common.UserDefinedApplicationContextLoader</listener-class>
   </listener>
   <session-config>
     <session-timeout>30</session-timeout>

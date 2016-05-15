@@ -9,7 +9,6 @@ public class TaskPluginModel extends SuperModel {
 	private String pluginname;
 	private String pluginclass;
 	private String plugindescription;
-	private String plugintype;//类型
 	private String bmodule;//模块
 	private int dr;
 	private String ts;
@@ -61,14 +60,6 @@ public class TaskPluginModel extends SuperModel {
 
 	public void setPlugindescription(String plugindescription) {
 		this.plugindescription = plugindescription;
-	}
-
-	public String getPlugintype() {
-		return plugintype;
-	}
-
-	public void setPlugintype(String plugintype) {
-		this.plugintype = plugintype;
 	}
 
 	public String getBmodule() {

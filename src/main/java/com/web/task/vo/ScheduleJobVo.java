@@ -11,21 +11,34 @@ import java.util.Date;
  * Created by liyd on 12/19/14.
  */
 public class ScheduleJobVo  {
-    private String jobName ;
     private String jobCode ;
     private String jobGroupCode ;
+
     private JobKey jobKey ;
     private TriggerKey triggerKey ;
+
+    private String cronExpression ;
+    private String jobClass ;
+
     private JobDetail jobDetail ;
     private Trigger trigger ;
-    private boolean jobstatus ;
 
-    public String getJobName() {
-        return jobName;
+    private Trigger.TriggerState triggerState;
+
+    public String getJobCode() {
+        return jobCode;
     }
 
-    public void setJobName(String jobName) {
-        this.jobName = jobName;
+    public void setJobCode(String jobCode) {
+        this.jobCode = jobCode;
+    }
+
+    public String getJobGroupCode() {
+        return jobGroupCode;
+    }
+
+    public void setJobGroupCode(String jobGroupCode) {
+        this.jobGroupCode = jobGroupCode;
     }
 
     public JobKey getJobKey() {
@@ -44,30 +57,6 @@ public class ScheduleJobVo  {
         this.triggerKey = triggerKey;
     }
 
-    public String getJobCode() {
-        return jobCode;
-    }
-
-    public boolean isJobstatus() {
-        return jobstatus;
-    }
-
-    public void setJobstatus(boolean jobstatus) {
-        this.jobstatus = jobstatus;
-    }
-
-    public void setJobCode(String jobCode) {
-        this.jobCode = jobCode;
-    }
-
-    public String getJobGroupCode() {
-        return jobGroupCode;
-    }
-
-    public void setJobGroupCode(String jobGroupCode) {
-        this.jobGroupCode = jobGroupCode;
-    }
-
     public JobDetail getJobDetail() {
         return jobDetail;
     }
@@ -82,5 +71,29 @@ public class ScheduleJobVo  {
 
     public void setTrigger(Trigger trigger) {
         this.trigger = trigger;
+    }
+
+    public Trigger.TriggerState getTriggerState() {
+        return triggerState;
+    }
+
+    public void setTriggerState(Trigger.TriggerState triggerState) {
+        this.triggerState = triggerState;
+    }
+
+    public String getCronExpression() {
+        return cronExpression;
+    }
+
+    public void setCronExpression(String cronExpression) {
+        this.cronExpression = cronExpression;
+    }
+
+    public String getJobClass() {
+        return jobClass;
+    }
+
+    public void setJobClass(String jobClass) {
+        this.jobClass = jobClass;
     }
 }

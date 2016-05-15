@@ -20,15 +20,10 @@
 				<textarea  name="taskdescription"  class="required textInput valid" >${item.taskdescription}</textarea>
 			</p>
 			<p>
-				<label>任务类型：</label>
-				<input type="text" name="tasktype"  value="${item.tasktype}"    class="number textInput required" style="float: left"/>
-			</p>
-			<p>
 				<label>任务cron表达式：</label>
 				<input type="text" name="triggerstr" value="${item.triggerstr}"    class="textInput required" style="float: left"/>
 			</p>
-			<c:if test="${ not empty taskDeployModel}">
-				<p>
+			<p>
 					<label>是否运行：</label>
 					<select name="runnable"  >
 
@@ -42,7 +37,6 @@
 						</c:if>
 					</select>
 				</p>
-			</c:if>
 		</div>
 		<div class="formBar">
 			<ul>

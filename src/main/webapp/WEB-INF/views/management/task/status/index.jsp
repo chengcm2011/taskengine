@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/include.inc.jsp" %>
 
-<form id="pagerForm" method="post" action="management/task/deploy/index#taskdeploy">
+<form id="pagerForm" method="post" action="management/task/status/index">
   <input type="hidden" name="pageNum" value="${pageVO.pageNum}" />
   <input type="hidden" name="numPerPage" value="${pageVO.pageSize}" />
 </form>
@@ -15,7 +15,7 @@
 		</div>
 	</div>
 	<div class="tabsContent">
-		<form rel="pagerForm" onsubmit="return navTabSearch(this);" class=" pageForm required-validate" action="management/task/deploy/index#taskdeploy" method="post">
+		<form rel="pagerForm" onsubmit="return navTabSearch(this);" class=" pageForm required-validate" action="management/task/status/index" method="post">
 		    <div class="searchBar">
 		      <ul class="searchContent">
 				  <li>
@@ -44,19 +44,11 @@
 
 <div class="panelBar">
 	<ul class="toolBar">
-       <li><a class="add" href="management/task/deploy/edit" target="dialog" rel="addplugin"><span>添加</span></a></li>
-       <li class="line">line</li>
-		<li><a class="edit" href="management/task/deploy/edit?pk={pk}" target="dialog"  rel="updateplugin"><span>修改</span></a></li>
+     	<li><a class="edit" href="management/task/status/pause?pk={pk}" target="ajaxTodo" title="确定要暂停吗？"  rel="pause"><span>暂停</span></a></li>
 		<li class="line">line</li>
-		<li><a class="delete" href="management/task/deploy/del?pk={pk}" target="ajaxTodo" title="确定要删除吗？" rel="del"><span>删除</span></a></li>
+		<li><a class="edit" href="management/task/status/resume?pk={pk}" target="ajaxTodo" title="确定要恢复吗？"  rel="resume"><span>恢复</span></a></li>
 		<li class="line">line</li>
-		<li><a class="delete" href="management/task/deploy/disable?pk={pk}" target="ajaxTodo" title="确定要禁用吗？" rel="disable"><span>禁用</span></a></li>
-		<li class="line">line</li>
-		<li><a class="edit" href="management/task/deploy/enable?pk={pk}" target="ajaxTodo" title="确定要启用吗？"  rel="enable"><span>启用</span></a></li>
-		<li class="line">line</li>
-		<%--<li><a class="edit" href="management/task/deploy/resume?pk={pk}" target="ajaxTodo" title="确定要恢复吗？"  rel="resume"><span>恢复</span></a></li>--%>
-		<%--<li class="line">line</li>--%>
-		<li><a class="edit" href="management/task/paramvalue/index?pk={pk}" target="navTab"  rel="paramvalueindex"><span>任务参数值管理</span></a></li>
+		<li><a class="edit" href="management/task/status/trigger?pk={pk}" target="ajaxTodo"  title="确定要运行一次吗？" rel="trigger" ><span>运行一次</span></a></li>
 	</ul>
 </div>
 
@@ -65,23 +57,21 @@
       <thead>
 	      <tr>
 	        <th width="">序号</th>
-			<th width="">任务插件名称</th>
 			<th width="">任务名称</th>
-			<th width="">任务描述</th>
 			<th width="">任务cron表达式</th>
+			<th width="">下次执行时间</th>
 			<th width="">运行状态</th>
 	      </tr>
       </thead>
       <tbody>
-	      <c:if test="${not empty pageVO.data }">
-	        <c:forEach var="item" items="${pageVO.data }" varStatus="sta">
-	          <tr target="pk" rel="${item.pk_taskdeploy }">
-	            <td>${(pageVO.pageNum-1)*pageVO.pageSize+sta.count}</td>
-	            <td>${item.pluginname }</td>
-	            <td>${item.taskname }</td>
-				  <td>${item.taskdescription }</td>
-				  <td>${item.triggerstr }</td>
-				  <td><c:if test="${'Y' eq item.runnable }">已启用</c:if><c:if test="${'N' eq item.runnable }">已禁用</c:if></td>
+	      <c:if test="${not empty data }">
+	        <c:forEach var="item" items="${data }" varStatus="sta">
+	          <tr target="pk" rel="${item.jobcode }">
+	            <td>${sta.count}</td>
+	            <td title="${item.jobclass}">${item.jobname }</td>
+	            <td>${item.cronExpression }</td>
+				<td><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${item.NextFireTime }"></fmt:formatDate></td>
+				<td>${item.TriggerStateName }</td>
 	          </tr>
 	        </c:forEach>
 	      </c:if>

@@ -97,30 +97,11 @@
 		<div class="headerNav">
 			<a class="logo" href="">标志</a>
 			<ul class="nav">
-				<%--<li id="switchEnvBox"><a href="javascript:">（<span>北京</span>）切换城市</a>--%>
-				<%--<ul>--%>
-				<%--<li><a href="sidebar_1.html">北京</a></li>--%>
-				<%--<li><a href="sidebar_2.html">上海</a></li>--%>
-				<%--<li><a href="sidebar_2.html">南京</a></li>--%>
-				<%--<li><a href="sidebar_2.html">深圳</a></li>--%>
-				<%--<li><a href="sidebar_2.html">广州</a></li>--%>
-				<%--<li><a href="sidebar_2.html">天津</a></li>--%>
-				<%--<li><a href="sidebar_2.html">杭州</a></li>--%>
-				<%--</ul>--%>
-				<%--</li>--%>
-				<%--<li><a href="https://me.alipay.com/dwzteam" target="_blank">捐赠</a></li>--%>
-				<%--<li><a href="changepwd.html" target="dialog" width="600">设置</a></li>--%>
-				<%--<li><a href="http://www.cnblogs.com/dwzjs" target="_blank">博客</a></li>--%>
-				<li><span style="color:white;">${item.user_name }</span></li>
+			<li><span style="color:white;">${item.user_name }</span></li>
 				<li><a href="loginout" style="color:white;">退出</a></li>
 			</ul>
 			<ul class="themeList" id="themeList">
-				<%--<li theme="default"><div class="selected">蓝色</div></li>--%>
-				<%--<li theme="green"><div>绿色</div></li>--%>
-				<%--<li theme="red"><div>红色</div></li>--%>
-				<%--<li theme="purple"><div>紫色</div></li>--%>
-				<%--<li theme="silver"><div>银色</div></li>--%>
-				<%--<li theme="azure"><div>天蓝</div></li>--%>
+				<li theme="default"><div class="selected">蓝色</div></li>
 			</ul>
 		</div>
 
@@ -144,7 +125,8 @@
 					<ul class="tree treeFolder">
 						<li><a href="management/task/index?rel=taskregister"  target="navTab" rel="taskregister">任务注册</a></li>
 						<li><a href="management/task/deploy/index?rel=taskdeploy"  target="navTab" rel="taskdeploy">任务部署</a></li>
-					    <li><a href="management/task/log/index?rel=tasklog"  target="navTab" rel="tasklog">任务日志</a></li>
+						<li><a href="management/task/status/index?rel=taskstatus"  target="navTab" rel="taskdeploy">任务状态</a></li>
+						<li><a href="management/task/log/index?rel=tasklog"  target="navTab" rel="tasklog">任务日志</a></li>
 					</ul>
 				</div>
 		    </div>

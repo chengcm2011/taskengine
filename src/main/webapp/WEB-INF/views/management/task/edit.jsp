@@ -17,10 +17,6 @@
 				<label>任务插件描述：</label>
 				<textarea name="plugindescription" class=" required textInput valid" >${item.plugindescription}</textarea>
 			</p>
-			<p style="display: none">
-				<label>任务插件类型：</label>
-				<input type="text" name="plugintype"  value="1" class="required textInput valid">
-			</p>
 		</div>
 		<div class="formBar">
 			<ul>

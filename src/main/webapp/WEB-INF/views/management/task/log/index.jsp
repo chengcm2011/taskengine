@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/include.inc.jsp" %>
 
-<form id="pagerForm" method="post" action="management/task/index">
+<form id="pagerForm" method="post" action="management/task/log/index">
   <input type="hidden" name="pageNum" value="${pageVO.pageNum}" />
   <input type="hidden" name="numPerPage" value="${pageVO.pageSize}" />
 </form>
@@ -15,7 +15,7 @@
 		</div>
 	</div>
 	<div class="tabsContent">
-		<form rel="pagerForm" onsubmit="return navTabSearch(this);" class=" pageForm required-validate" action="management/task/index" method="post">
+		<form rel="pagerForm" onsubmit="return navTabSearch(this);" class=" pageForm required-validate" action="management/task/log/index" method="post">
 		    <div class="searchBar">
 		      <ul class="searchContent">
 				  <li>
