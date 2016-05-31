@@ -6,6 +6,7 @@ import com.application.action.vo.AjaxDone;
 import com.application.module.jdbc.SQLParameter;
 import com.web.common.BusinessCommonAction;
 import com.web.task.model.TaskParamValueModel;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,10 +24,10 @@ public class TaskParamValueAction extends BusinessCommonAction {
 	@RequestMapping("paramvalue/index")
 	public String index(HttpServletRequest request,PageVO pageVO, Model model) throws Exception {
 		String pk = request.getParameter("pk");
-		if (!Verification.isSignlessnumber(pk)) {
+		if (StringUtils.isBlank(pk)) {
 			return "";
 		}
-		pageVO.setCondition(" dr=0 and id_taskdeploy ="+pk );
+		pageVO.setCondition(" dr=0 and pk_taskdeploy ='"+pk+"'" );
 		pageVO = dataBaseService.queryByPage(TaskParamValueModel.class, pageVO);
 		model.addAttribute("pageVO",pageVO);
 		model.addAttribute("pk",pk);

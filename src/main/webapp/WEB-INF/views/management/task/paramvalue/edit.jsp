@@ -7,11 +7,11 @@
 			<input type="hidden" name="pk" value="${pk}">
 			<p>
 				<label>参数名称：</label>
-				<input type="text"  name="paramname" value="${item.paramname}" class="required"  />
+				<input type="text"  name="paramname" value="${item.paramname}" class="required" readonly="readonly" />
 			</p>
 			<p>
 				<label>参数编码：</label>
-				<input type="text"  name="paramkey" value="${item.paramkey}" class="required"  />
+				<input type="text"  name="paramkey" value="${item.paramkey}" class="required" readonly="readonly" />
 			</p>
 			<p>
 				<label>参数值：</label>
