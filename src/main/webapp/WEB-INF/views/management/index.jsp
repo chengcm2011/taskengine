@@ -100,9 +100,9 @@
 			<li><span style="color:white;">${item.user_name }</span></li>
 				<li><a href="loginout" style="color:white;">退出</a></li>
 			</ul>
-			<ul class="themeList" id="themeList">
-				<li theme="default"><div class="selected">蓝色</div></li>
-			</ul>
+			<%--<ul class="themeList" id="themeList">--%>
+				<%--<li theme="default"><div class="selected">蓝色</div></li>--%>
+			<%--</ul>--%>
 		</div>
 
 		<!-- navMenu -->

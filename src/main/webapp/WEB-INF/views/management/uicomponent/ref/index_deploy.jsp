@@ -33,20 +33,20 @@
 	<table class="table" layoutH="118" targetType="dialog" width="100%">
 		<thead>
 		<tr>
-			<th >插件名称</th>
-			<th >插件处理类</th>
-			<th >插件描述</th>
+			<th >任务名称</th>
+			<th >任务描述</th>
+			<th >任务执行策略</th>
 			<th width="80">查找带回</th>
 		</tr>
 		</thead>
 		<tbody>
 		<c:forEach items="${data}" var="item">
 			<tr>
-				<td>${item.pluginname}</td>
-				<td>${item.pluginclass}</td>
-				<td>${item.plugindescription}</td>
+				<td>${item.taskname}</td>
+				<td>${item.taskdescription}</td>
+				<td>${item.triggerstr}</td>
 				<td>
-					<a class="btnSelect" href="javascript:$.bringBack({${itemkey}:'${item.pk_taskplugin}', orgName${itemkey}:'${item.pluginname}'})" title="查找带回">选择</a>
+					<a class="btnSelect" href="javascript:$.bringBack({${itemkey}:'${item.pk_taskdeploy}', orgName${itemkey}:'${item.taskname}'})" title="查找带回">选择</a>
 				</td>
 			</tr>
 		</c:forEach>

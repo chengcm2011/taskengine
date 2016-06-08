@@ -19,14 +19,14 @@
 		    <div class="searchBar">
 		      <ul class="searchContent">
 				  <li>
-					  <label>任务插件名称：</label>
+					  <label>插件名称：</label>
 					  <input type="hidden" id="orgLookup.pk_taskplugin" name="pk_taskplugin" />
 					  <input type="text"  style="float: left"  readonly="readonly" class="required" id="orgLookup.orgNamepk_taskplugin" />
 					  <a class="btnLook" href="management/uicomponent/ref/index?reftype=taskplugin&itemkey=pk_taskplugin" rel="pk_taskplugin" lookupGroup="orgLookup">查找带回</a>
 				  </li>
 				  <li>
 					  <label>任务名称：</label>
-					  <input type="text" name="taskname" class="textInput required" />
+					  <input type="text" name="taskname" class="textInput" />
 				  </li>
 		      </ul>
 		      <div class="subBar">

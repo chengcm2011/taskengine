@@ -19,8 +19,8 @@
 		    <div class="searchBar">
 		      <ul class="searchContent">
 				  <li>
-					  <label>任务插件名称：</label>
-					  <input type="text" name="pluginname" class="textInput required"/>
+					  <label>插件名称：</label>
+					  <input type="text" name="pluginname" class="textInput required" value="${item}"/>
 				  </li>
 		      </ul>
 		      <div class="subBar">

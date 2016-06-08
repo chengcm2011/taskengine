@@ -175,9 +175,12 @@ function dialogAjaxDone(json){
  */
 function navTabSearch(form, navTabId){
 	var $form = $(form);
+	if (!$form.valid()) {
+		return false;
+	}
 	if (form[DWZ.pageInfo.pageNum]) form[DWZ.pageInfo.pageNum].value = 1;
 	navTab.reload($form.attr('action'), {data: $form.serializeArray(), navTabId:navTabId});
-	$.pdialog.closeCurrent();
+	//$.pdialog.closeCurrent();
 	return false;
 }
 /**

@@ -1,0 +1,128 @@
+package com.application.taskengine.action;
+
+import cheng.lib.lang.PageVO;
+import cheng.lib.util.BeanUtil;
+import cheng.lib.util.TimeToolkit;
+import com.application.action.vo.AjaxDone;
+import com.application.taskengine.itf.ITaskService;
+import com.application.taskengine.model.TaskDeployModel;
+import com.application.taskengine.model.TaskPluginModel;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by cheng on 16/6/8.
+ */
+@Controller
+@RequestMapping("/management/task/")
+public class TaskDeployAction extends BusinessCommonAction {
+
+    @Resource
+    ITaskService taskService;
+
+    @RequestMapping("deploy/index")
+    public String deployindex(HttpServletRequest request, PageVO pageVO, Model model) throws Exception {
+
+        StringBuilder con = new StringBuilder(" dr=0 ");
+
+        String pk_taskplugin = request.getParameter("pk_taskplugin");
+        if (StringUtils.isNotBlank(pk_taskplugin)) {
+            con.append(" and pk_taskplugin='" + pk_taskplugin + "'");
+        }
+        String taskname = request.getParameter("taskname");
+        if (StringUtils.isNotBlank(taskname)) {
+            con.append(" and taskname like '%" + taskname + "'");
+
+        }
+        pageVO.setCondition(con.toString());
+        pageVO = dataBaseService.queryByPage(TaskDeployModel.class, pageVO);
+        List<TaskDeployModel> list = (List<TaskDeployModel>) pageVO.getData();
+        List<Map<String, Object>> data = new ArrayList<>();
+        for (TaskDeployModel taskDeployModel : list) {
+            Map<String, Object> item = BeanUtil.getValueMap(taskDeployModel);
+            TaskPluginModel taskPluginModel = dataBaseService.queryByPK(TaskPluginModel.class, taskDeployModel.getPk_taskplugin());
+            if (taskPluginModel != null) {
+                item.put("pluginname", taskPluginModel.getPluginname());
+            }
+            data.add(item);
+        }
+        pageVO.setData(data);
+        model.addAttribute("pageVO", pageVO);
+        return "/management/task/deploy/index";
+    }
+
+    @RequestMapping("deploy/edit")
+    public String detail(HttpServletRequest request, String pk, Model model) throws Exception {
+        if (StringUtils.isNotBlank(pk)) {
+            TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, pk);
+            TaskPluginModel taskPluginModel = dataBaseService.queryByPK(TaskPluginModel.class, taskDeployModel.getPk_taskplugin());
+            taskDeployModel.setVdef1(taskPluginModel.getPluginname());
+
+            model.addAttribute(ITEM, taskDeployModel);
+        }
+        return "/management/task/deploy/edit";
+    }
+
+    @RequestMapping("deploy/save")
+    @ResponseBody
+    public AjaxDone deploysave(HttpServletRequest request) throws Exception {
+        TaskDeployModel taskDeployModel = BeanUtil.objMapToBean(getParamFromReq(request), TaskDeployModel.class);
+        try {
+            if (StringUtils.isBlank(taskDeployModel.getRunnable())) {
+                taskDeployModel.setRunnable("N");
+            }
+            taskDeployModel.setDr(0);
+            taskDeployModel.setTs(TimeToolkit.getCurrentTs());
+            taskService.addTask(taskDeployModel);
+            return AjaxDoneSucc("保存成功");
+        } catch (Exception e) {
+            return AjaxDoneError("保存失败");
+        }
+    }
+
+
+    @RequestMapping("deploy/del")
+    @ResponseBody
+    public AjaxDone deploydel(HttpServletRequest request, String pk, Model model) {
+        try {
+            TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, pk);
+            taskService.removeTask(taskDeployModel);
+            return AjaxDoneSuccNotcloseCurrent("删除成功");
+        } catch (Exception e) {
+            return AjaxDoneSuccNotcloseCurrent("删除失败");
+        }
+    }
+
+    @RequestMapping("deploy/disable")
+    @ResponseBody
+    public AjaxDone disable(HttpServletRequest request, String pk, Model model) {
+        try {
+            TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, pk);
+            taskService.disableTask(taskDeployModel);
+            return AjaxDoneSuccNotcloseCurrent("禁用成功");
+        } catch (Exception e) {
+            return AjaxDoneSuccNotcloseCurrent("禁用失败");
+        }
+    }
+
+    @RequestMapping("deploy/enable")
+    @ResponseBody
+    public AjaxDone enable(HttpServletRequest request, String pk, Model model) {
+        try {
+            TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, pk);
+            taskService.enableTask(taskDeployModel);
+            return AjaxDoneSuccNotcloseCurrent("启用成功");
+        } catch (Exception e) {
+            return AjaxDoneSuccNotcloseCurrent("启用失败");
+        }
+    }
+}

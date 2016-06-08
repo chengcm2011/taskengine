@@ -10,7 +10,7 @@
 	<div class="tabsHeader">
 		<div class="tabsHeaderContent">
 			<ul>
-				<li><a href="javascript:;"><span>查询</span></a></li>
+				<li><a href="javascript:;"><span>任务信息</span></a></li>
 			</ul>
 		</div>
 	</div>
@@ -19,15 +19,18 @@
 		    <div class="searchBar">
 		      <ul class="searchContent">
 				  <li>
-					  <label>任务插件名称：</label>
-					  <input type="text" name="pluginname" class="textInput required"/>
+					  <label>任务名称：</label>
+					  <input type="text"  class="textInput " value="${item.taskname}" readonly="readonly"/>
+				  </li>
+				  <li>
+					  <label>任务描述：</label>
+					  <input type="text"  class="textInput " value="${item.taskdescription}" readonly="readonly"/>
+				  </li>
+				  <li>
+					  <label>任务执行策略：</label>
+					  <input type="text"  class="textInput " value="${item.triggerstr}" readonly="readonly"/>
 				  </li>
 		      </ul>
-		      <div class="subBar">
-		        <ul>
-		          <li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>
-		        </ul>
-		      </div>
 		    </div>
 		</form>
 	</div>
@@ -38,8 +41,6 @@
 
 <div class="panelBar">
 	<ul class="toolBar">
-		<%--<li><a class="add" href="management/task/paramvalue/edit?pk_taskdeploy=${pk}" target="dialog"><span>增加</span></a></li>--%>
-       <%--<li class="line">line</li>--%>
 		<li><a class="edit" href="management/task/paramvalue/edit?pk_taskdeploy=${pk}&pk={pk}" target="dialog"><span>编辑</span></a></li>
 	</ul>
 </div>
@@ -70,15 +71,15 @@
       </tbody>
     </table>
 
-  <div class="panelBar" >
-    <div class="pages">
-      <span>显示</span>
-      <select name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
-        <option value="${pageVO.pageSize }">${pageVO.pageSize }</option>
-      </select>
-      <span>条，共${pageVO.totalCount }条</span>
-    </div>
-    <div class="pagination" targetType="navTab" totalCount="${pageVO.totalCount }" numPerPage="${pageVO.pageSize }" pageNumShown="10" currentPage="${pageVO.pageNum}"></div>
-  </div>
+  <%--<div class="panelBar" >--%>
+    <%--<div class="pages">--%>
+      <%--<span>显示</span>--%>
+      <%--<select name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">--%>
+        <%--<option value="${pageVO.pageSize }">${pageVO.pageSize }</option>--%>
+      <%--</select>--%>
+      <%--<span>条，共${pageVO.totalCount }条</span>--%>
+    <%--</div>--%>
+    <%--<div class="pagination" targetType="navTab" totalCount="${pageVO.totalCount }" numPerPage="${pageVO.pageSize }" pageNumShown="10" currentPage="${pageVO.pageNum}"></div>--%>
+  <%--</div>--%>
 
 </div>

@@ -2,7 +2,7 @@ package com.web.test;
 
 import cheng.lib.exception.BusinessException;
 import cheng.lib.util.Predef;
-import com.web.task.AbstractTaskImpl;
+import com.application.taskengine.AbstractTaskImpl;
 import org.quartz.JobDataMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

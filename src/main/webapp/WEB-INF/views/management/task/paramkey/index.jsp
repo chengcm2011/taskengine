@@ -11,7 +11,7 @@
 	<div class="tabsHeader">
 		<div class="tabsHeaderContent">
 			<ul>
-				<li><a href="javascript:;"><span>查询</span></a></li>
+				<li><a href="javascript:;"><span>插件信息</span></a></li>
 			</ul>
 		</div>
 	</div>
@@ -20,15 +20,18 @@
 		    <div class="searchBar">
 		      <ul class="searchContent">
 				  <li>
-					  <label>任务插件名称：</label>
-					  <input type="text" name="pluginname" class="textInput required"/>
+					  <label>插件名称：</label>
+					  <input type="text" class="textInput required" value="${item.pluginname}"/>
+				  </li>
+				  <li>
+					  <label>插件执行类：</label>
+					  <input type="text" class="textInput required" value="${item.pluginclass}"/>
+				  </li>
+				  <li>
+					  <label>插件描述：</label>
+					  <input type="text" class="textInput required" value="${item.plugindescription}"/>
 				  </li>
 		      </ul>
-		      <div class="subBar">
-		        <ul>
-		          <li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>
-		        </ul>
-		      </div>
 		    </div>
 		</form>
 	</div>
@@ -69,15 +72,15 @@
       </tbody>
     </table>
 
-  <div class="panelBar" >
-    <div class="pages">
-      <span>显示</span>
-      <select name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
-        <option value="${pageVO.pageSize }">${pageVO.pageSize }</option>
-      </select>
-      <span>条，共${pageVO.totalCount }条</span>
-    </div>
-    <div class="pagination" targetType="navTab" totalCount="${pageVO.totalCount }" numPerPage="${pageVO.pageSize }" pageNumShown="10" currentPage="${pageVO.pageNum}"></div>
-  </div>
+  <%--<div class="panelBar" >--%>
+    <%--<div class="pages">--%>
+      <%--<span>显示</span>--%>
+      <%--<select name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">--%>
+        <%--<option value="${pageVO.pageSize }">${pageVO.pageSize }</option>--%>
+      <%--</select>--%>
+      <%--<span>条，共${pageVO.totalCount }条</span>--%>
+    <%--</div>--%>
+    <%--<div class="pagination" targetType="navTab" totalCount="${pageVO.totalCount }" numPerPage="${pageVO.pageSize }" pageNumShown="10" currentPage="${pageVO.pageNum}"></div>--%>
+  <%--</div>--%>
 
 </div>

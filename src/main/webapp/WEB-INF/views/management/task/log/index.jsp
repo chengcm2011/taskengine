@@ -19,13 +19,15 @@
 		    <div class="searchBar">
 		      <ul class="searchContent">
 				  <li>
-					  <label>任务插件名称：</label>
-					  <input type="text" name="pluginname" class="textInput required"/>
+					  <label>任务名称：</label>
+					  <input type="hidden" id="orgLookup.pk_taskdeploy" name="pk_taskdeploy"  value="${key}"/>
+					  <input type="text" name="deployname"  value="${item}" style="float: left"  readonly="readonly" class="required" id="orgLookup.orgNamepk_taskdeploy" />
+					  <a class="btnLook" href="management/uicomponent/ref/index?reftype=taskdeploy&itemkey=pk_taskdeploy" rel="pk_taskdeploy" lookupGroup="orgLookup">查找带回</a>
 				  </li>
 		      </ul>
 		      <div class="subBar">
 		        <ul>
-		          <%--<li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>--%>
+		          <li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>
 		        </ul>
 		      </div>
 		    </div>
@@ -35,21 +37,8 @@
 		<div class="tabsFooterContent"></div>
 	</div>
 </div>
-
-<div class="panelBar">
-	<ul class="toolBar">
-		<%--<li><a class="add" href="management/task/edit" target="dialog"><span>增加</span></a></li>--%>
-       <li class="line">line</li>
-		<%--<li><a class="edit" href="management/task/edit?pk={pk}" target="dialog"><span>编辑</span></a></li>--%>
-		<li class="line">line</li>
-		<%--<li><a class="delete" href="management/task/del?pk={pk}" target="ajaxTodo" title="确定要删除吗？" rel="run"><span>删除</span></a></li>--%>
-		<li class="line">line</li>
-		<%--<li><a class="edit" href="management/task/paramkey/index?pk={pk}" target="navTab"><span>任务插件参数管理</span></a></li>--%>
-	</ul>
-</div>
-
 <div class="pageContent">
-    <table class="table" width="100%" layoutH="165" nowrapTD="false">
+    <table class="table" width="100%" layoutH="138" nowrapTD="false">
       <thead>
 	      <tr>
 	        <th width="">序号</th>

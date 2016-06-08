@@ -45,13 +45,16 @@
 
 	<bean id="quartzScheduler" lazy-init="false" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="autoStartup" value="true" />	<!--自动启动 -->
-		<property name="startupDelay" value="20" />		<!--延时启动 -->
+		<property name="startupDelay" value="10" />		<!--延时启动 -->
 	</bean>
-	<bean id="dynamicSchedulerUtil" class="com.web.task.DynamicSchedulerFactory">
+	<bean id="dynamicSchedulerUtil" class="com.application.taskengine.util.DynamicSchedulerFactory">
 		<!-- (轻易不要变更“调度器名称”, 任务创建时会绑定该“调度器名称”) -->
 		<property name="scheduler" ref="quartzScheduler"/>
 	</bean>
 
+	<bean class="com.application.module.jdbc.init.DataSourceInit">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
 
 
 </beans>
