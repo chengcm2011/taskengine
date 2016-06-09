@@ -43,7 +43,7 @@ public class TaskRegisterAction extends BusinessCommonAction {
     public String index(HttpServletRequest request, PageVO pageVO, Model model) throws Exception {
         StringBuilder stringBuilder = new StringBuilder(" dr=0 ");
         if(org.apache.commons.lang3.StringUtils.isNotBlank(request.getParameter("pluginname"))){
-            stringBuilder.append(" and pluginname like '%"+request.getParameter("pluginname")+"'");
+            stringBuilder.append(" and pluginname like '%"+request.getParameter("pluginname")+"%'");
         }
         pageVO.setCondition(stringBuilder.toString());
         pageVO = dataBaseService.queryByPage(TaskPluginModel.class, pageVO);
