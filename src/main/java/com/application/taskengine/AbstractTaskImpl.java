@@ -42,7 +42,7 @@ public abstract class AbstractTaskImpl implements Job {
 			logger.info("task run end time ：" + taskLogModel.getVdef2());
 			LogMap.addLog(pk_taskdeploy,taskLogModel);
 			try {
-//				ApplicationServiceLocator.getService(IDataBaseService.class).insert(taskLogModel);
+				ApplicationServiceLocator.getService(IDataBaseService.class).insert(taskLogModel);
 			} catch (Exception e) {
 				logger.error("",e);
 				throw new JobExecutionException(e);

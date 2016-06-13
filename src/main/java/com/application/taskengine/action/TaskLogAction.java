@@ -21,7 +21,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/management/task/log")
 public class TaskLogAction extends BusinessCommonAction {
-	private  boolean ispersistence =false;
+	private  boolean ispersistence =true;
 	/**
 	 * 加载所以的注册的任务
 	 * @param model

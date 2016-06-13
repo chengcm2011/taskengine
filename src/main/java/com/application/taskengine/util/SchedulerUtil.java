@@ -1,6 +1,7 @@
 package com.application.taskengine.util;
 
 import cheng.lib.util.ClassUtil;
+import com.application.taskengine.AbstractTaskImpl;
 import com.application.taskengine.vo.ScheduleJobVo;
 import org.quartz.*;
 
@@ -18,7 +19,7 @@ public final class SchedulerUtil {
        CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(scheduleJobVo.getCronExpression()).withMisfireHandlingInstructionDoNothing();
         CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity(scheduleJobVo.getTriggerKey()).withSchedule(cronScheduleBuilder).build();
 
-		Class<? extends Job> jobClass_ = null;
+		Class<? extends AbstractTaskImpl> jobClass_ = null;
 		jobClass_ = ClassUtil.initClass1(scheduleJobVo.getJobClass());
 		JobDetail jobDetail = JobBuilder.newJob(jobClass_).withIdentity(scheduleJobVo.getJobKey()).build();
         scheduleJobVo.setJobDetail(jobDetail);
