@@ -39,13 +39,41 @@
 			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
 			<MaxFileSize>4MB</MaxFileSize>
 		</triggeringPolicy>
-
 	</appender>
 
+
+	<!-- INFO级别 -->
+	<appender name="E"
+			  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- 是否追加内容 -->
+		<Append>true</Append>
+		<!-- 指定file -->
+		<File>${LOG_HOME}/error.log</File>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} %level [%thread] \(%class.java:%line\) %msg%n</pattern>
+		</encoder>
+
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+
+		<!-- 当文件记录满1024k时，将记录到第二个log文件 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<maxIndex>10</maxIndex>
+			<FileNamePattern>${LOG_HOME}/htz_error.%d{yyyy-MM-dd}.log.%i</FileNamePattern>
+		</rollingPolicy>
+
+		<triggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>4MB</MaxFileSize>
+		</triggeringPolicy>
+
+	</appender>
 	<!-- 日志输出级别为DEBUG,开发环境 -->
 	<root level="INFO">
-		<!--<appender-ref ref="stdout" />-->
+		<appender-ref ref="stdout" />
 		<appender-ref ref="I" />
+		<appender-ref ref="E" />
 	</root>
 
 </configuration>

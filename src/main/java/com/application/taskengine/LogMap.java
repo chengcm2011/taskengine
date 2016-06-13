@@ -14,6 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class LogMap {
 
     private static final int maxsize = 20 ;
+    public static boolean ispersistence =false;
     private static Map<String,List<TaskLogModel>> tasklogmap = new HashMap<>();
 
 

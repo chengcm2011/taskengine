@@ -21,7 +21,6 @@ import java.util.Map;
 @Controller
 @RequestMapping("/management/task/log")
 public class TaskLogAction extends BusinessCommonAction {
-	private  boolean ispersistence =true;
 	/**
 	 * 加载所以的注册的任务
 	 * @param model
@@ -34,10 +33,10 @@ public class TaskLogAction extends BusinessCommonAction {
 			model.addAttribute("pageVO",pageVO);
 			return "/management/task/log/index";
 		}
-		if(!ispersistence){
+		if(!LogMap.ispersistence){
 			pageVO =  init(key);
 		}else {
-			pageVO.setCondition(" dr=0 ");
+			pageVO.setCondition(" dr=0 and pk_taskdeploy='"+key+"'");
 			pageVO = dataBaseService.queryByPage(TaskLogModel.class,pageVO);
 		}
 		List<TaskLogModel> list = (List<TaskLogModel>)pageVO.getData();
