@@ -94,7 +94,7 @@ public class TaskRegisterAction extends BusinessCommonAction {
             taskPluginModel.setTs(TimeToolkit.getCurrentTs());
             dataBaseService.update(taskPluginModel, new String[]{"dr", "ts"});
         }
-        return AjaxDoneSuccNotcloseCurrent("保存成功");
+        return AjaxDoneSuccNotcloseCurrent("删除成功");
     }
 
 

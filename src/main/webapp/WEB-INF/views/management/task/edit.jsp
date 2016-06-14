@@ -9,13 +9,13 @@
 				<label>任务插件名称：</label>
 				<input type="text"  name="pluginname" value="${item.pluginname}" class="required"  />
 			</p>
-			<p>
+			<p style="height: auto">
 				<label>任务插件处理类：</label>
-				<textarea name="pluginclass"   class="required textInput valid">${item.pluginclass}</textarea>
+				<textarea name="pluginclass"   class="required textInput valid" style="width: 240px" >${item.pluginclass}</textarea>
 			</p>
-			<p>
+			<p style="height: auto">
 				<label>任务插件描述：</label>
-				<textarea name="plugindescription" class=" required textInput valid" >${item.plugindescription}</textarea>
+				<textarea name="plugindescription" class=" required textInput valid" style="width: 240px" >${item.plugindescription}</textarea>
 			</p>
 		</div>
 		<div class="formBar">

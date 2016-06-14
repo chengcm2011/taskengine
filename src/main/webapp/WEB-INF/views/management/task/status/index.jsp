@@ -29,12 +29,12 @@
       <tbody>
 	      <c:if test="${not empty data }">
 	        <c:forEach var="item" items="${data }" varStatus="sta">
-	          <tr target="pk" rel="${item.jobcode }">
+	          <tr target="pk" rel="${item.jobCode }">
 	            <td>${sta.count}</td>
-	            <td title="${item.jobclass}">${item.jobname }</td>
+	            <td title="${item.jobClass}">${item.jobName }</td>
 	            <td>${item.cronExpression }</td>
-				<td><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${item.NextFireTime }"></fmt:formatDate></td>
-				<td>${item.TriggerStateName }</td>
+				<td><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${item.nextFireTime }"></fmt:formatDate></td>
+				<td>${item.triggerStateName }</td>
 	          </tr>
 	        </c:forEach>
 	      </c:if>

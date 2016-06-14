@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 
 /**
+ * 主要测试任务调度信息
  * Created by cheng on 2015/7/4.
  */
 public class DynamicSchedulerFactory {
@@ -41,13 +42,12 @@ public class DynamicSchedulerFactory {
                     TriggerState triggerState = scheduler.getTriggerState(triggerKey);
                     Map<String, Object> jobMap = new HashMap<>();
                     String cronExpression = ((CronTriggerImpl) trigger).getCronExpression();
-                    jobMap.put("NextFireTime", trigger.getNextFireTime());
-                    jobMap.put("jobclass", jobDetail.getJobClass());
-                    jobMap.put("jobcode", triggerKey.getName());
-                    jobMap.put("jobname", triggerKey.getName());
-                    jobMap.put("jobgroupcode", triggerKey.getGroup());
-                    jobMap.put("TriggerStateName", triggerState.name());
+                    jobMap.put("jobGroupCode", triggerKey.getGroup());
+                    jobMap.put("jobCode", triggerKey.getName());
+                    jobMap.put("jobClass", jobDetail.getJobClass());
                     jobMap.put("cronExpression", cronExpression);
+                    jobMap.put("nextFireTime", trigger.getNextFireTime());
+                    jobMap.put("triggerStateName", triggerState.name());
                     jobList.add(jobMap);
                 }
             }
@@ -97,7 +97,7 @@ public class DynamicSchedulerFactory {
 
         Date date = scheduler.scheduleJob(scheduleTaskVo.getJobDetail(), scheduleTaskVo.getTrigger());
 
-        logger.info(">>>>>>>>>>> add success, jobDetail:{}, cronTrigger:{}, date:{} >>>>>>>>>>>", scheduleTaskVo.getJobDetail(), scheduleTaskVo.getTrigger(), date);
+        logger.debug(">>>>>>>>>>> add success, jobDetail:{}, cronTrigger:{}, date:{} >>>>>>>>>>>", scheduleTaskVo.getJobDetail(), scheduleTaskVo.getTrigger(), date);
         return true;
     }
 
@@ -119,7 +119,7 @@ public class DynamicSchedulerFactory {
         triggerSet.add(scheduleTaskVo.getTrigger());
 
         scheduler.scheduleJob(scheduleTaskVo.getJobDetail(), triggerSet, true);
-        logger.info(">>>>>>>>>>> resume success, scheduleTaskVo:{} >>>>>>>>>>>", scheduleTaskVo);
+        logger.debug(">>>>>>>>>>> resume success, scheduleTaskVo:{} >>>>>>>>>>>", scheduleTaskVo);
         return true;
     }
 
@@ -137,7 +137,7 @@ public class DynamicSchedulerFactory {
         boolean result = false;
         if (checkTaskExists(jobCode, jobGroupCode)) {
             result = scheduler.unscheduleJob(triggerKey);
-            logger.info(">>>>>>>>>>> remove, triggerKey:{}, result [{}] >>>>>>>>>>>", triggerKey, result);
+            logger.debug(">>>>>>>>>>> remove, triggerKey:{}, result [{}] >>>>>>>>>>>", triggerKey, result);
         }
         return true;
     }
@@ -158,7 +158,7 @@ public class DynamicSchedulerFactory {
         if (checkTaskExists(jobCode, jobGroup)) {
             scheduler.pauseTrigger(triggerKey);
             result = true;
-            logger.info(">>>>>>>>>>> pause success, triggerKey:{} >>>>>>>>>>>", triggerKey);
+            logger.debug(">>>>>>>>>>> pause success, triggerKey:{} >>>>>>>>>>>", triggerKey);
         } else {
             logger.info(">>>>>>>>>>> pause fail, triggerKey:{} >>>>>>>>>>>", triggerKey);
         }
@@ -180,7 +180,7 @@ public class DynamicSchedulerFactory {
         if (checkTaskExists(jobCode, jobGroupCode)) {
             scheduler.resumeTrigger(triggerKey);
             result = true;
-            logger.info(">>>>>>>>>>> resume success, triggerKey:{} >>>>>>>>>>>", triggerKey);
+            logger.debug(">>>>>>>>>>> resume success, triggerKey:{} >>>>>>>>>>>", triggerKey);
         } else {
             logger.info(">>>>>>>>>>> resume fail, triggerKey:{} >>>>>>>>>>>", triggerKey);
         }
@@ -203,7 +203,7 @@ public class DynamicSchedulerFactory {
         if (checkTaskExists(jobName, jobGroupCode)) {
             scheduler.triggerJob(jobKey);
             result = true;
-            logger.info(">>>>>>>>>>> runJob success, jobKey:{} >>>>>>>>>>>", jobKey);
+            logger.debug(">>>>>>>>>>> runJob success, jobKey:{} >>>>>>>>>>>", jobKey);
         } else {
             logger.info(">>>>>>>>>>> runJob fail, jobKey:{} >>>>>>>>>>>", jobKey);
         }

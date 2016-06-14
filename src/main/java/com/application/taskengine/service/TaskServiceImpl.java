@@ -53,6 +53,7 @@ public class TaskServiceImpl implements ITaskService {
             try {
                 DynamicSchedulerFactory.addTask(createScheduleJobVo(taskDeployModel));
             }catch (SchedulerException e){
+                ApplicationLogger.error(e);
                 throw new BusinessException("任务添加失败");
             }
             return true ;
@@ -67,6 +68,7 @@ public class TaskServiceImpl implements ITaskService {
         try {
             DynamicSchedulerFactory.removeTask(taskdeploy.getPk_taskdeploy(), taskdeploy.getPk_taskplugin());
         }catch (SchedulerException s){
+            ApplicationLogger.error(s);
             throw new BusinessException("删除失败");
         }
         return true ;
@@ -78,6 +80,7 @@ public class TaskServiceImpl implements ITaskService {
         try {
             DynamicSchedulerFactory.removeTask(taskdeploy.getPk_taskdeploy(), taskdeploy.getPk_taskplugin());
         }catch (SchedulerException s){
+            ApplicationLogger.error(s);
             throw new BusinessException("禁用失败");
         }
     }
@@ -90,6 +93,7 @@ public class TaskServiceImpl implements ITaskService {
         try {
             DynamicSchedulerFactory.addTask(createScheduleJobVo(taskDeployModel));
         }catch (SchedulerException e){
+            ApplicationLogger.error(e);
             throw new BusinessException("任务添加失败");
         }
     }
@@ -103,6 +107,7 @@ public class TaskServiceImpl implements ITaskService {
         try {
             DynamicSchedulerFactory.rescheduleTask(createScheduleJobVo(taskDeployModel));
         }catch (SchedulerException e){
+            ApplicationLogger.error(e);
             throw new BusinessException("任务更新失败");
         }
         return true ;
@@ -150,6 +155,7 @@ public class TaskServiceImpl implements ITaskService {
             SchedulerUtil.parse(scheduleTaskVo);
             scheduleTaskVo.getJobDetail().getJobDataMap().putAll(getParams(taskDeployModel));
         } catch (Exception e) {
+            ApplicationLogger.error(e);
            throw new  BusinessException(e);
         }
         return scheduleTaskVo;

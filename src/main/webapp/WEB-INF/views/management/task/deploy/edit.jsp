@@ -11,19 +11,19 @@
 				<input type="text" value="${item.vdef1}" style="float: left"  readonly="readonly" class="required" id="orgLookup.orgNamepk_taskplugin" />
 				<a class="btnLook" href="management/uicomponent/ref/index?reftype=taskplugin&itemkey=pk_taskplugin" rel="pk_taskplugin" lookupGroup="orgLookup">查找带回</a>
 			</p>
-			<p>
+			<p style="height: auto">
 				<label>任务名称：</label>
 				<input type="text" name="taskname"  value="${item.taskname}" class="required textInput">
 			</p>
-			<p>
+			<p style="height: auto">
 				<label>任务描述：</label>
-				<textarea  name="taskdescription"  class="required textInput valid" >${item.taskdescription}</textarea>
+				<textarea  name="taskdescription"  class="required textInput valid" style="width: 240px" >${item.taskdescription}</textarea>
 			</p>
-			<p>
+			<p style="height: auto">
 				<label>任务cron表达式：</label>
 				<input type="text" name="triggerstr" value="${item.triggerstr}"    class="textInput required" style="float: left"/>
 			</p>
-			<p>
+			<p style="height: auto">
 					<label>是否运行：</label>
 					<select name="runnable"  >
 
