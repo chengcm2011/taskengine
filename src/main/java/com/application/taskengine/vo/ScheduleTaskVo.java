@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * Created by liyd on 12/19/14.
  */
-public class ScheduleJobVo  {
+public class ScheduleTaskVo {
     private String jobCode ;
     private String jobGroupCode ;
 
@@ -99,7 +99,7 @@ public class ScheduleJobVo  {
 
     @Override
     public String toString() {
-        return "ScheduleJobVo{" +
+        return "ScheduleTaskVo{" +
                 "jobCode='" + jobCode + '\'' +
                 ", jobGroupCode='" + jobGroupCode + '\'' +
                 ", jobKey=" + jobKey +

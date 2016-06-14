@@ -1,28 +1,22 @@
 package com.application.taskengine.util;
 
-import com.application.taskengine.vo.ScheduleJobVo;
+import com.application.taskengine.vo.ScheduleTaskVo;
 import org.quartz.*;
 import org.quartz.Trigger.TriggerState;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.quartz.impl.triggers.CronTriggerImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 
 import java.util.*;
 
 /**
  * Created by cheng on 2015/7/4.
  */
-public class DynamicSchedulerFactory implements InitializingBean {
+public class DynamicSchedulerFactory {
     private static final Logger logger = LoggerFactory.getLogger(DynamicSchedulerFactory.class);
 
     private static Scheduler scheduler;
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        logger.info(">>>>>>>>> init scheduler success >>>>>>>>>");
-    }
 
     public static List<Map<String, Object>> getJobList() {
         List<Map<String, Object>> jobList = new ArrayList<>();
@@ -59,7 +53,6 @@ public class DynamicSchedulerFactory implements InitializingBean {
             }
         } catch (SchedulerException e) {
             logger.error("task get error", e);
-            return null;
         }
         return jobList;
     }
@@ -72,7 +65,7 @@ public class DynamicSchedulerFactory implements InitializingBean {
      * @return
      * @throws SchedulerException
      */
-    public static boolean checkExists(TriggerKey triggerKey) throws SchedulerException {
+    public static boolean checkTaskExists(TriggerKey triggerKey) throws SchedulerException {
         return scheduler.checkExists(triggerKey);
     }
 
@@ -83,66 +76,66 @@ public class DynamicSchedulerFactory implements InitializingBean {
      * @return
      * @throws SchedulerException
      */
-    public static boolean checkExists(String jobCode, String jobGroupCode) throws SchedulerException {
+    public static boolean checkTaskExists(String jobCode, String jobGroupCode) throws SchedulerException {
         TriggerKey triggerKey = TriggerKey.triggerKey(jobCode, jobGroupCode);
         return scheduler.checkExists(triggerKey);
     }
 
     /**
-     * addJob to scheduler
+     * addTask to scheduler
      *
-     * @param scheduleJobVo
+     * @param scheduleTaskVo
      * @return
      * @throws SchedulerException
      */
-    public static boolean addJob(ScheduleJobVo scheduleJobVo) throws SchedulerException {
+    public static boolean addTask(ScheduleTaskVo scheduleTaskVo) throws SchedulerException {
 
-        if (checkExists(scheduleJobVo.getTriggerKey())) {
-            logger.info(">>>>>>>>> add fail, job already exist, scheduleJobVo:{} >>>>>>>>>", scheduleJobVo);
+        if (checkTaskExists(scheduleTaskVo.getTriggerKey())) {
+            logger.info(">>>>>>>>> add fail, task already exist, scheduleTaskVo:{} >>>>>>>>>", scheduleTaskVo);
             return false;
         }
 
-        Date date = scheduler.scheduleJob(scheduleJobVo.getJobDetail(), scheduleJobVo.getTrigger());
+        Date date = scheduler.scheduleJob(scheduleTaskVo.getJobDetail(), scheduleTaskVo.getTrigger());
 
-        logger.info(">>>>>>>>>>> add success, jobDetail:{}, cronTrigger:{}, date:{} >>>>>>>>>>>", scheduleJobVo.getJobDetail(), scheduleJobVo.getTrigger(), date);
+        logger.info(">>>>>>>>>>> add success, jobDetail:{}, cronTrigger:{}, date:{} >>>>>>>>>>>", scheduleTaskVo.getJobDetail(), scheduleTaskVo.getTrigger(), date);
         return true;
     }
 
     /**
      * reschedule task
      *
-     * @param scheduleJobVo
+     * @param scheduleTaskVo
      * @return
      * @throws SchedulerException
      */
-    public static boolean rescheduleJob(ScheduleJobVo scheduleJobVo) throws SchedulerException {
+    public static boolean rescheduleTask(ScheduleTaskVo scheduleTaskVo) throws SchedulerException {
 
-        if (!checkExists(scheduleJobVo.getTriggerKey())) {
-            logger.info(">>>>>>>>>>> rescheduleJob fail, job not exists, scheduleJobVo:{} >>>>>>>>>>>", scheduleJobVo);
+        if (!checkTaskExists(scheduleTaskVo.getTriggerKey())) {
+            logger.info(">>>>>>>>>>> rescheduleTask fail, task not exists, scheduleTaskVo:{} >>>>>>>>>>>", scheduleTaskVo);
             return false;
         }
 
         HashSet<Trigger> triggerSet = new HashSet<>();
-        triggerSet.add(scheduleJobVo.getTrigger());
+        triggerSet.add(scheduleTaskVo.getTrigger());
 
-        scheduler.scheduleJob(scheduleJobVo.getJobDetail(), triggerSet, true);
-        logger.info(">>>>>>>>>>> resume success, scheduleJobVo:{} >>>>>>>>>>>", scheduleJobVo);
+        scheduler.scheduleJob(scheduleTaskVo.getJobDetail(), triggerSet, true);
+        logger.info(">>>>>>>>>>> resume success, scheduleTaskVo:{} >>>>>>>>>>>", scheduleTaskVo);
         return true;
     }
 
     /**
-     * removeJob task
+     * removeTask task
      *
      * @param jobCode
      * @param jobGroupCode
      * @return
      * @throws SchedulerException
      */
-    public static boolean removeJob(String jobCode, String jobGroupCode) throws SchedulerException {
+    public static boolean removeTask(String jobCode, String jobGroupCode) throws SchedulerException {
 
         TriggerKey triggerKey = TriggerKey.triggerKey(jobCode, jobGroupCode);
         boolean result = false;
-        if (checkExists(jobCode, jobGroupCode)) {
+        if (checkTaskExists(jobCode, jobGroupCode)) {
             result = scheduler.unscheduleJob(triggerKey);
             logger.info(">>>>>>>>>>> remove, triggerKey:{}, result [{}] >>>>>>>>>>>", triggerKey, result);
         }
@@ -162,7 +155,7 @@ public class DynamicSchedulerFactory implements InitializingBean {
         TriggerKey triggerKey = TriggerKey.triggerKey(jobCode, jobGroup);
 
         boolean result = false;
-        if (checkExists(jobCode, jobGroup)) {
+        if (checkTaskExists(jobCode, jobGroup)) {
             scheduler.pauseTrigger(triggerKey);
             result = true;
             logger.info(">>>>>>>>>>> pause success, triggerKey:{} >>>>>>>>>>>", triggerKey);
@@ -184,7 +177,7 @@ public class DynamicSchedulerFactory implements InitializingBean {
         TriggerKey triggerKey = TriggerKey.triggerKey(jobCode, jobGroupCode);
 
         boolean result = false;
-        if (checkExists(jobCode, jobGroupCode)) {
+        if (checkTaskExists(jobCode, jobGroupCode)) {
             scheduler.resumeTrigger(triggerKey);
             result = true;
             logger.info(">>>>>>>>>>> resume success, triggerKey:{} >>>>>>>>>>>", triggerKey);
@@ -202,12 +195,12 @@ public class DynamicSchedulerFactory implements InitializingBean {
      * @return
      * @throws SchedulerException
      */
-    public static boolean triggerJob(String jobName, String jobGroupCode) throws SchedulerException {
+    public static boolean runOnceTask(String jobName, String jobGroupCode) throws SchedulerException {
 
         JobKey jobKey = new JobKey(jobName, jobGroupCode);
 
         boolean result = false;
-        if (checkExists(jobName, jobGroupCode)) {
+        if (checkTaskExists(jobName, jobGroupCode)) {
             scheduler.triggerJob(jobKey);
             result = true;
             logger.info(">>>>>>>>>>> runJob success, jobKey:{} >>>>>>>>>>>", jobKey);

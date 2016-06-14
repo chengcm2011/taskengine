@@ -2,7 +2,7 @@ package com.application.taskengine.util;
 
 import cheng.lib.util.ClassUtil;
 import com.application.taskengine.AbstractTaskImpl;
-import com.application.taskengine.vo.ScheduleJobVo;
+import com.application.taskengine.vo.ScheduleTaskVo;
 import org.quartz.*;
 
 
@@ -10,46 +10,46 @@ public final class SchedulerUtil {
 
     /**
      *
-     * @param scheduleJobVo
+     * @param scheduleTaskVo
      * @return
      */
-	public static ScheduleJobVo parse(ScheduleJobVo scheduleJobVo)  {
-		setJobKey(scheduleJobVo);
-		setTriggerKey(scheduleJobVo);
-       CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(scheduleJobVo.getCronExpression()).withMisfireHandlingInstructionDoNothing();
-        CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity(scheduleJobVo.getTriggerKey()).withSchedule(cronScheduleBuilder).build();
+	public static ScheduleTaskVo parse(ScheduleTaskVo scheduleTaskVo)  {
+		setJobKey(scheduleTaskVo);
+		setTriggerKey(scheduleTaskVo);
+       CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(scheduleTaskVo.getCronExpression()).withMisfireHandlingInstructionDoNothing();
+        CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity(scheduleTaskVo.getTriggerKey()).withSchedule(cronScheduleBuilder).build();
 
 		Class<? extends AbstractTaskImpl> jobClass_ = null;
-		jobClass_ = ClassUtil.initClass1(scheduleJobVo.getJobClass());
-		JobDetail jobDetail = JobBuilder.newJob(jobClass_).withIdentity(scheduleJobVo.getJobKey()).build();
-        scheduleJobVo.setJobDetail(jobDetail);
-		scheduleJobVo.setTrigger(cronTrigger);
-		return scheduleJobVo ;
+		jobClass_ = ClassUtil.initClass1(scheduleTaskVo.getJobClass());
+		JobDetail jobDetail = JobBuilder.newJob(jobClass_).withIdentity(scheduleTaskVo.getJobKey()).build();
+        scheduleTaskVo.setJobDetail(jobDetail);
+		scheduleTaskVo.setTrigger(cronTrigger);
+		return scheduleTaskVo;
     }
 
 
     /**
      *
-     * @param scheduleJobVo
+     * @param scheduleTaskVo
      * @return
      */
-    public static ScheduleJobVo setTriggerKey(ScheduleJobVo scheduleJobVo)  {
+    public static ScheduleTaskVo setTriggerKey(ScheduleTaskVo scheduleTaskVo)  {
 
-        TriggerKey triggerKey = TriggerKey.triggerKey(scheduleJobVo.getJobCode(), scheduleJobVo.getJobGroupCode());
-		scheduleJobVo.setTriggerKey(triggerKey);
-        return scheduleJobVo;
+        TriggerKey triggerKey = TriggerKey.triggerKey(scheduleTaskVo.getJobCode(), scheduleTaskVo.getJobGroupCode());
+		scheduleTaskVo.setTriggerKey(triggerKey);
+        return scheduleTaskVo;
     }
 
 
     /**
      *
-     * @param scheduleJobVo
+     * @param scheduleTaskVo
      * @return
      */
-    public static ScheduleJobVo setJobKey(ScheduleJobVo scheduleJobVo)  {
-    	JobKey jobKey = new JobKey(scheduleJobVo.getJobCode(), scheduleJobVo.getJobGroupCode());
-		scheduleJobVo.setJobKey(jobKey);
-        return scheduleJobVo;
+    public static ScheduleTaskVo setJobKey(ScheduleTaskVo scheduleTaskVo)  {
+    	JobKey jobKey = new JobKey(scheduleTaskVo.getJobCode(), scheduleTaskVo.getJobGroupCode());
+		scheduleTaskVo.setJobKey(jobKey);
+        return scheduleTaskVo;
     }
 
 }

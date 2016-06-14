@@ -54,8 +54,8 @@ public class TaskParamValueAction extends BusinessCommonAction {
 		String pk_taskdeploy = pk.split(";")[1];
 		String paramvalue = request.getParameter("paramvalue");
 		SQLParameter sqlParameter = new SQLParameter();
-		sqlParameter.addParam(pk_taskparamkey);
 		sqlParameter.addParam(pk_taskdeploy);
+		sqlParameter.addParam(pk_taskparamkey);
 		TaskParamValueModel taskParamValueModel = dataBaseService.queryOneByClause(TaskParamValueModel.class, "pk_taskdeploy=? and pk_taskparamkey=? and dr=0 ", sqlParameter);
 		if(taskParamValueModel==null){
 			taskParamValueModel = new TaskParamValueModel();
