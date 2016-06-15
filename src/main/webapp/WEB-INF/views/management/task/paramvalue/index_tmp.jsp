@@ -63,8 +63,8 @@
 	            <td>${(pageVO.pageNum-1)*pageVO.pageSize+sta.count}</td>
 	            <td>${item.paramname }</td>
 	            <td>${item.paramkey }</td>
-				<td>${item.paramvalue }</td>
-	            <td>${item.ts }</td>
+				<td></td>
+	            <td></td>
 	          </tr>
 	        </c:forEach>
 	      </c:if>
