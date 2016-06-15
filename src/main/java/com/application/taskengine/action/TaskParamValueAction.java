@@ -1,6 +1,7 @@
 package com.application.taskengine.action;
 
 import cheng.lib.lang.PageVO;
+import cheng.lib.util.TimeToolkit;
 import com.application.action.vo.AjaxDone;
 import com.application.module.jdbc.SQLParameter;
 import com.application.taskengine.model.TaskDeployModel;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by cheng on 2015/8/28.
@@ -32,11 +35,25 @@ public class TaskParamValueAction extends BusinessCommonAction {
         pageVO.setCondition(" dr=0 and pk_taskdeploy ='" + pk + "'");
         pageVO = dataBaseService.queryByPage(TaskParamValueModel.class, pageVO);
         if (pageVO.getData() == null || pageVO.getData().isEmpty()) {
+             //初始化参数
             pageVO.setCondition(" dr=0 and pk_taskplugin ='" + deployModel.getPk_taskplugin() + "'");
             pageVO = dataBaseService.queryByPage(TaskParamKeyModel.class, pageVO);
             model.addAttribute(ITEM, deployModel);
             model.addAttribute("pageVO", pageVO);
             model.addAttribute("pk", pk);
+            List<TaskParamKeyModel> taskParamKeyModels = (List<TaskParamKeyModel>)pageVO.getData();
+            List<TaskParamValueModel> taskParamValueModels = new ArrayList<>();
+            for (int i=0;i<taskParamKeyModels.size();i++){
+                TaskParamValueModel taskParamValueModel = new TaskParamValueModel();
+                taskParamValueModel.setParamkey(taskParamKeyModels.get(i).getParamkey());
+                taskParamValueModel.setParamname(taskParamKeyModels.get(i).getParamname());
+                taskParamValueModel.setPk_taskdeploy(pk);
+                taskParamValueModel.setPk_taskparamkey(taskParamKeyModels.get(i).getPk_taskparamkey());
+                taskParamValueModel.setDr(0);
+                taskParamValueModel.setTs(TimeToolkit.getCurrentTs());
+                taskParamValueModels.add(taskParamValueModel);
+            }
+            dataBaseService.insert(taskParamValueModels);
             return "management/task/paramvalue/index_tmp";
         }
         model.addAttribute(ITEM, deployModel);
