@@ -1,78 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!--级别排序为： TRACE < DEBUG < INFO < WARN < ERROR -->
-<configuration scan="true" scanPeriod="60 seconds">
-
-	<!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 -->
-	<property name="LOG_HOME" value="../businesslogs" />
-
-	<!-- 输入到控制台 -->
-	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
-		<Target>System.out</Target>
-		<encoder>
-			<pattern>%d{yyyy-MM-dd HH:mm:ss} %level [%thread] \(%class.java:%line\) %msg%n</pattern>
-		</encoder>
-	</appender>
-
-	<!-- INFO级别 -->
-	<appender name="I"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<!-- 是否追加内容 -->
-		<Append>true</Append>
-		<!-- 指定file -->
-		<File>${LOG_HOME}/info.log</File>
-		<encoder>
-			<pattern>%d{yyyy-MM-dd HH:mm:ss} %level [%thread] \(%class.java:%line\) %msg%n</pattern>
-		</encoder>
-
-		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-			<level>INFO</level>
-		</filter>
-
-		<!-- 当文件记录满1024k时，将记录到第二个log文件 -->
-		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-			<maxIndex>10</maxIndex>
-			<FileNamePattern>${LOG_HOME}/htz_error.%d{yyyy-MM-dd}.log.%i</FileNamePattern>
+<!-- 用于测试、准生产、生产环境 -->
+<configuration>
+	<!-- 设置变量： <property> -->
+	<property name="log_file_path" value="/Users/cheng/logs/task/" />
+	<!-- 设置上下文名称：<contextName> -->
+	<contextName>ams</contextName>
+	<!-- 业务日志  -->
+	<appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log_file_path}info.log.%d{yyyy-MM-dd}</fileNamePattern>
 		</rollingPolicy>
-
-		<triggeringPolicy
-			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-			<MaxFileSize>4MB</MaxFileSize>
-		</triggeringPolicy>
-	</appender>
-
-
-	<!-- INFO级别 -->
-	<appender name="E"
-			  class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<!-- 是否追加内容 -->
-		<Append>true</Append>
-		<!-- 指定file -->
-		<File>${LOG_HOME}/error.log</File>
 		<encoder>
-			<pattern>%d{yyyy-MM-dd HH:mm:ss} %level [%thread] \(%class.java:%line\) %msg%n</pattern>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n</pattern>
 		</encoder>
-
-		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-			<level>INFO</level>
-		</filter>
-
-		<!-- 当文件记录满1024k时，将记录到第二个log文件 -->
-		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-			<maxIndex>10</maxIndex>
-			<FileNamePattern>${LOG_HOME}/htz_error.%d{yyyy-MM-dd}.log.%i</FileNamePattern>
-		</rollingPolicy>
-
-		<triggeringPolicy
-				class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-			<MaxFileSize>4MB</MaxFileSize>
-		</triggeringPolicy>
-
 	</appender>
-	<!-- 日志输出级别为DEBUG,开发环境 -->
+	<!-- 错误日志 -->
+	<appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log_file_path}error.log.%d{yyyy-MM-dd}</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%msg%n</pattern>
+		</encoder>
+	</appender>
+	<!-- 接口提供方日志 -->
+	<appender name="PROVIDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log_file_path}provider.log.%d{yyyy-MM-dd}</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%msg%n</pattern>
+		</encoder>
+	</appender>
+	<!-- 接口消费方日志 -->
+	<appender name="CONSUMER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log_file_path}consumer.log.%d{yyyy-MM-dd}</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="ERROR_LOGGER" level="WARN" additivity="false">
+		<appender-ref ref="ERROR"/>
+	</logger>
+	<logger name="PROVIDER_LOGGER" level="INFO" additivity="false">
+		<appender-ref ref="PROVIDER"/>
+	</logger>
+	<logger name="CONSUMER_LOGGER" level="INFO" additivity="false">
+		<appender-ref ref="CONSUMER"/>
+	</logger>
+
 	<root level="INFO">
-		<appender-ref ref="stdout" />
-		<appender-ref ref="I" />
+		<appender-ref ref="INFO" />
 	</root>
 
 </configuration>
