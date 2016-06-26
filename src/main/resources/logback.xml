@@ -52,8 +52,13 @@
 		<appender-ref ref="CONSUMER"/>
 	</logger>
 
+	<appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{H:mm:ss.SSS} %-5level [%logger{16}] %msg%n</pattern>
+		</encoder>
+	</appender>
 	<root level="INFO">
-		<appender-ref ref="INFO" />
+		<appender-ref ref="Console" />
 	</root>
 
 </configuration>
