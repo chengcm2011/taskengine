@@ -11,13 +11,15 @@ import org.slf4j.LoggerFactory;
  * Created by cheng on 2015/10/23.
  */
 public class TestTask extends AbstractTaskImpl {
-	protected Logger logger = LoggerFactory.getLogger(TestTask.class);
 
 	@Override
 	public String doexecute(JobDataMap jobDataMap) throws BusinessException {
-		logger.info(" task run begin ");
 		Predef.p(jobDataMap);
-		logger.info(" task run end ");
-		return "success";
+		try {
+			Thread.sleep(30000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;
 	}
 }

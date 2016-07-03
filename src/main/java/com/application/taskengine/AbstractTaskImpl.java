@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 
 public abstract class AbstractTaskImpl implements StatefulJob {
 
+    public static  final String SUCCESS = "success" ;
+    public static  final String ERROR = "error" ;
     protected Logger logger = LoggerFactory.getLogger(AbstractTaskImpl.class);
 
     public void execute(JobExecutionContext arg0) throws JobExecutionException {
