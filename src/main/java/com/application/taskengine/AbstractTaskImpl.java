@@ -6,14 +6,11 @@ import cheng.lib.util.TimeToolkit;
 import com.application.common.context.ApplicationServiceLocator;
 import com.application.module.jdbc.itf.IDataBaseService;
 import com.application.taskengine.model.TaskLogModel;
-import org.quartz.Job;
-import org.quartz.JobDataMap;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
+import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractTaskImpl implements Job {
+public abstract class AbstractTaskImpl implements StatefulJob {
 
     protected Logger logger = LoggerFactory.getLogger(AbstractTaskImpl.class);
 
@@ -36,7 +33,7 @@ public abstract class AbstractTaskImpl implements Job {
             taskLogModel.setIssuccess(false);
             throw new JobExecutionException(e);
         } finally {
-            taskLogModel.setRuntime(System.currentTimeMillis() - b + "ms");
+            taskLogModel.setRuntime((System.currentTimeMillis() - b)/1000 + "s");
             taskLogModel.setVdef2(TimeToolkit.getCurrentTs());
             logger.info("task run end time ：" + taskLogModel.getVdef2());
             try {
