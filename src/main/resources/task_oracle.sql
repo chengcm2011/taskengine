@@ -1,4 +1,13 @@
-﻿CREATE TABLE task_taskplugin 
+﻿
+create table PUB_OID
+(
+  oid     VARCHAR2(20) not null,
+  ts      VARCHAR2(19) not null,
+  pk_corp VARCHAR2(4) not null,
+  dr      NUMBER(11) not null
+);
+alter table PUB_OID add constraint PK_PUB_OID primary key (PK_CORP);
+CREATE TABLE task_taskplugin
    ( 
   pk_taskplugin CHAR(20), 
   pluginname VARCHAR2(20), 

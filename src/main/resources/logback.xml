@@ -24,18 +24,9 @@
 		</encoder>
 	</appender>
 	<!-- 接口提供方日志 -->
-	<appender name="PROVIDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	<appender name="TASK" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${log_file_path}provider.log.%d{yyyy-MM-dd}</fileNamePattern>
-		</rollingPolicy>
-		<encoder>
-			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%msg%n</pattern>
-		</encoder>
-	</appender>
-	<!-- 接口消费方日志 -->
-	<appender name="CONSUMER" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${log_file_path}consumer.log.%d{yyyy-MM-dd}</fileNamePattern>
+			<fileNamePattern>${log_file_path}task.log.%d{yyyy-MM-dd}</fileNamePattern>
 		</rollingPolicy>
 		<encoder>
 			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%msg%n</pattern>
@@ -45,11 +36,8 @@
 	<logger name="ERROR_LOGGER" level="WARN" additivity="false">
 		<appender-ref ref="ERROR"/>
 	</logger>
-	<logger name="PROVIDER_LOGGER" level="INFO" additivity="false">
-		<appender-ref ref="PROVIDER"/>
-	</logger>
-	<logger name="CONSUMER_LOGGER" level="INFO" additivity="false">
-		<appender-ref ref="CONSUMER"/>
+	<logger name="TASK_LOGGER" level="INFO" additivity="false">
+		<appender-ref ref="TASK"/>
 	</logger>
 
 	<appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
@@ -59,6 +47,7 @@
 	</appender>
 	<root level="INFO">
 		<appender-ref ref="Console" />
+		<appender-ref ref="INFO"></appender-ref>
 	</root>
 
 </configuration>

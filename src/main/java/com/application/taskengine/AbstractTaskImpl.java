@@ -14,7 +14,7 @@ public abstract class AbstractTaskImpl implements StatefulJob {
 
     public static  final String SUCCESS = "success" ;
     public static  final String ERROR = "error" ;
-    protected Logger logger = LoggerFactory.getLogger(AbstractTaskImpl.class);
+    protected Logger logger = LoggerFactory.getLogger("TASK_LOGGER");
 
     public void execute(JobExecutionContext arg0) throws JobExecutionException {
         final JobExecutionContext tt = arg0;

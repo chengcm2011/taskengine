@@ -1,0 +1,95 @@
+create table PUB_OID
+(
+  oid     VARCHAR2(20) not null,
+  ts      VARCHAR2(19) not null,
+  pk_corp VARCHAR2(4) not null,
+  dr      NUMBER(11) not null
+);
+alter table PUB_OID
+  add constraint PK_PUB_OID primary key (PK_CORP);
+  
+  
+  
+
+create table TASK_TASKDEPLOY
+(
+  pk_taskdeploy   VARCHAR2(20) not null,
+  pk_taskplugin   VARCHAR2(20) not null,
+  taskname        VARCHAR2(50) not null,
+  taskdescription VARCHAR2(100),
+  triggerstr      VARCHAR2(30) not null,
+  runnable        VARCHAR2(1) not null,
+  dr              NUMBER(4) not null,
+  ts              VARCHAR2(19) not null
+);
+alter table TASK_TASKDEPLOY
+  add constraint PK_TASK_TASKDEPLOY primary key (PK_TASKDEPLOY);
+  
+  
+  
+  -- Create table
+create table TASK_TASKLOG
+(
+  pk_tasklog    VARCHAR2(20) not null,
+  pk_taskdeploy VARCHAR2(20) not null,
+  returnstr     VARCHAR2(30),
+  issuccess     VARCHAR2(1) not null,
+  runtime       VARCHAR2(20) not null,
+  runserver     VARCHAR2(100) not null,
+  vdef1         VARCHAR2(100),
+  vdef2         VARCHAR2(100),
+  vdef3         VARCHAR2(100),
+  vdef4         VARCHAR2(100),
+  vdef5         VARCHAR2(100),
+  ts            VARCHAR2(19) not null,
+  dr            NUMBER(4) not null
+);
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table TASK_TASKLOG
+  add constraint PK_TASK_TASKLOG primary key (PK_TASKLOG);
+
+  
+  create table TASK_TASKPARAMKEY
+(
+  pk_taskparamkey VARCHAR2(20) not null,
+  pk_taskplugin   VARCHAR2(20) not null,
+  paramname       VARCHAR2(30) not null,
+  paramkey        VARCHAR2(30) not null,
+  ts              VARCHAR2(19) not null,
+  dr              NUMBER(4) not null
+);
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table TASK_TASKPARAMKEY
+  add constraint PK_TASK_TASKPARAMKEY primary key (PK_TASKPARAMKEY);
+  
+  
+  
+  create table TASK_TASKPLUGIN
+(
+  pk_taskplugin     VARCHAR2(20) not null,
+  pluginname        VARCHAR2(30) not null,
+  pluginclass       VARCHAR2(100) not null,
+  plugindescription VARCHAR2(100),
+  bmodule           VARCHAR2(20),
+  dr                NUMBER(4) not null,
+  ts                VARCHAR2(19) not null
+);
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table TASK_TASKPLUGIN
+  add constraint PK_TASK_TASKPLUGIN primary key (PK_TASKPLUGIN);
+  
+  
+  create table TASK_TASPARAMVALUE
+(
+  pk_taskparamvalue VARCHAR2(20) not null,
+  pk_taskdeploy     VARCHAR2(20) not null,
+  pk_taskparamkey   VARCHAR2(20) not null,
+  paramkey          VARCHAR2(30) not null,
+  paramname         VARCHAR2(30),
+  paramvalue        VARCHAR2(30),
+  ts                VARCHAR2(19) not null,
+  dr                NUMBER(4) not null
+);
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table TASK_TASPARAMVALUE
+  add constraint PK_TASK_TASPARAMVALUE primary key (PK_TASKPARAMVALUE);
