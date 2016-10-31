@@ -6,7 +6,7 @@ import com.application.taskengine.AbstractTaskImpl;
 import org.quartz.JobDataMap;
 
 /**
- * Created by cheng on 2015/10/23.
+ * 测试任务
  */
 public class TestTask extends AbstractTaskImpl {
 
@@ -14,7 +14,7 @@ public class TestTask extends AbstractTaskImpl {
 	public String doexecute(JobDataMap jobDataMap) throws BusinessException {
 		Predef.p(jobDataMap);
 		try {
-			Thread.sleep(300000);
+			Thread.sleep(3);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

@@ -99,7 +99,21 @@ public class TaskServiceImpl implements ITaskService {
     }
 
     public boolean updateTask(TaskDeployModel taskDeployModel) throws BusinessException{
-        dataBaseService.update(taskDeployModel);
+        TaskDeployModel dbtaskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, taskDeployModel.getPk_taskdeploy());
+        if ("N".equals(dbtaskDeployModel.getRunnable())) {
+            if ("Y".equals(taskDeployModel.getRunnable())) {
+                addTask(taskDeployModel);
+            } else {
+
+            }
+            dataBaseService.update(taskDeployModel);
+            return true;
+        } else {
+            if ("Y".equals(taskDeployModel.getRunnable())) {
+                dataBaseService.update(taskDeployModel);
+            }
+        }
+
         if("N".equals(taskDeployModel.getRunnable())){
             disableTask(taskDeployModel);
             return false ;

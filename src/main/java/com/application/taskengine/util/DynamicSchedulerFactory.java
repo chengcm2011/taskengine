@@ -38,8 +38,17 @@ public class DynamicSchedulerFactory {
                 for (JobKey jobKey : jobKeys) {
                     TriggerKey triggerKey = TriggerKey.triggerKey(jobKey.getName(), jobKey.getGroup());
                     Trigger trigger = scheduler.getTrigger(triggerKey);
+                    if (trigger == null) {
+                        continue;
+                    }
                     JobDetail jobDetail = scheduler.getJobDetail(jobKey);
+                    if (jobDetail == null) {
+                        continue;
+                    }
                     TriggerState triggerState = scheduler.getTriggerState(triggerKey);
+                    if (triggerState == null) {
+                        triggerState = TriggerState.NONE;
+                    }
                     Map<String, Object> jobMap = new HashMap<>();
                     String cronExpression = ((CronTriggerImpl) trigger).getCronExpression();
                     jobMap.put("jobGroupCode", triggerKey.getGroup());
