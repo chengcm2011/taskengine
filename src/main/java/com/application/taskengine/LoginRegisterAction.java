@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by cheng on 2015/7/4.
+ *
  */
 @Controller
 public class LoginRegisterAction extends BusinessCommonAction {
@@ -24,7 +24,7 @@ public class LoginRegisterAction extends BusinessCommonAction {
 
 	@RequestMapping("/login")
 	public String index(HttpServletRequest request, HttpServletResponse response, Model model) throws BusinessException {
-		return redirect(response,"/management/index");
+		return redirect(response, "management/index");
 //		return "login" ;
 	}
 	@RequestMapping("/loginaction")
