@@ -1,7 +1,6 @@
 package com.application.taskengine;
 
 import cheng.lib.exception.BusinessException;
-import cheng.lib.validate.ValidateUtil;
 import com.application.taskengine.action.BusinessCommonAction;
 import com.application.taskengine.vo.TaskSession;
 import org.springframework.stereotype.Controller;
@@ -32,12 +31,12 @@ public class LoginRegisterAction extends BusinessCommonAction {
 	public String loginaction(HttpServletRequest request, HttpServletResponse response, Model model) throws BusinessException {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
-			ValidateUtil v = new ValidateUtil(getParamFromReq(request));
-			v.start("username").required().minlength(4).maxlength(16);
-			v.start("password").required().minlength(6).maxlength(16);
-			if(!v.isVal()){
-				return forwardError(model,"用户名或者密码有误！");
-			}
+//			ValidateUtil v = new ValidateUtil(getParamFromReq(request));
+//			v.start("username").required().minlength(4).maxlength(16);
+//			v.start("password").required().minlength(6).maxlength(16);
+//			if(!v.isVal()){
+//				return forwardError(model,"用户名或者密码有误！");
+//			}
 			try {
 				if("cheng".equals(username) && "124817".equals(password)){
 					TaskSession taskSession = new TaskSession();
