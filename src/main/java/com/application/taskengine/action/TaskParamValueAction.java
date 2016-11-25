@@ -1,12 +1,12 @@
 package com.application.taskengine.action;
 
-import cheng.lib.lang.PageVO;
-import cheng.lib.util.TimeToolkit;
-import com.application.action.vo.AjaxDone;
-import com.application.module.jdbc.SQLParameter;
 import com.application.taskengine.model.TaskDeployModel;
 import com.application.taskengine.model.TaskParamKeyModel;
 import com.application.taskengine.model.TaskParamValueModel;
+import com.cheng.common.AjaxDone;
+import com.cheng.jdbc.SQLParameter;
+import com.cheng.lang.PageVO;
+import com.cheng.lang.TimeToolkit;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -97,7 +97,6 @@ public class TaskParamValueAction extends BusinessCommonAction {
             TaskParamKeyModel taskParamKeyModel = dataBaseService.queryByPK(TaskParamKeyModel.class,pk_taskparamkey);
             taskParamValueModel.setParamkey(taskParamKeyModel.getParamkey());
             taskParamValueModel.setParamname(taskParamKeyModel.getParamname());
-            taskParamValueModel.setTsDr();
             taskParamValueModel.setPk_taskdeploy(pk_taskdeploy);
             taskParamValueModel.setPk_taskparamkey(pk_taskparamkey);
             taskParamValueModel.setParamvalue(paramvalue);

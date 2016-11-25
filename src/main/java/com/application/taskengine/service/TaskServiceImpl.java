@@ -1,11 +1,5 @@
 package com.application.taskengine.service;
 
-import cheng.lib.exception.BusinessException;
-import cheng.lib.log.ApplicationLogger;
-import cheng.lib.util.TimeToolkit;
-import com.application.common.context.ApplicationServiceLocator;
-import com.application.module.jdbc.SQLParameter;
-import com.application.module.jdbc.itf.IDataBaseService;
 import com.application.taskengine.itf.ITaskService;
 import com.application.taskengine.model.TaskDeployModel;
 import com.application.taskengine.model.TaskParamValueModel;
@@ -13,7 +7,12 @@ import com.application.taskengine.model.TaskPluginModel;
 import com.application.taskengine.util.DynamicSchedulerFactory;
 import com.application.taskengine.util.SchedulerUtil;
 import com.application.taskengine.vo.ScheduleTaskVo;
-import org.apache.commons.lang.StringUtils;
+import com.cheng.jdbc.SQLParameter;
+import com.cheng.jdbc.itf.IDataBaseService;
+import com.cheng.lang.TimeToolkit;
+import com.cheng.lang.exception.BusinessException;
+import com.cheng.util.ApplicationLogger;
+import org.apache.commons.lang3.StringUtils;
 import org.quartz.SchedulerException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by cheng on 16/5/14.
+ *
  */
 @Component
 @Transactional
@@ -179,7 +178,7 @@ public class TaskServiceImpl implements ITaskService {
         Map<String,Object> taskunitmap = new HashMap<>();
         SQLParameter sqlParameter = new SQLParameter();
         sqlParameter.addParam(taskDeployModel.getPrimaryKey());
-        List<TaskParamValueModel> taskParamValueModels = ApplicationServiceLocator.getBean(IDataBaseService.class).queryByClause(TaskParamValueModel.class, " dr=0 and pk_taskdeploy=?", sqlParameter);
+        List<TaskParamValueModel> taskParamValueModels = dataBaseService.queryByClause(TaskParamValueModel.class, " dr=0 and pk_taskdeploy=?", sqlParameter);
         for (int j=0;j<taskParamValueModels.size();j++){
             TaskParamValueModel t = taskParamValueModels.get(j);
             taskunitmap.put(t.getParamkey(),t.getParamvalue());

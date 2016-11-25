@@ -1,14 +1,14 @@
 package com.application.taskengine.action;
 
-import cheng.lib.exception.BusinessException;
-import cheng.lib.util.Predef;
-import com.application.action.AbstractCommonAction;
-import com.application.action.vo.AjaxDone;
-import com.application.common.util.HttpRequestUtil;
-import com.application.common.vo.UserSessionVO;
-import com.application.module.jdbc.itf.IDataBaseService;
 import com.application.taskengine.vo.TaskSession;
-import org.apache.commons.lang.StringUtils;
+import com.cheng.common.AjaxDone;
+import com.cheng.common.Constant;
+import com.cheng.common.UserSessionVO;
+import com.cheng.jdbc.itf.IDataBaseService;
+import com.cheng.lang.exception.BusinessException;
+import com.cheng.util.Predef;
+import com.cheng.web.AbstractCommonAction;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -67,7 +67,7 @@ public class BusinessCommonAction extends AbstractCommonAction {
 	 * @return
 	 */
 	protected TaskSession getTaskSession(HttpServletRequest request){
-		return  (TaskSession) HttpRequestUtil.getUserFromSession(request);
+		return (TaskSession) WebUtils.getSessionAttribute(request, Constant.SESSION_FRONT_KEY);
 	}
 	/**
 	 * 

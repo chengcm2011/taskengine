@@ -1,7 +1,7 @@
 package com.application.taskengine.model;
 
 
-import cheng.lib.lang.SuperModel;
+import com.cheng.lang.model.SuperModel;
 
 public class TaskPluginModel extends SuperModel {
 	private static final long serialVersionUID = 1L;

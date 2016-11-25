@@ -1,7 +1,7 @@
 package com.application.taskengine.model;
 
 
-import cheng.lib.lang.SuperModel;
+import com.cheng.lang.model.SuperModel;
 
 public class TaskLogModel extends SuperModel {
 

@@ -1,10 +1,9 @@
 package com.application.taskengine.model;
 
 
-import cheng.lib.lang.SuperModel;
+import com.cheng.lang.model.SuperModel;
 
 /**
- * Created by cheng on 2015/8/28.
  */
 public class TaskParamValueModel extends SuperModel {
 
