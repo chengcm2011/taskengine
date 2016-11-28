@@ -75,11 +75,7 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>ojdbc</groupId>
-			<artifactId>ojdbc</artifactId>
-			<version>14</version>
-		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/com.caucho/hessian -->
 		<dependency>
 			<groupId>com.caucho</groupId>
