@@ -6,8 +6,8 @@ import com.cheng.lang.model.SuperModel;
 public class TaskLogModel extends SuperModel {
 
 	private static final long serialVersionUID = 1L;
-	private String pk_tasklog ;
-	private String pk_taskdeploy ;
+	private String pkTasklog;
+	private String pkTaskdeploy;
 	private String returnstr ;
 	private boolean issuccess ;
 	private String runtime ;
@@ -22,12 +22,12 @@ public class TaskLogModel extends SuperModel {
 
 	@Override
 	public String getParentPKFieldName() {
-		return "pk_taskdeploy";
+		return "pkTaskdeploy";
 	}
 
 	@Override
 	public String getPKFieldName() {
-		return "pk_tasklog";
+		return "pkTasklog";
 	}
 
 	@Override
@@ -35,20 +35,20 @@ public class TaskLogModel extends SuperModel {
 		return "task_tasklog";
 	}
 
-	public String getPk_tasklog() {
-		return pk_tasklog;
+	public String getPkTasklog() {
+		return pkTasklog;
 	}
 
-	public void setPk_tasklog(String pk_tasklog) {
-		this.pk_tasklog = pk_tasklog;
+	public void setPkTasklog(String pkTasklog) {
+		this.pkTasklog = pkTasklog;
 	}
 
-	public String getPk_taskdeploy() {
-		return pk_taskdeploy;
+	public String getPkTaskdeploy() {
+		return pkTaskdeploy;
 	}
 
-	public void setPk_taskdeploy(String pk_taskdeploy) {
-		this.pk_taskdeploy = pk_taskdeploy;
+	public void setPkTaskdeploy(String pkTaskdeploy) {
+		this.pkTaskdeploy = pkTaskdeploy;
 	}
 
 	public boolean issuccess() {

@@ -5,8 +5,8 @@ import com.cheng.lang.model.SuperModel;
 
 public class TaskDeployModel extends SuperModel {
 
-	private String pk_taskdeploy;
-	private String pk_taskplugin;
+	private String pkTaskdeploy;
+	private String pkTaskplugin;
 	private String taskname;
 	private String taskdescription;
 
@@ -30,12 +30,12 @@ public class TaskDeployModel extends SuperModel {
 
 	@Override
 	public String getParentPKFieldName() {
-		return "pk_taskplugin";
+		return "pkTaskplugin";
 	}
 
 	@Override
 	public String getPKFieldName() {
-		return "pk_taskdeploy";
+		return "pkTaskdeploy";
 	}
 
 
@@ -87,22 +87,21 @@ public class TaskDeployModel extends SuperModel {
 		this.vdef5 = vdef5;
 	}
 
-	public String getPk_taskdeploy() {
-		return pk_taskdeploy;
+	public String getPkTaskdeploy() {
+		return pkTaskdeploy;
 	}
 
-	public void setPk_taskdeploy(String pk_taskdeploy) {
-		this.pk_taskdeploy = pk_taskdeploy;
+	public void setPkTaskdeploy(String pkTaskdeploy) {
+		this.pkTaskdeploy = pkTaskdeploy;
 	}
 
-	public String getPk_taskplugin() {
-		return pk_taskplugin;
+	public String getPkTaskplugin() {
+		return pkTaskplugin;
 	}
 
-	public void setPk_taskplugin(String pk_taskplugin) {
-		this.pk_taskplugin = pk_taskplugin;
+	public void setPkTaskplugin(String pkTaskplugin) {
+		this.pkTaskplugin = pkTaskplugin;
 	}
-
 
 	public String getTaskname() {
 		return taskname;

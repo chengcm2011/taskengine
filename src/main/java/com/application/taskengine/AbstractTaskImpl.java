@@ -23,7 +23,7 @@ public abstract class AbstractTaskImpl implements StatefulJob {
         final JobExecutionContext tt = arg0;
         String pk_taskdeploy = tt.getJobDetail().getJobDataMap().getString("pk_taskdeploy");
         TaskLogModel taskLogModel = new TaskLogModel();
-        taskLogModel.setPk_taskdeploy(pk_taskdeploy);
+        taskLogModel.setPkTaskdeploy(pk_taskdeploy);
         taskLogModel.setVdef1(TimeToolkit.getCurrentTs());
 
         taskLogModel.setRunserver(SystemInfoUtil.getInstance().getOs_name() + ":" + SystemInfoUtil.getInstance().getOs_mac() + ":" + SystemInfoUtil.getInstance().getOs_ip());
