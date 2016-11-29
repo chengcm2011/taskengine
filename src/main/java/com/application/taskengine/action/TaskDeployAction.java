@@ -49,7 +49,7 @@ public class TaskDeployAction extends BusinessCommonAction {
         List<Map<String, Object>> data = new ArrayList<>();
         for (TaskDeployModel taskDeployModel : list) {
             Map<String, Object> item = BeanUtil.getValueMap(taskDeployModel);
-            TaskPluginModel taskPluginModel = dataBaseService.queryByPK(TaskPluginModel.class, taskDeployModel.getPk_taskplugin());
+            TaskPluginModel taskPluginModel = dataBaseService.queryByPK(TaskPluginModel.class, taskDeployModel.getPkTaskplugin());
             if (taskPluginModel != null) {
                 item.put("pluginname", taskPluginModel.getPluginname());
             }
@@ -64,7 +64,7 @@ public class TaskDeployAction extends BusinessCommonAction {
     public String detail(HttpServletRequest request, String pk, Model model) throws Exception {
         if (StringUtils.isNotBlank(pk)) {
             TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, pk);
-            TaskPluginModel taskPluginModel = dataBaseService.queryByPK(TaskPluginModel.class, taskDeployModel.getPk_taskplugin());
+            TaskPluginModel taskPluginModel = dataBaseService.queryByPK(TaskPluginModel.class, taskDeployModel.getPkTaskplugin());
             taskDeployModel.setVdef1(taskPluginModel.getPluginname());
 
             model.addAttribute(ITEM, taskDeployModel);

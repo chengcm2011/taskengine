@@ -7,10 +7,10 @@ import com.cheng.lang.model.SuperModel;
  */
 public class TaskParamValueModel extends SuperModel {
 
-	private String pk_taskparamvalue ;
+	private String pkTaskparamvalue;
 
-	private String pk_taskdeploy ;
-	private String pk_taskparamkey ;
+	private String pkTaskdeploy;
+	private String pkTaskparamkey;
 	private String paramkey ;
 	private String paramname ;
 	private String paramvalue ;
@@ -25,12 +25,12 @@ public class TaskParamValueModel extends SuperModel {
 
 	@Override
 	public String getParentPKFieldName() {
-		return "pk_taskparamkey";
+		return "pkTaskparamkey";
 	}
 
 	@Override
 	public String getPKFieldName() {
-		return "pk_taskparamvalue";
+		return "pkTaskparamvalue";
 	}
 
 	public String getParamkey() {
@@ -49,28 +49,28 @@ public class TaskParamValueModel extends SuperModel {
 		this.paramname = paramname;
 	}
 
-	public String getPk_taskparamvalue() {
-		return pk_taskparamvalue;
+	public String getPkTaskparamvalue() {
+		return pkTaskparamvalue;
 	}
 
-	public void setPk_taskparamvalue(String pk_taskparamvalue) {
-		this.pk_taskparamvalue = pk_taskparamvalue;
+	public void setPkTaskparamvalue(String pkTaskparamvalue) {
+		this.pkTaskparamvalue = pkTaskparamvalue;
 	}
 
-	public String getPk_taskdeploy() {
-		return pk_taskdeploy;
+	public String getPkTaskdeploy() {
+		return pkTaskdeploy;
 	}
 
-	public void setPk_taskdeploy(String pk_taskdeploy) {
-		this.pk_taskdeploy = pk_taskdeploy;
+	public void setPkTaskdeploy(String pkTaskdeploy) {
+		this.pkTaskdeploy = pkTaskdeploy;
 	}
 
-	public String getPk_taskparamkey() {
-		return pk_taskparamkey;
+	public String getPkTaskparamkey() {
+		return pkTaskparamkey;
 	}
 
-	public void setPk_taskparamkey(String pk_taskparamkey) {
-		this.pk_taskparamkey = pk_taskparamkey;
+	public void setPkTaskparamkey(String pkTaskparamkey) {
+		this.pkTaskparamkey = pkTaskparamkey;
 	}
 
 	public String getParamvalue() {

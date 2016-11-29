@@ -36,7 +36,7 @@ public class TaskParamValueAction extends BusinessCommonAction {
         pageVO = dataBaseService.queryByPage(TaskParamValueModel.class, pageVO);
         if (pageVO.getData() == null || pageVO.getData().isEmpty()) {
              //初始化参数
-            pageVO.setCondition(" dr=0 and pk_taskplugin ='" + deployModel.getPk_taskplugin() + "'");
+            pageVO.setCondition(" dr=0 and pk_taskplugin ='" + deployModel.getPkTaskplugin() + "'");
             pageVO = dataBaseService.queryByPage(TaskParamKeyModel.class, pageVO);
             model.addAttribute(ITEM, deployModel);
             model.addAttribute("pageVO", pageVO);
@@ -47,8 +47,8 @@ public class TaskParamValueAction extends BusinessCommonAction {
                 TaskParamValueModel taskParamValueModel = new TaskParamValueModel();
                 taskParamValueModel.setParamkey(taskParamKeyModels.get(i).getParamkey());
                 taskParamValueModel.setParamname(taskParamKeyModels.get(i).getParamname());
-                taskParamValueModel.setPk_taskdeploy(pk);
-                taskParamValueModel.setPk_taskparamkey(taskParamKeyModels.get(i).getPk_taskparamkey());
+                taskParamValueModel.setPkTaskdeploy(pk);
+                taskParamValueModel.setPkTaskparamkey(taskParamKeyModels.get(i).getPkTaskparamkey());
                 taskParamValueModel.setDr(0);
                 taskParamValueModel.setTs(TimeToolkit.getCurrentTs());
                 taskParamValueModels.add(taskParamValueModel);
@@ -65,16 +65,16 @@ public class TaskParamValueAction extends BusinessCommonAction {
     @RequestMapping("paramvalue/edit")
     public String edit(HttpServletRequest request, Model model) throws Exception {
         String pk = request.getParameter("pk");
-        String pk_taskparamkey = pk.split(";")[0];
-        String pk_taskdeploy = pk.split(";")[1];
+        String pkTaskparamkey = pk.split(";")[0];
+        String pkTaskdeploy = pk.split(";")[1];
         SQLParameter sqlParameter = new SQLParameter();
-        sqlParameter.addParam(pk_taskdeploy);
-        sqlParameter.addParam(pk_taskparamkey);
-        TaskParamValueModel item = dataBaseService.queryOneByClause(TaskParamValueModel.class, "pk_taskdeploy=? and dr=0 and pk_taskparamkey  =?", sqlParameter);
+        sqlParameter.addParam(pkTaskdeploy);
+        sqlParameter.addParam(pkTaskparamkey);
+        TaskParamValueModel item = dataBaseService.queryOneByClause(TaskParamValueModel.class, "pkTaskdeploy=? and dr=0 and pkTaskparamkey  =?", sqlParameter);
         if(item==null){
             item = new TaskParamValueModel();
         }
-        TaskParamKeyModel taskParamKeyModel = dataBaseService.queryByPK(TaskParamKeyModel.class,pk_taskparamkey);
+        TaskParamKeyModel taskParamKeyModel = dataBaseService.queryByPK(TaskParamKeyModel.class, pkTaskparamkey);
         item.setParamkey(taskParamKeyModel.getParamkey());
         item.setParamname(taskParamKeyModel.getParamname());
         model.addAttribute(ITEM, item);
@@ -85,20 +85,20 @@ public class TaskParamValueAction extends BusinessCommonAction {
     @RequestMapping("paramvalue/save")
     @ResponseBody
     public AjaxDone save(HttpServletRequest request, String pk, Model model) throws Exception {
-        String pk_taskparamkey = pk.split(";")[0];
-        String pk_taskdeploy = pk.split(";")[1];
+        String pkTaskparamkey = pk.split(";")[0];
+        String pkTaskdeploy = pk.split(";")[1];
         String paramvalue = request.getParameter("paramvalue");
         SQLParameter sqlParameter = new SQLParameter();
-        sqlParameter.addParam(pk_taskdeploy);
-        sqlParameter.addParam(pk_taskparamkey);
-        TaskParamValueModel taskParamValueModel = dataBaseService.queryOneByClause(TaskParamValueModel.class, "pk_taskdeploy=? and pk_taskparamkey=? and dr=0 ", sqlParameter);
+        sqlParameter.addParam(pkTaskdeploy);
+        sqlParameter.addParam(pkTaskparamkey);
+        TaskParamValueModel taskParamValueModel = dataBaseService.queryOneByClause(TaskParamValueModel.class, "pkTaskdeploy=? and pkTaskparamkey=? and dr=0 ", sqlParameter);
         if (taskParamValueModel == null) {
             taskParamValueModel = new TaskParamValueModel();
-            TaskParamKeyModel taskParamKeyModel = dataBaseService.queryByPK(TaskParamKeyModel.class,pk_taskparamkey);
+            TaskParamKeyModel taskParamKeyModel = dataBaseService.queryByPK(TaskParamKeyModel.class, pkTaskparamkey);
             taskParamValueModel.setParamkey(taskParamKeyModel.getParamkey());
             taskParamValueModel.setParamname(taskParamKeyModel.getParamname());
-            taskParamValueModel.setPk_taskdeploy(pk_taskdeploy);
-            taskParamValueModel.setPk_taskparamkey(pk_taskparamkey);
+            taskParamValueModel.setPkTaskdeploy(pkTaskdeploy);
+            taskParamValueModel.setPkTaskparamkey(pkTaskparamkey);
             taskParamValueModel.setParamvalue(paramvalue);
             dataBaseService.insert(taskParamValueModel);
         } else {

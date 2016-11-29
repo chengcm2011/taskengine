@@ -43,7 +43,7 @@ public class TaskParamKeyAction extends BusinessCommonAction {
 		if(Verification.isSignlessnumber(pk)){
 			TaskParamKeyModel taskParamKeyModel = dataBaseService.queryByPK(TaskParamKeyModel.class, pk);
 			if(taskParamKeyModel!=null){
-				taskParamKeyModel.setPk_taskplugin(pk_taskplugin);
+				taskParamKeyModel.setPkTaskplugin(pk_taskplugin);
 				model.addAttribute(ITEM,taskParamKeyModel);
 			}
 		}else {
@@ -58,7 +58,7 @@ public class TaskParamKeyAction extends BusinessCommonAction {
 		TaskParamKeyModel taskParamKeyModel = BeanUtil.objMapToBean(getParamFromReq(request), TaskParamKeyModel.class);
 		taskParamKeyModel.setTs(TimeToolkit.getCurrentTs());
 		taskParamKeyModel.setDr(0);
-		if(StringUtils.isEmpty(taskParamKeyModel.getPk_taskparamkey())){
+		if (StringUtils.isEmpty(taskParamKeyModel.getPkTaskparamkey())) {
 			dataBaseService.insert(taskParamKeyModel);
 		}else {
 			dataBaseService.update(taskParamKeyModel);

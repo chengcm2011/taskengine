@@ -43,7 +43,7 @@ public class TaskLogAction extends BusinessCommonAction {
 		List<Map<String,Object>> data = new ArrayList<>();
 		for(TaskLogModel taskLogModel:list){
 			Map<String,Object> mdata = BeanUtil.getValueMap(taskLogModel);
-			TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class,taskLogModel.getPk_taskdeploy());
+			TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, taskLogModel.getPkTaskdeploy());
 			mdata.put("taskname",taskDeployModel.getTaskname());
 			data.add(mdata);
 		}
