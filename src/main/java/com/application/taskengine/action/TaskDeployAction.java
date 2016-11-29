@@ -34,9 +34,9 @@ public class TaskDeployAction extends BusinessCommonAction {
 
         StringBuilder con = new StringBuilder(" dr=0 ");
 
-        String pk_taskplugin = request.getParameter("pk_taskplugin");
-        if (StringUtils.isNotBlank(pk_taskplugin)) {
-            con.append(" and pk_taskplugin='" + pk_taskplugin + "'");
+        String pkTaskplugin = request.getParameter("pkTaskplugin");
+        if (StringUtils.isNotBlank(pkTaskplugin)) {
+            con.append(" and pkTaskplugin='" + pkTaskplugin + "'");
         }
         String taskname = request.getParameter("taskname");
         if (StringUtils.isNotBlank(taskname)) {

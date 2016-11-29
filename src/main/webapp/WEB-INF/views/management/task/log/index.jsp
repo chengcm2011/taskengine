@@ -20,9 +20,11 @@
 		      <ul class="searchContent">
 				  <li>
 					  <label>任务名称：</label>
-					  <input type="hidden" id="orgLookup.pk_taskdeploy" name="pk_taskdeploy"  value="${key}"/>
-					  <input type="text" name="deployname"  value="${item}" style="float: left"  readonly="readonly" class="required" id="orgLookup.orgNamepk_taskdeploy" />
-					  <a class="btnLook" href="management/uicomponent/ref/index?reftype=taskdeploy&itemkey=pk_taskdeploy" rel="pk_taskdeploy" lookupGroup="orgLookup">查找带回</a>
+					  <input type="hidden" id="orgLookup.pkTaskdeploy" name="pkTaskdeploy" value="${key}"/>
+					  <input type="text" name="deployname" value="${item}" style="float: left" readonly="readonly"
+							 class="required" id="orgLookup.orgNamepkTaskdeploy"/>
+					  <a class="btnLook" href="management/uicomponent/ref/index?reftype=taskdeploy&itemkey=pkTaskdeploy"
+						 rel="pkTaskdeploy" lookupGroup="orgLookup">查找带回</a>
 				  </li>
 		      </ul>
 		      <div class="subBar">
@@ -52,7 +54,7 @@
       <tbody>
 	      <c:if test="${not empty pageVO.data }">
 	        <c:forEach var="item" items="${pageVO.data }" varStatus="sta">
-	          <tr target="pk" rel="${item.pk_taskplugin }">
+				<tr target="pk" rel="${item.pkTaskplugin }">
 	            <td>${(pageVO.pageNum-1)*pageVO.pageSize+sta.count}</td>
 	            <td>${item.taskname }</td>
 	            <td>${item.returnstr }</td>

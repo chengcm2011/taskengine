@@ -32,11 +32,11 @@ public class TaskParamValueAction extends BusinessCommonAction {
         }
         TaskDeployModel deployModel = dataBaseService.queryByPK(TaskDeployModel.class, pk);
 
-        pageVO.setCondition(" dr=0 and pk_taskdeploy ='" + pk + "'");
+        pageVO.setCondition(" dr=0 and pkTaskdeploy ='" + pk + "'");
         pageVO = dataBaseService.queryByPage(TaskParamValueModel.class, pageVO);
         if (pageVO.getData() == null || pageVO.getData().isEmpty()) {
              //初始化参数
-            pageVO.setCondition(" dr=0 and pk_taskplugin ='" + deployModel.getPkTaskplugin() + "'");
+            pageVO.setCondition(" dr=0 and pkTaskplugin ='" + deployModel.getPkTaskplugin() + "'");
             pageVO = dataBaseService.queryByPage(TaskParamKeyModel.class, pageVO);
             model.addAttribute(ITEM, deployModel);
             model.addAttribute("pageVO", pageVO);

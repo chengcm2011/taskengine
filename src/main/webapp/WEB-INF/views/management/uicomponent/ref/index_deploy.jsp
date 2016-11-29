@@ -46,7 +46,9 @@
 				<td>${item.taskdescription}</td>
 				<td>${item.triggerstr}</td>
 				<td>
-					<a class="btnSelect" href="javascript:$.bringBack({${itemkey}:'${item.pk_taskdeploy}', orgName${itemkey}:'${item.taskname}'})" title="查找带回">选择</a>
+					<a class="btnSelect"
+					   href="javascript:$.bringBack({${itemkey}:'${item.pkTaskdeploy}', orgName${itemkey}:'${item.taskname}'})"
+					   title="查找带回">选择</a>
 				</td>
 			</tr>
 		</c:forEach>

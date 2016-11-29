@@ -13,7 +13,7 @@ public interface ITaskService extends IService {
 
     public boolean addTask(TaskDeployModel taskDeployModel) throws BusinessException;
 
-    public boolean removeTask(TaskDeployModel pk_taskdeploy) throws BusinessException;
+    public boolean removeTask(TaskDeployModel pkTaskdeploy) throws BusinessException;
 
     public boolean updateTask(TaskDeployModel taskDeployModel) throws BusinessException;
 

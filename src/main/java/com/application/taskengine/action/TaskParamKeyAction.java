@@ -28,7 +28,7 @@ public class TaskParamKeyAction extends BusinessCommonAction {
 		if(StringUtils.isEmpty(pk)){
 			throw new BusinessException("");
 		}
-		pageVO.setCondition(" dr=0 and pk_taskplugin='"+pk+"'");
+		pageVO.setCondition(" dr=0 and pkTaskplugin='" + pk + "'");
 		pageVO = dataBaseService.queryByPage(TaskParamKeyModel.class,pageVO);
 		TaskPluginModel taskPluginModel = dataBaseService.queryByPK(TaskPluginModel.class,pk);
 		model.addAttribute("pageVO",pageVO);
@@ -39,15 +39,15 @@ public class TaskParamKeyAction extends BusinessCommonAction {
 	@RequestMapping("paramkey/edit")
 	public String edit(HttpServletRequest request, Model model) throws Exception {
 		String pk = request.getParameter("pk");
-		String pk_taskplugin = request.getParameter("pk_taskplugin");
+		String pkTaskplugin = request.getParameter("pkTaskplugin");
 		if(Verification.isSignlessnumber(pk)){
 			TaskParamKeyModel taskParamKeyModel = dataBaseService.queryByPK(TaskParamKeyModel.class, pk);
 			if(taskParamKeyModel!=null){
-				taskParamKeyModel.setPkTaskplugin(pk_taskplugin);
+				taskParamKeyModel.setPkTaskplugin(pkTaskplugin);
 				model.addAttribute(ITEM,taskParamKeyModel);
 			}
 		}else {
-			model.addAttribute("pk_taskplugin",pk_taskplugin);
+			model.addAttribute("pkTaskplugin", pkTaskplugin);
 		}
 		return "management/task/paramkey/edit";
 	}

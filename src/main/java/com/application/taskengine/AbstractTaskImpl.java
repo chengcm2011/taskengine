@@ -21,9 +21,9 @@ public abstract class AbstractTaskImpl implements StatefulJob {
 
     public void execute(JobExecutionContext arg0) throws JobExecutionException {
         final JobExecutionContext tt = arg0;
-        String pk_taskdeploy = tt.getJobDetail().getJobDataMap().getString("pk_taskdeploy");
+        String pkTaskdeploy = tt.getJobDetail().getJobDataMap().getString("pkTaskdeploy");
         TaskLogModel taskLogModel = new TaskLogModel();
-        taskLogModel.setPkTaskdeploy(pk_taskdeploy);
+        taskLogModel.setPkTaskdeploy(pkTaskdeploy);
         taskLogModel.setVdef1(TimeToolkit.getCurrentTs());
 
         taskLogModel.setRunserver(SystemInfoUtil.getInstance().getOs_name() + ":" + SystemInfoUtil.getInstance().getOs_mac() + ":" + SystemInfoUtil.getInstance().getOs_ip());
@@ -45,7 +45,7 @@ public abstract class AbstractTaskImpl implements StatefulJob {
                 if (LogMap.ispersistence) {
                     ApplicationServiceLocator.getService(IDataBaseService.class).insert(taskLogModel);
                 } else {
-                    LogMap.addLog(pk_taskdeploy, taskLogModel);
+                    LogMap.addLog(pkTaskdeploy, taskLogModel);
                 }
             } catch (Exception e) {
                 logger.error("", e);

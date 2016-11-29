@@ -42,9 +42,10 @@
 
 <div class="panelBar">
 	<ul class="toolBar">
-		<li><a class="add" href="management/task/paramkey/edit?pk_taskplugin=${pk}" target="dialog"><span>增加</span></a></li>
+		<li><a class="add" href="management/task/paramkey/edit?pkTaskplugin=${pk}" target="dialog"><span>增加</span></a>
+		</li>
        <li class="line">line</li>
-		<%--<li><a class="edit" href="management/task/paramkey/edit?pk_taskplugin=${pk}&pk={pk}" target="dialog"><span>编辑</span></a></li>--%>
+		<%--<li><a class="edit" href="management/task/paramkey/edit?pkTaskplugin=${pk}&pk={pk}" target="dialog"><span>编辑</span></a></li>--%>
 	</ul>
 </div>
 
@@ -61,7 +62,7 @@
       <tbody>
 	      <c:if test="${not empty pageVO.data }">
 	        <c:forEach var="item" items="${pageVO.data }" varStatus="sta">
-	          <tr target="pk" rel="${item.pk_taskparamkey }">
+				<tr target="pk" rel="${item.pkTaskparamkey }">
 	            <td>${(pageVO.pageNum-1)*pageVO.pageSize+sta.count}</td>
 	            <td>${item.paramname }</td>
 	            <td>${item.paramkey }</td>

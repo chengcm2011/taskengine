@@ -28,7 +28,7 @@ public class TaskLogAction extends BusinessCommonAction {
 	 */
 	@RequestMapping("index")
 	public String index(HttpServletRequest request,PageVO pageVO, Model model) throws Exception {
-		String key = request.getParameter("pk_taskdeploy");
+		String key = request.getParameter("pkTaskdeploy");
 		if(StringUtils.isBlank(key)){
 			model.addAttribute("pageVO",pageVO);
 			return "/management/task/log/index";
@@ -36,12 +36,13 @@ public class TaskLogAction extends BusinessCommonAction {
 		if(!LogMap.ispersistence){
 			pageVO =  init(key);
 		}else {
-			pageVO.setCondition(" dr=0 and pk_taskdeploy='"+key+"'");
+			pageVO.setCondition(" dr=0 and pkTaskdeploy='" + key + "'");
 			pageVO = dataBaseService.queryByPage(TaskLogModel.class,pageVO);
 		}
 		List<TaskLogModel> list = (List<TaskLogModel>)pageVO.getData();
 		List<Map<String,Object>> data = new ArrayList<>();
-		for(TaskLogModel taskLogModel:list){
+		for (int i = 0; i < list.size(); i++) {
+			TaskLogModel taskLogModel = list.get(i);
 			Map<String,Object> mdata = BeanUtil.getValueMap(taskLogModel);
 			TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, taskLogModel.getPkTaskdeploy());
 			mdata.put("taskname",taskDeployModel.getTaskname());
