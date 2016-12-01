@@ -1,8 +1,8 @@
 package com.application.taskengine;
 
-import cheng.lib.exception.BusinessException;
 import com.application.taskengine.action.BusinessCommonAction;
 import com.application.taskengine.vo.TaskSession;
+import com.cheng.lang.exception.BusinessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +40,6 @@ public class LoginRegisterAction extends BusinessCommonAction {
 			try {
 				if("cheng".equals(username) && "124817".equals(password)){
 					TaskSession taskSession = new TaskSession();
-					taskSession.setPhone("18610493841");
 					taskSession.setShowname(username);
 					taskSession.setId(1);
 					setUserToSession(request, response, taskSession);

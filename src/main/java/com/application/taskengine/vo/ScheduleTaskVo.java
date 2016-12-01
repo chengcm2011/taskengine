@@ -5,10 +5,8 @@ import org.quartz.JobKey;
 import org.quartz.Trigger;
 import org.quartz.TriggerKey;
 
-import java.util.Date;
-
 /**
- * Created by liyd on 12/19/14.
+ *
  */
 public class ScheduleTaskVo {
     private String jobCode ;

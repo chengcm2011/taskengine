@@ -1,12 +1,15 @@
 package com.application.taskengine;
 
-import cheng.lib.exception.BusinessException;
-import cheng.lib.util.SystemInfoUtil;
-import cheng.lib.util.TimeToolkit;
-import com.application.common.context.ApplicationServiceLocator;
-import com.application.module.jdbc.itf.IDataBaseService;
 import com.application.taskengine.model.TaskLogModel;
-import org.quartz.*;
+import com.cheng.jdbc.itf.IDataBaseService;
+import com.cheng.lang.TimeToolkit;
+import com.cheng.lang.exception.BusinessException;
+import com.cheng.util.SystemInfoUtil;
+import com.cheng.web.ApplicationServiceLocator;
+import org.quartz.JobDataMap;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.quartz.StatefulJob;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,9 +21,9 @@ public abstract class AbstractTaskImpl implements StatefulJob {
 
     public void execute(JobExecutionContext arg0) throws JobExecutionException {
         final JobExecutionContext tt = arg0;
-        String pk_taskdeploy = tt.getJobDetail().getJobDataMap().getString("pk_taskdeploy");
+        String pkTaskdeploy = tt.getJobDetail().getJobDataMap().getString("pkTaskdeploy");
         TaskLogModel taskLogModel = new TaskLogModel();
-        taskLogModel.setPk_taskdeploy(pk_taskdeploy);
+        taskLogModel.setPkTaskdeploy(pkTaskdeploy);
         taskLogModel.setVdef1(TimeToolkit.getCurrentTs());
 
         taskLogModel.setRunserver(SystemInfoUtil.getInstance().getOs_name() + ":" + SystemInfoUtil.getInstance().getOs_mac() + ":" + SystemInfoUtil.getInstance().getOs_ip());
@@ -42,7 +45,7 @@ public abstract class AbstractTaskImpl implements StatefulJob {
                 if (LogMap.ispersistence) {
                     ApplicationServiceLocator.getService(IDataBaseService.class).insert(taskLogModel);
                 } else {
-                    LogMap.addLog(pk_taskdeploy, taskLogModel);
+                    LogMap.addLog(pkTaskdeploy, taskLogModel);
                 }
             } catch (Exception e) {
                 logger.error("", e);

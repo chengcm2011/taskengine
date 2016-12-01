@@ -1,11 +1,5 @@
 package com.application.taskengine.service;
 
-import cheng.lib.exception.BusinessException;
-import cheng.lib.log.ApplicationLogger;
-import cheng.lib.util.TimeToolkit;
-import com.application.common.context.ApplicationServiceLocator;
-import com.application.module.jdbc.SQLParameter;
-import com.application.module.jdbc.itf.IDataBaseService;
 import com.application.taskengine.itf.ITaskService;
 import com.application.taskengine.model.TaskDeployModel;
 import com.application.taskengine.model.TaskParamValueModel;
@@ -13,7 +7,12 @@ import com.application.taskengine.model.TaskPluginModel;
 import com.application.taskengine.util.DynamicSchedulerFactory;
 import com.application.taskengine.util.SchedulerUtil;
 import com.application.taskengine.vo.ScheduleTaskVo;
-import org.apache.commons.lang.StringUtils;
+import com.cheng.jdbc.SQLParameter;
+import com.cheng.jdbc.itf.IDataBaseService;
+import com.cheng.lang.TimeToolkit;
+import com.cheng.lang.exception.BusinessException;
+import com.cheng.util.ApplicationLogger;
+import org.apache.commons.lang3.StringUtils;
 import org.quartz.SchedulerException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by cheng on 16/5/14.
+ *
  */
 @Component
 @Transactional
@@ -48,7 +47,7 @@ public class TaskServiceImpl implements ITaskService {
     }
 
     public boolean addTask(TaskDeployModel taskDeployModel) throws BusinessException {
-        if(StringUtils.isBlank(taskDeployModel.getPk_taskdeploy())){
+        if (StringUtils.isBlank(taskDeployModel.getPkTaskdeploy())) {
             dataBaseService.insert(taskDeployModel);
             try {
                 DynamicSchedulerFactory.addTask(createScheduleJobVo(taskDeployModel));
@@ -66,7 +65,7 @@ public class TaskServiceImpl implements ITaskService {
     public boolean removeTask(TaskDeployModel taskdeploy) throws BusinessException{
         dataBaseService.deleteByPK(TaskDeployModel.class, taskdeploy.getPrimaryKey());
         try {
-            DynamicSchedulerFactory.removeTask(taskdeploy.getPk_taskdeploy(), taskdeploy.getPk_taskplugin());
+            DynamicSchedulerFactory.removeTask(taskdeploy.getPkTaskdeploy(), taskdeploy.getPkTaskplugin());
         }catch (SchedulerException s){
             ApplicationLogger.error(s);
             throw new BusinessException("删除失败");
@@ -78,7 +77,7 @@ public class TaskServiceImpl implements ITaskService {
         taskdeploy.setTs(TimeToolkit.getCurrentTs());
         dataBaseService.update(taskdeploy,new String[]{"runnable","ts"});
         try {
-            DynamicSchedulerFactory.removeTask(taskdeploy.getPk_taskdeploy(), taskdeploy.getPk_taskplugin());
+            DynamicSchedulerFactory.removeTask(taskdeploy.getPkTaskdeploy(), taskdeploy.getPkTaskplugin());
         }catch (SchedulerException s){
             ApplicationLogger.error(s);
             throw new BusinessException("禁用失败");
@@ -99,7 +98,7 @@ public class TaskServiceImpl implements ITaskService {
     }
 
     public boolean updateTask(TaskDeployModel taskDeployModel) throws BusinessException{
-        TaskDeployModel dbtaskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, taskDeployModel.getPk_taskdeploy());
+        TaskDeployModel dbtaskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, taskDeployModel.getPkTaskdeploy());
         if ("N".equals(dbtaskDeployModel.getRunnable())) {
             if ("Y".equals(taskDeployModel.getRunnable())) {
                 addTask(taskDeployModel);
@@ -128,7 +127,7 @@ public class TaskServiceImpl implements ITaskService {
     }
     public boolean runOnceTask(TaskDeployModel taskDeployModel){
         try {
-            DynamicSchedulerFactory.runOnceTask(taskDeployModel.getPk_taskdeploy(), taskDeployModel.getPk_taskplugin());
+            DynamicSchedulerFactory.runOnceTask(taskDeployModel.getPkTaskdeploy(), taskDeployModel.getPkTaskplugin());
             return true;
         } catch (SchedulerException e) {
             ApplicationLogger.error("runOnceTask task is error ", e);
@@ -139,7 +138,7 @@ public class TaskServiceImpl implements ITaskService {
 
     public boolean pause(TaskDeployModel taskDeployModel) {
         try {
-            DynamicSchedulerFactory.pauseJob(taskDeployModel.getPk_taskdeploy(), taskDeployModel.getPk_taskplugin());	// jobStatus do not store
+            DynamicSchedulerFactory.pauseJob(taskDeployModel.getPkTaskdeploy(), taskDeployModel.getPkTaskplugin());    // jobStatus do not store
             return true;
         } catch (SchedulerException e) {
             ApplicationLogger.error("pause task is error ",e);
@@ -149,7 +148,7 @@ public class TaskServiceImpl implements ITaskService {
 
     public boolean resume(TaskDeployModel taskDeployModel) {
         try {
-            DynamicSchedulerFactory.resumeJob(taskDeployModel.getPk_taskdeploy(), taskDeployModel.getPk_taskplugin());
+            DynamicSchedulerFactory.resumeJob(taskDeployModel.getPkTaskdeploy(), taskDeployModel.getPkTaskplugin());
             return true;
         } catch (SchedulerException e) {
             ApplicationLogger.error("resume task is error ", e);
@@ -160,10 +159,10 @@ public class TaskServiceImpl implements ITaskService {
 
     private ScheduleTaskVo createScheduleJobVo(TaskDeployModel taskDeployModel) {
         ScheduleTaskVo scheduleTaskVo = new ScheduleTaskVo();
-        scheduleTaskVo.setJobCode(taskDeployModel.getPk_taskdeploy());
-        scheduleTaskVo.setJobGroupCode(taskDeployModel.getPk_taskplugin());
+        scheduleTaskVo.setJobCode(taskDeployModel.getPkTaskdeploy());
+        scheduleTaskVo.setJobGroupCode(taskDeployModel.getPkTaskplugin());
         scheduleTaskVo.setCronExpression(taskDeployModel.getTriggerstr());
-        TaskPluginModel t = dataBaseService.queryByPK(TaskPluginModel.class,taskDeployModel.getPk_taskplugin(),new String[]{"pluginclass"});
+        TaskPluginModel t = dataBaseService.queryByPK(TaskPluginModel.class, taskDeployModel.getPkTaskplugin(), new String[]{"pluginclass"});
         scheduleTaskVo.setJobClass(t.getPluginclass());
         try {
             SchedulerUtil.parse(scheduleTaskVo);
@@ -179,7 +178,7 @@ public class TaskServiceImpl implements ITaskService {
         Map<String,Object> taskunitmap = new HashMap<>();
         SQLParameter sqlParameter = new SQLParameter();
         sqlParameter.addParam(taskDeployModel.getPrimaryKey());
-        List<TaskParamValueModel> taskParamValueModels = ApplicationServiceLocator.getBean(IDataBaseService.class).queryByClause(TaskParamValueModel.class, " dr=0 and pk_taskdeploy=?", sqlParameter);
+        List<TaskParamValueModel> taskParamValueModels = dataBaseService.queryByClause(TaskParamValueModel.class, " dr=0 and pkTaskdeploy=?", sqlParameter);
         for (int j=0;j<taskParamValueModels.size();j++){
             TaskParamValueModel t = taskParamValueModels.get(j);
             taskunitmap.put(t.getParamkey(),t.getParamvalue());

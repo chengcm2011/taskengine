@@ -1,8 +1,8 @@
 package com.application.taskengine.common;
 
-import com.application.common.context.ApplicationServiceLocator;
-import com.application.config.contextloader.ApplicationContextLoaderListener;
 import com.application.taskengine.itf.ITaskService;
+import com.cheng.web.ApplicationContextLoaderListener;
+import com.cheng.web.ApplicationServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.ServletContextEvent;
 
 /**
- * Created by cheng on 2015/8/25.
+ *
  */
 @Component
 public class UserDefinedApplicationContextLoader extends ApplicationContextLoaderListener {

@@ -1,10 +1,10 @@
 package com.application.taskengine.action;
 
-import cheng.lib.lang.PageVO;
-import cheng.lib.util.BeanUtil;
 import com.application.taskengine.LogMap;
 import com.application.taskengine.model.TaskDeployModel;
 import com.application.taskengine.model.TaskLogModel;
+import com.cheng.lang.PageVO;
+import com.cheng.util.BeanUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by cheng on 2015/10/23.
+ *
  */
 @Controller
 @RequestMapping("/management/task/log")
@@ -28,7 +28,7 @@ public class TaskLogAction extends BusinessCommonAction {
 	 */
 	@RequestMapping("index")
 	public String index(HttpServletRequest request,PageVO pageVO, Model model) throws Exception {
-		String key = request.getParameter("pk_taskdeploy");
+		String key = request.getParameter("pkTaskdeploy");
 		if(StringUtils.isBlank(key)){
 			model.addAttribute("pageVO",pageVO);
 			return "/management/task/log/index";
@@ -36,14 +36,15 @@ public class TaskLogAction extends BusinessCommonAction {
 		if(!LogMap.ispersistence){
 			pageVO =  init(key);
 		}else {
-			pageVO.setCondition(" dr=0 and pk_taskdeploy='"+key+"'");
+			pageVO.setCondition(" dr=0 and pkTaskdeploy='" + key + "'");
 			pageVO = dataBaseService.queryByPage(TaskLogModel.class,pageVO);
 		}
 		List<TaskLogModel> list = (List<TaskLogModel>)pageVO.getData();
 		List<Map<String,Object>> data = new ArrayList<>();
-		for(TaskLogModel taskLogModel:list){
+		for (int i = 0; i < list.size(); i++) {
+			TaskLogModel taskLogModel = list.get(i);
 			Map<String,Object> mdata = BeanUtil.getValueMap(taskLogModel);
-			TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class,taskLogModel.getPk_taskdeploy());
+			TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, taskLogModel.getPkTaskdeploy());
 			mdata.put("taskname",taskDeployModel.getTaskname());
 			data.add(mdata);
 		}

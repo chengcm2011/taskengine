@@ -20,9 +20,11 @@
 		      <ul class="searchContent">
 				  <li>
 					  <label>插件名称：</label>
-					  <input type="hidden" id="orgLookup.pk_taskplugin" name="pk_taskplugin" />
-					  <input type="text"  style="float: left"  readonly="readonly" class="required" id="orgLookup.orgNamepk_taskplugin" />
-					  <a class="btnLook" href="management/uicomponent/ref/index?reftype=taskplugin&itemkey=pk_taskplugin" rel="pk_taskplugin" lookupGroup="orgLookup">查找带回</a>
+					  <input type="hidden" id="orgLookup.pkTaskplugin" name="pkTaskplugin"/>
+					  <input type="text" style="float: left" readonly="readonly" class="required"
+							 id="orgLookup.orgNamepkTaskplugin"/>
+					  <a class="btnLook" href="management/uicomponent/ref/index?reftype=taskplugin&itemkey=pkTaskplugin"
+						 rel="pkTaskplugin" lookupGroup="orgLookup">查找带回</a>
 				  </li>
 				  <li>
 					  <label>任务名称：</label>
@@ -75,7 +77,7 @@
       <tbody>
 	      <c:if test="${not empty pageVO.data }">
 	        <c:forEach var="item" items="${pageVO.data }" varStatus="sta">
-	          <tr target="pk" rel="${item.pk_taskdeploy }">
+				<tr target="pk" rel="${item.pkTaskdeploy }">
 	            <td>${(pageVO.pageNum-1)*pageVO.pageSize+sta.count}</td>
 	            <td>${item.pluginname }</td>
 	            <td>${item.taskname }</td>

@@ -1,12 +1,12 @@
 package com.application.taskengine.action;
 
-import cheng.lib.lang.PageVO;
-import cheng.lib.util.BeanUtil;
-import cheng.lib.util.TimeToolkit;
-import com.application.action.vo.AjaxDone;
 import com.application.taskengine.itf.ITaskService;
 import com.application.taskengine.model.TaskDeployModel;
 import com.application.taskengine.model.TaskPluginModel;
+import com.cheng.common.AjaxDone;
+import com.cheng.lang.PageVO;
+import com.cheng.lang.TimeToolkit;
+import com.cheng.util.BeanUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,9 +34,9 @@ public class TaskDeployAction extends BusinessCommonAction {
 
         StringBuilder con = new StringBuilder(" dr=0 ");
 
-        String pk_taskplugin = request.getParameter("pk_taskplugin");
-        if (StringUtils.isNotBlank(pk_taskplugin)) {
-            con.append(" and pk_taskplugin='" + pk_taskplugin + "'");
+        String pkTaskplugin = request.getParameter("pkTaskplugin");
+        if (StringUtils.isNotBlank(pkTaskplugin)) {
+            con.append(" and pkTaskplugin='" + pkTaskplugin + "'");
         }
         String taskname = request.getParameter("taskname");
         if (StringUtils.isNotBlank(taskname)) {
@@ -49,7 +49,7 @@ public class TaskDeployAction extends BusinessCommonAction {
         List<Map<String, Object>> data = new ArrayList<>();
         for (TaskDeployModel taskDeployModel : list) {
             Map<String, Object> item = BeanUtil.getValueMap(taskDeployModel);
-            TaskPluginModel taskPluginModel = dataBaseService.queryByPK(TaskPluginModel.class, taskDeployModel.getPk_taskplugin());
+            TaskPluginModel taskPluginModel = dataBaseService.queryByPK(TaskPluginModel.class, taskDeployModel.getPkTaskplugin());
             if (taskPluginModel != null) {
                 item.put("pluginname", taskPluginModel.getPluginname());
             }
@@ -64,7 +64,7 @@ public class TaskDeployAction extends BusinessCommonAction {
     public String detail(HttpServletRequest request, String pk, Model model) throws Exception {
         if (StringUtils.isNotBlank(pk)) {
             TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, pk);
-            TaskPluginModel taskPluginModel = dataBaseService.queryByPK(TaskPluginModel.class, taskDeployModel.getPk_taskplugin());
+            TaskPluginModel taskPluginModel = dataBaseService.queryByPK(TaskPluginModel.class, taskDeployModel.getPkTaskplugin());
             taskDeployModel.setVdef1(taskPluginModel.getPluginname());
 
             model.addAttribute(ITEM, taskDeployModel);

@@ -62,7 +62,7 @@
       <tbody>
 	      <c:if test="${not empty pageVO.data }">
 	        <c:forEach var="item" items="${pageVO.data }" varStatus="sta">
-	          <tr target="pk" rel="${item.pk_taskplugin }">
+				<tr target="pk" rel="${item.pkTaskplugin }">
 	            <td>${(pageVO.pageNum-1)*pageVO.pageSize+sta.count}</td>
 	            <td>${item.pluginname }</td>
 	            <td>${item.pluginclass }</td>

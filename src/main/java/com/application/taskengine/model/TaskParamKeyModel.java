@@ -1,14 +1,13 @@
 package com.application.taskengine.model;
 
 
-import cheng.lib.lang.SuperModel;
+import com.cheng.lang.model.SuperModel;
 
 /**
- * Created by cheng on 2015/8/28.
  */
 public class TaskParamKeyModel extends SuperModel {
-	private String pk_taskplugin ;
-	private String pk_taskparamkey ;
+	private String pkTaskplugin;
+	private String pkTaskparamkey;
 	private String paramname ;
 	private String paramkey ;
 
@@ -22,28 +21,28 @@ public class TaskParamKeyModel extends SuperModel {
 
 	@Override
 	public String getParentPKFieldName() {
-		return "pk_taskplugin";
+		return "pkTaskplugin";
 	}
 
 	@Override
 	public String getPKFieldName() {
-		return "pk_taskparamkey";
+		return "pkTaskparamkey";
 	}
 
-	public String getPk_taskplugin() {
-		return pk_taskplugin;
+	public String getPkTaskplugin() {
+		return pkTaskplugin;
 	}
 
-	public void setPk_taskplugin(String pk_taskplugin) {
-		this.pk_taskplugin = pk_taskplugin;
+	public void setPkTaskplugin(String pkTaskplugin) {
+		this.pkTaskplugin = pkTaskplugin;
 	}
 
-	public String getPk_taskparamkey() {
-		return pk_taskparamkey;
+	public String getPkTaskparamkey() {
+		return pkTaskparamkey;
 	}
 
-	public void setPk_taskparamkey(String pk_taskparamkey) {
-		this.pk_taskparamkey = pk_taskparamkey;
+	public void setPkTaskparamkey(String pkTaskparamkey) {
+		this.pkTaskparamkey = pkTaskparamkey;
 	}
 
 	public String getParamname() {

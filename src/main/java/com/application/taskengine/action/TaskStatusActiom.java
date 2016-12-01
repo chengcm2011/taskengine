@@ -1,13 +1,10 @@
 package com.application.taskengine.action;
 
-import cheng.lib.lang.PageVO;
-import cheng.lib.util.BeanUtil;
-import cheng.lib.util.Predef;
-import com.application.action.vo.AjaxDone;
-import com.application.taskengine.model.TaskLogModel;
-import com.application.taskengine.util.DynamicSchedulerFactory;
 import com.application.taskengine.itf.ITaskService;
 import com.application.taskengine.model.TaskDeployModel;
+import com.application.taskengine.util.DynamicSchedulerFactory;
+import com.cheng.common.AjaxDone;
+import com.cheng.util.Predef;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

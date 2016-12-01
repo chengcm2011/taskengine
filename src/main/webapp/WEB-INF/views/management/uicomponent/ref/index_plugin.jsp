@@ -46,7 +46,9 @@
 				<td>${item.pluginclass}</td>
 				<td>${item.plugindescription}</td>
 				<td>
-					<a class="btnSelect" href="javascript:$.bringBack({${itemkey}:'${item.pk_taskplugin}', orgName${itemkey}:'${item.pluginname}'})" title="查找带回">选择</a>
+					<a class="btnSelect"
+					   href="javascript:$.bringBack({${itemkey}:'${item.pkTaskplugin}', orgName${itemkey}:'${item.pluginname}'})"
+					   title="查找带回">选择</a>
 				</td>
 			</tr>
 		</c:forEach>

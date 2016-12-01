@@ -1,11 +1,11 @@
 package com.application.taskengine.model;
 
 
-import cheng.lib.lang.SuperModel;
+import com.cheng.lang.model.SuperModel;
 
 public class TaskPluginModel extends SuperModel {
 	private static final long serialVersionUID = 1L;
-	private String pk_taskplugin;
+	private String pkTaskplugin;
 	private String pluginname;
 	private String pluginclass;
 	private String plugindescription;
@@ -19,7 +19,7 @@ public class TaskPluginModel extends SuperModel {
 	}
 
 	public String getPKFieldName() {
-		return "pk_taskplugin";
+		return "pkTaskplugin";
 	}
 
 	public String getTableName() {
@@ -30,12 +30,12 @@ public class TaskPluginModel extends SuperModel {
 		return serialVersionUID;
 	}
 
-	public String getPk_taskplugin() {
-		return pk_taskplugin;
+	public String getPkTaskplugin() {
+		return pkTaskplugin;
 	}
 
-	public void setPk_taskplugin(String pk_taskplugin) {
-		this.pk_taskplugin = pk_taskplugin;
+	public void setPkTaskplugin(String pkTaskplugin) {
+		this.pkTaskplugin = pkTaskplugin;
 	}
 
 	public String getPluginname() {

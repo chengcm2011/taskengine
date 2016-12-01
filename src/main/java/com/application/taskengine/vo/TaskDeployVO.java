@@ -1,7 +1,7 @@
 package com.application.taskengine.vo;
 
 
-import cheng.lib.lang.SuperVO;
+import com.cheng.lang.vo.SuperVO;
 
 /**
  * 任务部署信息  一个任务插件可以部署多次 。会产生多少部署信息
@@ -11,8 +11,8 @@ import cheng.lib.lang.SuperVO;
 public class TaskDeployVO extends SuperVO {
 
 	private static final long serialVersionUID = 1L;
-	private String pk_taskdeploy ;
-	private String pk_taskplugin ;//任务插件主键
+	private String pkTaskdeploy;
+	private String pkTaskplugin;//任务插件主键
 	private String taskname ;//任务名称
 	private String taskdescription ;//任务描述
 	private String priority;//#high,normal,low 优先级 线程相关
@@ -32,28 +32,32 @@ public class TaskDeployVO extends SuperVO {
 	private String ts ;
 	
 	public String getParentPKFieldName() {
-		
-		return "pk_taskplugin";
+
+		return "pkTaskplugin";
 	}
 	
 	public String getPKFieldName() {
-		return "pk_taskdeploy";
+		return "pkTaskdeploy";
 	}
 	
 	public String getTableName() {
 		return "pub_taskdeploy";
 	}
-	public String getPk_taskdeploy() {
-		return pk_taskdeploy;
+
+	public String getpkTaskdeploy() {
+		return pkTaskdeploy;
 	}
-	public void setPk_taskdeploy(String pk_taskdeploy) {
-		this.pk_taskdeploy = pk_taskdeploy;
+
+	public void setpkTaskdeploy(String pkTaskdeploy) {
+		this.pkTaskdeploy = pkTaskdeploy;
 	}
-	public String getPk_taskplugin() {
-		return pk_taskplugin;
+
+	public String getpkTaskplugin() {
+		return pkTaskplugin;
 	}
-	public void setPk_taskplugin(String pk_taskplugin) {
-		this.pk_taskplugin = pk_taskplugin;
+
+	public void setpkTaskplugin(String pkTaskplugin) {
+		this.pkTaskplugin = pkTaskplugin;
 	}
 	public String getPriority() {
 		return priority;

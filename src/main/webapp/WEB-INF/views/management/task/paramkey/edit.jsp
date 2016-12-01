@@ -4,8 +4,8 @@
 <div class="pageContent">
 	<form method="post" action="management/task/paramkey/save" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
 		<div class="pageFormContent" layoutH="56">
-			<input type="hidden" name="pk_taskparamkey" value="${item.pk_taskparamkey}">
-			<input type="hidden" name="pk_taskplugin" value="${pk_taskplugin}">
+			<input type="hidden" name="pkTaskparamkey" value="${item.pkTaskparamkey}">
+			<input type="hidden" name="pkTaskplugin" value="${pkTaskplugin}">
 			<p>
 				<label>参数名称：</label>
 				<input type="text"  name="paramname" value="${item.paramname}" class="required"  />
