@@ -14,9 +14,16 @@
 		<java.version>1.7</java.version>
 		<build.skipTests>true</build.skipTests>
 		<source.encoding>UTF-8</source.encoding>
+		<conf.version>0.0.1</conf.version>
 	</properties>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>com.application</groupId>
+			<artifactId>conf-client</artifactId>
+			<version>${conf.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.cheng</groupId>
 			<artifactId>lang</artifactId>
