@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xmlns:mvc="http://www.springframework.org/schema/mvc"
 	   xmlns:tx="http://www.springframework.org/schema/tx"
 	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns="http://www.springframework.org/schema/beans"
 	   xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
@@ -11,17 +11,16 @@
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
 
-
 	<!-- @Controller, @Service, @Configuration, etc. <mvc:resources mapping="/resources/**" location="/resources/" />-->
-	<context:component-scan base-package="com" />
-	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<context:component-scan base-package="com"/>
+	<mvc:resources mapping="/resources/**" location="/resources/"/>
 	<mvc:view-controller path="/" view-name="index"/>
-	<mvc:annotation-driven />
-	<context:annotation-config />
+	<mvc:annotation-driven/>
+	<context:annotation-config/>
 
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="ignoreResourceNotFound" value="true" />
-		<property name="locations" value="classpath*:/jdbc.properties" />
+		<property name="ignoreResourceNotFound" value="true"/>
+		<property name="locations" value="classpath*:/jdbc.properties"/>
 	</bean>
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 		<property name="driverClassName">
@@ -65,16 +64,18 @@
 				  value="config.decrypt=true;config.decrypt.key=MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJvenY7S36hFQGr3y7QLX4w31buFKhzjaSWg9ndtBB8MwpE7H1ad0eq/OY5F28QUEV/1MWpIb6KtYtBkfYMGSlMCAwEAAQ=="/>
 	</bean>
 
-	<bean id="transactionManager"  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
 	</bean>
 	<!-- 将所有具有@Transactional注解的Bean自动配置为声明式事务支持 -->
-	<tx:annotation-driven transaction-manager="transactionManager" />
+	<tx:annotation-driven transaction-manager="transactionManager"/>
 
 	<bean id="quartzScheduler" lazy-init="false" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<!--<property name="dataSource" ref="dataSource"></property>-->
-		<property name="autoStartup" value="true" />	<!--自动启动 -->
-		<property name="startupDelay" value="10" />		<!--延时启动 -->
+		<property name="autoStartup" value="true"/>
+		<!--自动启动 -->
+		<property name="startupDelay" value="10"/>
+		<!--延时启动 -->
 		<!--<property name="applicationContextSchedulerContextKey"  value="applicationContextKey" />-->
 		<!--<property name="configLocation" value="classpath:quartz.properties"/>-->
 	</bean>
@@ -86,7 +87,12 @@
 	<bean id="idGeneratorService" class="com.cheng.jdbc.generator.IdGeneratorService" destroy-method="returnOid">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
-	<bean class="com.cheng.jdbc.impl.DefaultDataBaseServiceImpl">
+	<bean id="dataBaseService" class="com.cheng.jdbcspring.DefaultDataBaseServiceImpl">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="idGeneratorService" ref="idGeneratorService"></property>
+	</bean>
+
+	<bean id="baseDAO" class="com.cheng.jdbc.impl.BaseDAO">
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="idGeneratorService" ref="idGeneratorService"></property>
 	</bean>

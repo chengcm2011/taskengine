@@ -11,10 +11,10 @@ import org.quartz.JobDataMap;
  */
 public class TestTask extends AbstractTaskImpl {
 
-	@Override
-	public String doexecute(JobDataMap jobDataMap) throws BusinessException {
+    @Override
+    public String doexecute(JobDataMap jobDataMap) throws BusinessException {
 //		Predef.p(jobDataMap);
-		Predef.p("get conf sdsdsdsd: " + ConfClient.getInstance().get("sdsdsdsd", "没有获取到配置"));
-		return SUCCESS;
-	}
+        Predef.p("get conf sdsdsdsd: " + ConfClient.getInstance().get("sdsdsdsd", "没有获取到配置"));
+        return SUCCESS;
+    }
 }

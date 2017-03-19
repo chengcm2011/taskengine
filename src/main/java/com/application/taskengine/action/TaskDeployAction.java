@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by cheng on 16/6/8.
+ * 任务部署
  */
 @Controller
 @RequestMapping("/management/task/")
@@ -61,7 +61,7 @@ public class TaskDeployAction extends BusinessCommonAction {
     }
 
     @RequestMapping("deploy/edit")
-    public String detail(HttpServletRequest request, String pk, Model model) throws Exception {
+    public String detail(String pk, Model model) throws Exception {
         if (StringUtils.isNotBlank(pk)) {
             TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, pk);
             TaskPluginModel taskPluginModel = dataBaseService.queryByPK(TaskPluginModel.class, taskDeployModel.getPkTaskplugin());

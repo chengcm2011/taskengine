@@ -9,17 +9,17 @@ import org.quartz.TriggerKey;
  *
  */
 public class ScheduleTaskVo {
-    private String jobCode ;
-    private String jobGroupCode ;
+    private String jobCode;
+    private String jobGroupCode;
 
-    private JobKey jobKey ;
-    private TriggerKey triggerKey ;
+    private JobKey jobKey;
+    private TriggerKey triggerKey;
 
-    private String cronExpression ;
-    private String jobClass ;
+    private String cronExpression;
+    private String jobClass;
 
-    private JobDetail jobDetail ;
-    private Trigger trigger ;
+    private JobDetail jobDetail;
+    private Trigger trigger;
 
     private Trigger.TriggerState triggerState;
 

@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 用于测试、准生产、生产环境 -->
 <configuration>
-	<!-- 设置变量： <property> -->
-	<property name="log_file_path" value="/Users/cheng/logs/task/" />
-	<!-- 设置上下文名称：<contextName> -->
-	<contextName>ams</contextName>
-	<!-- 业务日志  -->
-	<appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${log_file_path}info.log.%d{yyyy-MM-dd}</fileNamePattern>
-		</rollingPolicy>
-		<encoder>
-			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n</pattern>
-		</encoder>
-	</appender>
-	<!-- 错误日志 -->
-	<appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${log_file_path}error.log.%d{yyyy-MM-dd}</fileNamePattern>
-		</rollingPolicy>
-		<encoder>
-			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%msg%n</pattern>
-		</encoder>
-	</appender>
-	<!-- 接口提供方日志 -->
-	<appender name="TASK" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${log_file_path}task.log.%d{yyyy-MM-dd}</fileNamePattern>
-		</rollingPolicy>
-		<encoder>
-			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%msg%n</pattern>
-		</encoder>
-	</appender>
+    <!-- 设置变量： <property> -->
+    <property name="log_file_path" value="/Users/cheng/logs/task/"/>
+    <!-- 设置上下文名称：<contextName> -->
+    <contextName>ams</contextName>
+    <!-- 业务日志  -->
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log_file_path}info.log.%d{yyyy-MM-dd}</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!-- 错误日志 -->
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log_file_path}error.log.%d{yyyy-MM-dd}</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%msg%n</pattern>
+        </encoder>
+    </appender>
+    <!-- 接口提供方日志 -->
+    <appender name="TASK" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log_file_path}task.log.%d{yyyy-MM-dd}</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%msg%n</pattern>
+        </encoder>
+    </appender>
 
-	<logger name="ERROR_LOGGER" level="WARN" additivity="false">
-		<appender-ref ref="ERROR"/>
-	</logger>
-	<logger name="TASK_LOGGER" level="INFO" additivity="false">
-		<appender-ref ref="TASK"/>
-	</logger>
+    <logger name="ERROR_LOGGER" level="WARN" additivity="false">
+        <appender-ref ref="ERROR"/>
+    </logger>
+    <logger name="TASK_LOGGER" level="INFO" additivity="false">
+        <appender-ref ref="TASK"/>
+    </logger>
 
-	<appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
-		<encoder>
-			<pattern>%d{H:mm:ss.SSS} %-5level [%logger{16}] %msg%n</pattern>
-		</encoder>
-	</appender>
-	<root level="INFO">
-		<appender-ref ref="Console" />
-		<appender-ref ref="INFO"></appender-ref>
-	</root>
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{H:mm:ss.SSS} %-5level [%logger{16}] %msg%n</pattern>
+        </encoder>
+    </appender>
+    <root level="INFO">
+        <appender-ref ref="Console"/>
+        <appender-ref ref="INFO"></appender-ref>
+    </root>
 
 </configuration>

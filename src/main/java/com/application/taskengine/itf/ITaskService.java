@@ -2,10 +2,11 @@ package com.application.taskengine.itf;
 
 import com.application.taskengine.model.TaskDeployModel;
 import com.cheng.lang.IService;
+import com.cheng.lang.PageVO;
 import com.cheng.lang.exception.BusinessException;
 
 /**
- * Created by cheng on 16/5/14.
+ *
  */
 public interface ITaskService extends IService {
 
@@ -20,7 +21,6 @@ public interface ITaskService extends IService {
     public boolean runOnceTask(TaskDeployModel taskDeployModel);
 
 
-
     public boolean resume(TaskDeployModel taskDeployModel);
 
     public boolean pause(TaskDeployModel taskDeployModel);
@@ -28,4 +28,6 @@ public interface ITaskService extends IService {
     public void disableTask(TaskDeployModel taskDeployModel);
 
     public void enableTask(TaskDeployModel taskDeployModel);
+
+    public PageVO getTaskLog(String pkTaskdeploy, PageVO pageVO);
 }

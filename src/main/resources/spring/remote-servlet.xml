@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans>
-       <!-- 接口的具体实现类 -->
-       <bean id="impl" class="com.wtang.isay.IWelcomeImpl" />
-       <!-- 使用Spring的HessianServie做代理 -->
-       <bean name="/remoteservice/welcome"  class="org.springframework.remoting.caucho.HessianServiceExporter">
-              <!-- service引用具体的实现实体Bean-->
-              <property name="service" ref="impl" />
-              <property name="serviceInterface" value="com.wtang.isay.IWelcome" />
-       </bean>
+    <!-- 接口的具体实现类 -->
+    <bean id="impl" class="com.wtang.isay.IWelcomeImpl"/>
+    <!-- 使用Spring的HessianServie做代理 -->
+    <bean name="/remoteservice/welcome" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <!-- service引用具体的实现实体Bean-->
+        <property name="service" ref="impl"/>
+        <property name="serviceInterface" value="com.wtang.isay.IWelcome"/>
+    </bean>
 
-       <!-- 可以配置多个HessianServiceExporter代理Bean -->
+    <!-- 可以配置多个HessianServiceExporter代理Bean -->
 </beans>

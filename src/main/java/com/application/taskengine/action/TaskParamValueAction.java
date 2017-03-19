@@ -35,15 +35,15 @@ public class TaskParamValueAction extends BusinessCommonAction {
         pageVO.setCondition(" dr=0 and pkTaskdeploy ='" + pk + "'");
         pageVO = dataBaseService.queryByPage(TaskParamValueModel.class, pageVO);
         if (pageVO.getData() == null || pageVO.getData().isEmpty()) {
-             //初始化参数
+            //初始化参数
             pageVO.setCondition(" dr=0 and pkTaskplugin ='" + deployModel.getPkTaskplugin() + "'");
             pageVO = dataBaseService.queryByPage(TaskParamKeyModel.class, pageVO);
             model.addAttribute(ITEM, deployModel);
             model.addAttribute("pageVO", pageVO);
             model.addAttribute("pk", pk);
-            List<TaskParamKeyModel> taskParamKeyModels = (List<TaskParamKeyModel>)pageVO.getData();
+            List<TaskParamKeyModel> taskParamKeyModels = (List<TaskParamKeyModel>) pageVO.getData();
             List<TaskParamValueModel> taskParamValueModels = new ArrayList<>();
-            for (int i=0;i<taskParamKeyModels.size();i++){
+            for (int i = 0; i < taskParamKeyModels.size(); i++) {
                 TaskParamValueModel taskParamValueModel = new TaskParamValueModel();
                 taskParamValueModel.setParamkey(taskParamKeyModels.get(i).getParamkey());
                 taskParamValueModel.setParamname(taskParamKeyModels.get(i).getParamname());
@@ -71,7 +71,7 @@ public class TaskParamValueAction extends BusinessCommonAction {
         sqlParameter.addParam(pkTaskdeploy);
         sqlParameter.addParam(pkTaskparamkey);
         TaskParamValueModel item = dataBaseService.queryOneByClause(TaskParamValueModel.class, "pkTaskdeploy=? and dr=0 and pkTaskparamkey  =?", sqlParameter);
-        if(item==null){
+        if (item == null) {
             item = new TaskParamValueModel();
         }
         TaskParamKeyModel taskParamKeyModel = dataBaseService.queryByPK(TaskParamKeyModel.class, pkTaskparamkey);

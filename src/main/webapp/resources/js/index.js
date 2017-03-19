@@ -1,42 +1,38 @@
-
 window.onload = function () {
-	
-	//µÇÂ¼¿ò
-	var login = S().getId('login');
-	var screen = S().getId('screen');
-	var w = S().getId('login').css('width');
-	var h = S().getId('login').css('height');
-	//alert(w+""+h);
-	login.center(w.substr(0,3),h.substr(0,3)).resize(function () {
-		if (login.css('display') == 'block') {
-			screen.lock();
-		}
-	});
-	S().getClass('login').click(function () {
-		login.center(w.substr(0,3),h.substr(0,3));
-		login.css('display', 'block');
-		screen.lock();
-	});
-	S().getClass('close').click(function () {
-		login.css('display', 'none');
-		screen.unlock();
-	});
-	
-	//ÍÏ×§
-	login.drag();
-	
-	//var oDiv = document.getElementById('login');
-	
-	//ÍÏ×§Á÷³Ì£º
-	//1.ÏÈµãÏÂÈ¥
-	//2.ÔÚµãÏÂµÄÎïÌå±»Ñ¡ÖÐ£¬½øÐÐmoveÒÆ¶¯
-	//3.Ì§ÆðÊó±ê£¬Í£Ö¹ÒÆ¶¯
-	//µã»÷Ä³¸öÎïÌå£¬ÓÃoDiv¼´¿É£¬moveºÍupÊÇÈ«¾ÖÇøÓò£¬Ò²¾ÍÊÇÕû¸öÎÄµµÍ¨ÓÃ£¬Ó¦¸ÃÓÃdocument
+
+    //ï¿½ï¿½Â¼ï¿½ï¿½
+    var login = S().getId('login');
+    var screen = S().getId('screen');
+    var w = S().getId('login').css('width');
+    var h = S().getId('login').css('height');
+    //alert(w+""+h);
+    login.center(w.substr(0, 3), h.substr(0, 3)).resize(function () {
+        if (login.css('display') == 'block') {
+            screen.lock();
+        }
+    });
+    S().getClass('login').click(function () {
+        login.center(w.substr(0, 3), h.substr(0, 3));
+        login.css('display', 'block');
+        screen.lock();
+    });
+    S().getClass('close').click(function () {
+        login.css('display', 'none');
+        screen.unlock();
+    });
+
+    //ï¿½ï¿½×§
+    login.drag();
+
+    //var oDiv = document.getElementById('login');
+
+    //ï¿½ï¿½×§ï¿½ï¿½ï¿½Ì£ï¿½
+    //1.ï¿½Èµï¿½ï¿½ï¿½È¥
+    //2.ï¿½Úµï¿½ï¿½Âµï¿½ï¿½ï¿½ï¿½å±»Ñ¡ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½moveï¿½Æ¶ï¿½
+    //3.Ì§ï¿½ï¿½ï¿½ï¿½ê£¬Í£Ö¹ï¿½Æ¶ï¿½
+    //ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½å£¬ï¿½ï¿½oDivï¿½ï¿½ï¿½É£ï¿½moveï¿½ï¿½upï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½Í¨ï¿½Ã£ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½document
 
 
-	
-
-	
 };
 
 

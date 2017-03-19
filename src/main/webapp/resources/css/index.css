@@ -1,220 +1,236 @@
 ﻿@charset "utf-8";
 
 /* CSS Document */
-html{
-	overflow: auto;
+html {
+    overflow: auto;
 }
-#search{
-	padding-top: 220px;
-	height: 170px;
-	width: 725px;
-	margin-left: auto;
-	margin-right: auto;
-	font-family: "宋体";
-	 
+
+#search {
+    padding-top: 220px;
+    height: 170px;
+    width: 725px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: "宋体";
+
 }
+
 #search table {
-	height: 100px;
-	width: 720px;
-	margin-right: auto;
-	margin-left: auto;
-	text-align: center;
+    height: 100px;
+    width: 720px;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
 }
+
 .searchInput {
-	height: 45px;
-	width: 80%;
-	font: 21px "宋体";
-	color: #000;
-	padding-left: 10px;
-	border-radius: 2px;
-	background:rgba(255, 255, 255, 0.1) none repeat scroll 0 0 !important;
-	border: 1px solid rgba(255, 255, 255, 0.1)!important;
-	border-radius: 2px;
+    height: 45px;
+    width: 80%;
+    font: 21px "宋体";
+    color: #000;
+    padding-left: 10px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.1) none repeat scroll 0 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 2px;
 }
 
 .searchInput:hover {
-	font-weight: bold;
-	border: 1px solid rgba(255, 255, 255, 0.5)!important;
-	background:rgba(255, 255, 255, 0.4) none repeat scroll 0 0 !important;
+    font-weight: bold;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    background: rgba(255, 255, 255, 0.4) none repeat scroll 0 0 !important;
 }
+
 .searchBtn {
-	min-width: 120px;
-	height: 40px;
-	line-height: 29px;
-	padding: 0px 8px 0px 8px;
-	border: 1px solid rgba(255, 255, 255, 0.1)!important;
-	text-align: center;
-	color: #666;
-	font: bold 21px arial, sans-serif;
-	border-radius: 2px;
-	cursor: pointer;
-	background:rgba(255, 255, 255, 0.1) none repeat scroll 0 0 !important;
-	border: 1px solid rgba(255, 255, 255, 0.1)!important;
-	border-radius: 2px;
+    min-width: 120px;
+    height: 40px;
+    line-height: 29px;
+    padding: 0px 8px 0px 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    text-align: center;
+    color: #666;
+    font: bold 21px arial, sans-serif;
+    border-radius: 2px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1) none repeat scroll 0 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 2px;
 }
+
 .searchBtn:hover {
-	border: 1px solid rgba(255, 255, 255, 0.5)!important;
-	color: #000;
-	border: 1px solid rgba(255, 255, 255, 0.5)!important;
-	background:rgba(255, 255, 255, 0.4) none repeat scroll 0 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    color: #000;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    background: rgba(255, 255, 255, 0.4) none repeat scroll 0 0 !important;
 }
 
-
-
-
-
-
-
-
-#tip{
-	height: 200px;
-	width: 550px;
-	font-family: "黑体";
-	color: #000;
-	margin-left: auto;
-	margin-right: auto; 
-	z-index: 1;
-	}
-#tip ul li{
-	height: 30px;
-	background:rgba(255, 255, 255, 0.1) none repeat scroll 0 0 !important;
-	margin-top: 1px;
-	margin-right: 1px;
-	margin-bottom: 3px;
-	margin-left: 1px;
-	border-radius: 4px;
-	padding-top: 15px;
-	padding-right: 1px;
-	padding-bottom: 1px;
-	padding-left: 15px;
-	color: #555;
-	display:block;
-	font-weight: 500;
-	}
-#tip ul li:hover{
-	height: 30px;
-	background:rgba(255, 255, 255, 0.8) none repeat scroll 0 0 !important;
-	margin-top: 1px;
-	margin-right: 1px;
-	margin-bottom: 3px;
-	margin-left: 1px;
-	border-radius: 4px;
-	cursor: pointer;/***/
-	padding-top: 15px;
-	padding-right: 1px;
-	padding-bottom: 1px;
-	padding-left: 15px;
-	color: #000;
-	font-weight: bold;
+#tip {
+    height: 200px;
+    width: 550px;
+    font-family: "黑体";
+    color: #000;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 1;
 }
-#tip ul li a.tipclose{
-	display:block;
-	width: 14px;
-	margin-left: 5px;
-	float: right;
-	background-image: url(../images/IDR_CLOSE_DIALOG.png);
-	height: 14px;
+
+#tip ul li {
+    height: 30px;
+    background: rgba(255, 255, 255, 0.1) none repeat scroll 0 0 !important;
+    margin-top: 1px;
+    margin-right: 1px;
+    margin-bottom: 3px;
+    margin-left: 1px;
+    border-radius: 4px;
+    padding-top: 15px;
+    padding-right: 1px;
+    padding-bottom: 1px;
+    padding-left: 15px;
+    color: #555;
+    display: block;
+    font-weight: 500;
 }
-#tip ul li a.tipclose:hover{
-	display:block;
-	width: 14px;
-	margin-left: 5px;
-	float: right;
-	background-color: #FFF;
-	background-image: url(../images/IDR_CLOSE_DIALOG_H.png);
-	height: 14px;
+
+#tip ul li:hover {
+    height: 30px;
+    background: rgba(255, 255, 255, 0.8) none repeat scroll 0 0 !important;
+    margin-top: 1px;
+    margin-right: 1px;
+    margin-bottom: 3px;
+    margin-left: 1px;
+    border-radius: 4px;
+    cursor: pointer; /***/
+    padding-top: 15px;
+    padding-right: 1px;
+    padding-bottom: 1px;
+    padding-left: 15px;
+    color: #000;
+    font-weight: bold;
 }
-#toolbar{
-	position: fixed;
-	height: 96px;
-	width: 40px;
-	right: 1px;
-	top: 200px;
-	z-index: 2;
+
+#tip ul li a.tipclose {
+    display: block;
+    width: 14px;
+    margin-left: 5px;
+    float: right;
+    background-image: url(../images/IDR_CLOSE_DIALOG.png);
+    height: 14px;
 }
+
+#tip ul li a.tipclose:hover {
+    display: block;
+    width: 14px;
+    margin-left: 5px;
+    float: right;
+    background-color: #FFF;
+    background-image: url(../images/IDR_CLOSE_DIALOG_H.png);
+    height: 14px;
+}
+
+#toolbar {
+    position: fixed;
+    height: 96px;
+    width: 40px;
+    right: 1px;
+    top: 200px;
+    z-index: 2;
+}
+
 #toolbar img.login:hover {
-background: rgba(255, 255, 255, 0.8) none repeat scroll;
+    background: rgba(255, 255, 255, 0.8) none repeat scroll;
 }
+
 #toolbar img.login1:hover {
-background: rgba(255, 255, 255, 0.8) none repeat scroll;
+    background: rgba(255, 255, 255, 0.8) none repeat scroll;
 }
+
 #login {
-	width: 450px;
-	height: 250px;
-	border: 1px solid #ccc;
-	position: absolute;
-	display: none;
-	z-index: 9999;
-	background: #fff;
+    width: 450px;
+    height: 250px;
+    border: 1px solid #ccc;
+    position: absolute;
+    display: none;
+    z-index: 9999;
+    background: #fff;
 }
+
 #login h2 {
-	height: 40px;
-	line-height: 40px;
-	text-align: center;
-	font-size: 14px;
-	letter-spacing: 1px;
-	color: #666;
-	margin: 0;
-	padding: 0;
-	border-bottom: 1px solid #ccc;
-	margin: 0 0 20px 0;
-	cursor: move;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: #666;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #ccc;
+    margin: 0 0 20px 0;
+    cursor: move;
 }
+
 #login h2 img {
-	float:right;
-	position:relative;
-	top:14px;
-	right:8px;
-	cursor:pointer;
+    float: right;
+    position: relative;
+    top: 14px;
+    right: 8px;
+    cursor: pointer;
 }
+
 #login div.user, #login div.pass {
-	font-size:14px;
-	color:#666;
-	padding:5px 0;
-	text-align:center;
+    font-size: 14px;
+    color: #666;
+    padding: 5px 0;
+    text-align: center;
 }
+
 #login input.text {
-	width: 300px;
-	height: 35px;
-	border: 1px solid #ccc;
-	background: #fff;
-	font-size: 16px;
-	padding-left: 5px;
+    width: 300px;
+    height: 35px;
+    border: 1px solid #ccc;
+    background: #fff;
+    font-size: 16px;
+    padding-left: 5px;
 }
+
 #login .button {
-	text-align: right;
-	padding-top: 15px;
-	padding-right: 50px;
-	padding-bottom: 15px;
+    text-align: right;
+    padding-top: 15px;
+    padding-right: 50px;
+    padding-bottom: 15px;
 }
+
 #login input.submit {
-	min-width: 120px;
-	height: 40px;
-	line-height: 29px;
-	padding: 0px 4px 0px 4px;
-	border: 1px solid rgba(255, 255, 255, 0.1)!important;
-	text-align: center;
-	color: #CCC;
-	font: bold 21px arial, sans-serif;
-	border-radius: 2px;
-	cursor: pointer;
-	background: rgba(255, 255, 255, 0.1) none repeat scroll 0 0 !important;
+    min-width: 120px;
+    height: 40px;
+    line-height: 29px;
+    padding: 0px 4px 0px 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    text-align: center;
+    color: #CCC;
+    font: bold 21px arial, sans-serif;
+    border-radius: 2px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1) none repeat scroll 0 0 !important;
 }
+
 #login input.submit:hover {
-	color: #000;
-	border: 1px solid rgba(204,204,204,0.9)!important;
-	background: rgba(255, 255, 255, 0.4) none repeat scroll 0 0 !important;
-	font-weight: bold;
+    color: #000;
+    border: 1px solid rgba(204, 204, 204, 0.9) !important;
+    background: rgba(255, 255, 255, 0.4) none repeat scroll 0 0 !important;
+    font-weight: bold;
 }
+
 #login .other {
-	text-align: right;
-	padding-top: 0px;
-	padding-right: 10px;
-	padding-left: 10px;
+    text-align: right;
+    padding-top: 0px;
+    padding-right: 10px;
+    padding-left: 10px;
 }
+
 #login .other a {
-	color: #CCC;
+    color: #CCC;
 }
+
 #login .other a:hover {
-	color: #666;
+    color: #666;
 }

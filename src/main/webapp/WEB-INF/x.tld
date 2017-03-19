@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
-	<tlib-version>1.0</tlib-version>
-	<short-name>x</short-name>
-	<uri>/WEB-INF/x.tld</uri>
+<taglib xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1"
+        xmlns="http://java.sun.com/xml/ns/javaee"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
+    <tlib-version>1.0</tlib-version>
+    <short-name>x</short-name>
+    <uri>/WEB-INF/x.tld</uri>
 
-	<tag>
-		<name>block</name>
-		<tag-class>htz.util.infrastructure.web.BlockTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>name</name>
-			<required>true</required>
-			<rtexprvalue>false</rtexprvalue>
-			<type>java.lang.String</type>
-		</attribute>
-	</tag>
-	<tag>
-		<name>content</name>
-		<tag-class>htz.util.infrastructure.web.BlockContentTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>name</name>
-			<required>true</required>
-			<rtexprvalue>false</rtexprvalue>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<name>append</name>
-			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-	</tag>
+    <tag>
+        <name>block</name>
+        <tag-class>htz.util.infrastructure.web.BlockTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <name>content</name>
+        <tag-class>htz.util.infrastructure.web.BlockContentTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <name>append</name>
+            <required>false</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+    </tag>
 
 </taglib>

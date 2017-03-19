@@ -1,7 +1,7 @@
 package com.application.taskengine;
 
 import com.application.taskengine.model.TaskLogModel;
-import com.cheng.jdbc.itf.IDataBaseService;
+import com.cheng.jdbcspring.IDataBaseService;
 import com.cheng.lang.TimeToolkit;
 import com.cheng.lang.exception.BusinessException;
 import com.cheng.util.SystemInfoUtil;
@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
 
 public abstract class AbstractTaskImpl implements StatefulJob {
 
-    public static  final String SUCCESS = "success" ;
-    public static  final String ERROR = "error" ;
+    public static final String SUCCESS = "success";
+    public static final String ERROR = "error";
     protected Logger logger = LoggerFactory.getLogger("TASK_LOGGER");
 
     public void execute(JobExecutionContext arg0) throws JobExecutionException {
@@ -38,7 +38,7 @@ public abstract class AbstractTaskImpl implements StatefulJob {
             taskLogModel.setIssuccess(false);
             throw new JobExecutionException(e);
         } finally {
-            taskLogModel.setRuntime((System.currentTimeMillis() - b)/1000 + "s");
+            taskLogModel.setRuntime((System.currentTimeMillis() - b) / 1000 + "s");
             taskLogModel.setVdef2(TimeToolkit.getCurrentTs());
             logger.info("task run end time ：" + taskLogModel.getVdef2());
             try {

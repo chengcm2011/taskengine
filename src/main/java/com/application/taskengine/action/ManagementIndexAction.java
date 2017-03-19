@@ -15,12 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 public class ManagementIndexAction extends BusinessCommonAction {
 
 
-	@RequestMapping("/index")
-	public String index(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+    @RequestMapping("/index")
+    public String index(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 //		if (!login(request, response)) {
 //			return redirect(response, "/login?url=management/index");
 //		}
 //		String sql = " select * from task_taskparamkey " ;
-		return "management/index";
-	}
+        return "management/index";
+    }
 }

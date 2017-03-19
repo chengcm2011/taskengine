@@ -8,27 +8,28 @@ import com.cheng.common.UserSessionVO;
  */
 public class TaskSession extends UserSessionVO {
 
-	private int id ;
-	private String showname ;
-	@Override
-	public Object getPrimaryKeyValue() {
-		return id;
-	}
+    private int id;
+    private String showname;
 
-	public String getShowname() {
-		return showname;
-	}
+    @Override
+    public Object getPrimaryKeyValue() {
+        return id;
+    }
 
-	public void setShowname(String showname) {
-		this.showname = showname;
-	}
+    public String getShowname() {
+        return showname;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public void setShowname(String showname) {
+        this.showname = showname;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
 }

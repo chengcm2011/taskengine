@@ -1,183 +1,208 @@
 ﻿@charset "utf-8";
 
 /* CSS Document */
-html{
-	overflow: auto;
+html {
+    overflow: auto;
 }
-body{
-	margin:0px;
-	font-size:20px
+
+body {
+    margin: 0px;
+    font-size: 20px
 }
-#back{
-	 background-color:#FFF;
+
+#back {
+    background-color: #FFF;
 }
-#header .first{
-	text-align:left;
-	margin-top:10px;
-	margin-left:20px;
+
+#header .first {
+    text-align: left;
+    margin-top: 10px;
+    margin-left: 20px;
 }
-#header a{
-	text-decoration:none;
-	font-size:18px;
-	color:#CCC;
-	
+
+#header a {
+    text-decoration: none;
+    font-size: 18px;
+    color: #CCC;
+
 }
-#header a:hover{
-	font-size:18px;
-	color:#55CC99;
+
+#header a:hover {
+    font-size: 18px;
+    color: #55CC99;
 }
-#content{
-	margin-top: 130px;
-	margin-left: auto;
-	margin-right: auto;
-	width:800px;
-	height:450px;
-	
+
+#content {
+    margin-top: 130px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 800px;
+    height: 450px;
+
 }
-#logincontent{
-	margin-top: 180px;
-	margin-left: auto;
-	margin-right: auto;
-	width:300px;
-	height:350px;
-	
+
+#logincontent {
+    margin-top: 180px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    height: 350px;
+
 }
-#logo{
-	width: 450px;
-	height: 400px;
-	float: left;
-	background-color: #CCC;
-	background-image: url(../images/logo.jpg);
+
+#logo {
+    width: 450px;
+    height: 400px;
+    float: left;
+    background-color: #CCC;
+    background-image: url(../images/logo.jpg);
 }
-#registerform{
-	width:300px;
-	height:400px;
-	float:right;
-	padding-left:10px;
-	padding-top:0px;
+
+#registerform {
+    width: 300px;
+    height: 400px;
+    float: right;
+    padding-left: 10px;
+    padding-top: 0px;
 }
-#registerform .reg_input_text{
-	font-size: 16px;
-	color: #AAA;
-	font-family: "新宋体";
-	padding: 2px;
-	height: 35px;
-	width: 250px;
-	border: 1px solid #DDD;
-	padding-left:10px;
-	margin-top: 3px;
-	margin-bottom: 3px;
-	border-radius: 5px 5px 5px 5px;
+
+#registerform .reg_input_text {
+    font-size: 16px;
+    color: #AAA;
+    font-family: "新宋体";
+    padding: 2px;
+    height: 35px;
+    width: 250px;
+    border: 1px solid #DDD;
+    padding-left: 10px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    border-radius: 5px 5px 5px 5px;
 }
-#registerform .img{
-	height: 35px;
-	width: 210px;
-	
+
+#registerform .img {
+    height: 35px;
+    width: 210px;
+
 }
-#registerform span{
-	font-size: 12px;
+
+#registerform span {
+    font-size: 12px;
 }
-#registerform .reg_input_text_button{
-	color: #fff;
-	width: 265px;
-	height: 45px;
-	border: 0;
-	font-size: 18px;
-	cursor: pointer;
-	margin-top:10px;
-	border-radius: 5px 5px 5px 5px;
-	background-color:#d14836;
-	background-image: none;
-	background-repeat: repeat;
-	 
+
+#registerform .reg_input_text_button {
+    color: #fff;
+    width: 265px;
+    height: 45px;
+    border: 0;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px 5px 5px 5px;
+    background-color: #d14836;
+    background-image: none;
+    background-repeat: repeat;
+
 }
-#error{
-	height:20px;
-	margin-top:2px;
-	margin-left:5px;
-	color:#F00;
+
+#error {
+    height: 20px;
+    margin-top: 2px;
+    margin-left: 5px;
+    color: #F00;
 }
-#error span{
-	display:none;
+
+#error span {
+    display: none;
 }
-#tologin a{
-	font-size: 14px;
-	cursor:pointer;
-	text-decoration:none;
-	color:#999;
+
+#tologin a {
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #999;
 }
-#tologin a:hover{
-	font-size: 14px;
-	cursor:pointer;
-	text-decoration:none;
-	color:#55CC99;
+
+#tologin a:hover {
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #55CC99;
 }
-#toregister a{
-	font-size: 14px;
-	cursor:pointer;
-	text-decoration:none;
-	color:#999;
+
+#toregister a {
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #999;
 }
-#toregister a:hover{
-	font-size: 14px;
-	cursor:pointer;
-	text-decoration:none;
-	color:#55CC99;
+
+#toregister a:hover {
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #55CC99;
 }
-#loginform{
-	width: 280px;
-	height: 400px;
-	padding-left: 10px;
-	padding-top: 0px;
+
+#loginform {
+    width: 280px;
+    height: 400px;
+    padding-left: 10px;
+    padding-top: 0px;
 }
-#loginform .reg_input_text{
-	font-size: 16px;
-	color: #AAA;
-	font-family: "新宋体";
-	padding: 2px;
-	height: 35px;
-	width: 266px;
-	border: 1px solid #DDD;
-	padding-left:10px;
-	margin-top: 3px;
-	margin-bottom: 3px;
-	border-radius: 5px 5px 5px 5px;
+
+#loginform .reg_input_text {
+    font-size: 16px;
+    color: #AAA;
+    font-family: "新宋体";
+    padding: 2px;
+    height: 35px;
+    width: 266px;
+    border: 1px solid #DDD;
+    padding-left: 10px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    border-radius: 5px 5px 5px 5px;
 }
-#loginform .img{
-	height: 40px;
-	width: 210px;
-	
+
+#loginform .img {
+    height: 40px;
+    width: 210px;
+
 }
-#loginform span{
-	font-size: 12px;
+
+#loginform span {
+    font-size: 12px;
 }
-#loginform .reg_input_text_button{
-	color: #fff;
-	width: 280px;
-	height: 45px;
-	border: 0;
-	font-size: 18px;
-	cursor: pointer;
-	margin-top:5px;
-	border-radius: 5px 5px 5px 5px;
-	background-color:#55CC99;
-	background-image: none;
-	background-repeat: repeat;
-	 
+
+#loginform .reg_input_text_button {
+    color: #fff;
+    width: 280px;
+    height: 45px;
+    border: 0;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 5px;
+    border-radius: 5px 5px 5px 5px;
+    background-color: #55CC99;
+    background-image: none;
+    background-repeat: repeat;
+
 }
-#loginform .user_value_select{
-	padding: 4px;
-	margin-bottom: 0;
-	font-size:21px;
-	width: 280px;
-	color: #999;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
-	border-radius: 2px;
-	border: #CCC 1px solid;
-	margin-top: 2px;
-	background: white;
-	position: relative;
-	overflow: hidden;
-	height: 43px;
+
+#loginform .user_value_select {
+    padding: 4px;
+    margin-bottom: 0;
+    font-size: 21px;
+    width: 280px;
+    color: #999;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    border: #CCC 1px solid;
+    margin-top: 2px;
+    background: white;
+    position: relative;
+    overflow: hidden;
+    height: 43px;
 }

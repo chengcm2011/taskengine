@@ -29,15 +29,15 @@ public class TaskStatusActiom extends BusinessCommonAction {
     @RequestMapping("index")
     public String index(HttpServletRequest request, Model model) throws Exception {
 
-        List<Map<String,Object>> data = DynamicSchedulerFactory.getJobList();
-        if(data==null || data.isEmpty()){
+        List<Map<String, Object>> data = DynamicSchedulerFactory.getJobList();
+        if (data == null || data.isEmpty()) {
             return "/management/task/status/index";
         }
-        for(Map<String,Object> item:data){
+        for (Map<String, Object> item : data) {
             TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, Predef.toStr(item.get("jobCode")));
-            item.put("jobName",taskDeployModel.getTaskname());
+            item.put("jobName", taskDeployModel.getTaskname());
         }
-        model.addAttribute(DATA,data);
+        model.addAttribute(DATA, data);
         return "/management/task/status/index";
     }
 
