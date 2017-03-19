@@ -9,8 +9,6 @@ import com.cheng.lang.exception.BusinessException;
 import com.cheng.util.Predef;
 import com.cheng.web.AbstractCommonAction;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,11 +25,8 @@ public class BusinessCommonAction extends AbstractCommonAction {
 
     public static final String PAGE = "page";
     public static final String Action = "action";
-    public static final String Login = "login";
-    public static final String Register = "register";
     @Resource
     public IDataBaseService dataBaseService;
-    protected Logger logger = LoggerFactory.getLogger(BusinessCommonAction.class);
 
     public BusinessCommonAction() {
     }
