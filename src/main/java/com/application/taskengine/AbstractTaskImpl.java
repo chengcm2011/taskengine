@@ -30,9 +30,9 @@ public abstract class AbstractTaskImpl implements StatefulJob {
         logger.info("task run begin time ：" + taskLogModel.getVdef1());
         long b = System.currentTimeMillis();
         try {
-            Object object = doexecute(tt.getJobDetail().getJobDataMap());
+            String object = doexecute(tt.getJobDetail().getJobDataMap());
             taskLogModel.setIssuccess(true);
-            taskLogModel.setReturnstr(object.toString());
+            taskLogModel.setReturnstr(object);
             logger.info("task run result ：" + taskLogModel.getReturnstr());
         } catch (Exception e) {
             taskLogModel.setIssuccess(false);

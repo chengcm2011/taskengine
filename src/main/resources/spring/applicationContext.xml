@@ -99,4 +99,6 @@
 
 	<bean class="com.cheng.web.ApplicationServiceLocator"></bean>
 
+	<bean id="httpClientUtils" class="com.cheng.util.HttpClientUtils"/>
+
 </beans>

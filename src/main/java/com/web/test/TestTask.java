@@ -2,7 +2,6 @@ package com.web.test;
 
 import com.application.taskengine.AbstractTaskImpl;
 import com.cheng.lang.exception.BusinessException;
-import com.cheng.util.Predef;
 import org.quartz.JobDataMap;
 
 /**
@@ -12,8 +11,16 @@ public class TestTask extends AbstractTaskImpl {
 
     @Override
     public String doexecute(JobDataMap jobDataMap) throws BusinessException {
-        Predef.p(jobDataMap);
-//        Predef.p("get conf sdsdsdsd: " + ConfClient.getInstance().get("sdsdsdsd", "没有获取到配置"));
+//        IDataBaseService dataBaseService = ApplicationServiceLocator.getBean(IDataBaseService.class);
+//        List<String> d = FileUtil.readFileByLines("D:\\用户账户\\Desktop\\init.txt");
+//        for (String dd:d){
+//            AccountNOModel accountNOModel = new AccountNOModel();
+//            accountNOModel.setSuccess(UFBoolean.FALSE);
+//            accountNOModel.setTs(TimeToolkit.getCurrentTs());
+//            accountNOModel.setDr(0);
+//            accountNOModel.setAid(Predef.toInt(dd,0));
+//            dataBaseService.insert(accountNOModel);
+//        }
         return SUCCESS;
     }
 }
