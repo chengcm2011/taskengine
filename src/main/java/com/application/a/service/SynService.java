@@ -25,7 +25,7 @@ public class SynService implements ISynService {
 
     public String syn(AccountNOModel accountNOModel) {
         try {
-            String msf = httpClientUtils.httpGet("http://inventory.t.ziroom.com/backend/api/houseaccountno/initmq2?ids=" + accountNOModel.getAid());
+            String msf = httpClientUtils.httpGet("http://inventory.ziroom.com/backend/api/houseaccountno/initmq2?ids=" + accountNOModel.getAid());
             accountNOModel.setSuccess(UFBoolean.TRUE);
             accountNOModel.setRemsg(msf);
         } catch (Exception e) {
