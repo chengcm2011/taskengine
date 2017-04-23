@@ -15,6 +15,7 @@
 		<build.skipTests>true</build.skipTests>
 		<source.encoding>UTF-8</source.encoding>
 		<conf.version>0.0.1</conf.version>
+		<latest.release.version>2.1.0</latest.release.version>
 	</properties>
 
 	<dependencies>
@@ -93,6 +94,24 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.34</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.dangdang/elastic-job-core -->
+		<dependency>
+			<groupId>com.dangdang</groupId>
+			<artifactId>elastic-job</artifactId>
+			<version>${latest.release.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.dangdang</groupId>
+			<artifactId>elastic-job-lite-core</artifactId>
+			<version>${latest.release.version}</version>
+		</dependency>
+
+		<!-- 使用springframework自定义命名空间时引入 -->
+		<dependency>
+			<groupId>com.dangdang</groupId>
+			<artifactId>elastic-job-lite-spring</artifactId>
+			<version>${latest.release.version}</version>
+		</dependency>
 	</dependencies>
 
 
@@ -144,6 +163,20 @@
 			<id>JBossRepo_repository</id>
 			<name>JBossRepo</name>
 			<url>https://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+		</repository>
+		<repository>
+			<id>alfresco-maven-repo</id>
+			<url>https://maven.alfresco.com/nexus/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>java-net</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
 		</repository>
 	</repositories>
 </project>
