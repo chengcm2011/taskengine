@@ -35,6 +35,6 @@ public class Mian {
         // 定义SCRIPT类型配置
         ScriptJobConfiguration scriptJobConfig = new ScriptJobConfiguration(scriptCoreConfig, "test.sh");
         // 定义Lite作业根配置
-//        JobRootConfiguration scriptJobRootConfig = LiteJobConfiguration.newBuilder(scriptCoreConfig).build();
+        JobRootConfiguration scriptJobRootConfig = LiteJobConfiguration.newBuilder(scriptJobConfig).build();
     }
 }

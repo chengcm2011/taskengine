@@ -30,4 +30,6 @@ public interface ITaskService extends IService {
     public void enableTask(TaskDeployModel taskDeployModel);
 
     public PageVO getTaskLog(String pkTaskdeploy, PageVO pageVO);
+
+    void initTask_test();
 }

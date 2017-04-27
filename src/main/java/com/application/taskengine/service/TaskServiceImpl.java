@@ -16,6 +16,17 @@ import com.cheng.lang.TimeToolkit;
 import com.cheng.lang.exception.BusinessException;
 import com.cheng.util.ApplicationLogger;
 import com.cheng.util.BeanUtil;
+import com.dangdang.ddframe.job.config.JobCoreConfiguration;
+import com.dangdang.ddframe.job.config.dataflow.DataflowJobConfiguration;
+import com.dangdang.ddframe.job.config.script.ScriptJobConfiguration;
+import com.dangdang.ddframe.job.config.simple.SimpleJobConfiguration;
+import com.dangdang.ddframe.job.lite.api.JobScheduler;
+import com.dangdang.ddframe.job.lite.config.LiteJobConfiguration;
+import com.dangdang.ddframe.job.reg.base.CoordinatorRegistryCenter;
+import com.dangdang.ddframe.job.reg.zookeeper.ZookeeperConfiguration;
+import com.dangdang.ddframe.job.reg.zookeeper.ZookeeperRegistryCenter;
+import com.wtang.isay.DataflowDemoJob;
+import com.wtang.isay.SimpleDemoJob;
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.SchedulerException;
 import org.springframework.stereotype.Component;
@@ -126,6 +137,57 @@ public class TaskServiceImpl implements ITaskService {
         return pageVO;
     }
 
+    @Override
+    public void initTask_test() {
+        new JobScheduler(createRegistryCenter(), createJobConfiguration()).init();
+    }
+
+    /**
+     * 初始化注册中心
+     *
+     * @return
+     */
+    private CoordinatorRegistryCenter createRegistryCenter() {
+        CoordinatorRegistryCenter regCenter = new ZookeeperRegistryCenter(new ZookeeperConfiguration("101.200.228.120:2181", "elastic-job-demo"));
+        regCenter.init();
+        return regCenter;
+    }
+
+    /**
+     * 初始化任务
+     *
+     * @return
+     */
+    private LiteJobConfiguration createJobConfiguration() {
+        // 创建作业配置
+        // 定义作业核心配置
+        JobCoreConfiguration simpleCoreConfig = JobCoreConfiguration.newBuilder("demoSimpleJob", "0/5 * * * * ?", 1).build();
+        // 定义SIMPLE类型配置
+        SimpleJobConfiguration simpleJobConfig = new SimpleJobConfiguration(simpleCoreConfig, SimpleDemoJob.class.getCanonicalName());
+        // 定义Lite作业根配置
+        LiteJobConfiguration simpleJobRootConfig = LiteJobConfiguration.newBuilder(simpleJobConfig).build();
+        return simpleJobRootConfig;
+    }
+
+    private LiteJobConfiguration createJobConfiguration2() {
+        // 定义作业核心配置
+        JobCoreConfiguration dataflowCoreConfig = JobCoreConfiguration.newBuilder("demoDataflowJob", "0/30 * * * * ?", 10).build();
+        // 定义DATAFLOW类型配置
+        DataflowJobConfiguration dataflowJobConfig = new DataflowJobConfiguration(dataflowCoreConfig, DataflowDemoJob.class.getCanonicalName(), true);
+        // 定义Lite作业根配置
+        LiteJobConfiguration dataflowJobRootConfig = LiteJobConfiguration.newBuilder(dataflowJobConfig).build();
+        return dataflowJobRootConfig;
+    }
+
+    private LiteJobConfiguration createJobConfiguration3() {
+        // 定义作业核心配置配置
+        JobCoreConfiguration scriptCoreConfig = JobCoreConfiguration.newBuilder("demoScriptJob", "0/45 * * * * ?", 10).build();
+        // 定义SCRIPT类型配置
+        ScriptJobConfiguration scriptJobConfig = new ScriptJobConfiguration(scriptCoreConfig, "test.sh");
+        // 定义Lite作业根配置
+        LiteJobConfiguration scriptJobRootConfig = LiteJobConfiguration.newBuilder(scriptJobConfig).build();
+        return scriptJobRootConfig;
+    }
     private PageVO init(String key) {
         PageVO pageVO = new PageVO(1, 20);
         List<TaskLogModel> data = LogMap.getLog(key);

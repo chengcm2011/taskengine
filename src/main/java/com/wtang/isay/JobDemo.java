@@ -15,7 +15,7 @@ public class JobDemo {
     }
 
     private static CoordinatorRegistryCenter createRegistryCenter() {
-        CoordinatorRegistryCenter regCenter = new ZookeeperRegistryCenter(new ZookeeperConfiguration("www.chengyingsheng.com/:2181", "elastic-job-demo"));
+        CoordinatorRegistryCenter regCenter = new ZookeeperRegistryCenter(new ZookeeperConfiguration("101.200.228.120:2181", "elastic-job-demo"));
         regCenter.init();
         return regCenter;
     }
@@ -23,7 +23,7 @@ public class JobDemo {
     private static LiteJobConfiguration createJobConfiguration() {
         // 创建作业配置
         // 定义作业核心配置
-        JobCoreConfiguration simpleCoreConfig = JobCoreConfiguration.newBuilder("demoSimpleJob", "0/1 * * * * ?", 1).build();
+        JobCoreConfiguration simpleCoreConfig = JobCoreConfiguration.newBuilder("demoSimpleJob", "0/5 * * * * ?", 1).build();
         // 定义SIMPLE类型配置
         SimpleJobConfiguration simpleJobConfig = new SimpleJobConfiguration(simpleCoreConfig, SimpleDemoJob.class.getCanonicalName());
         // 定义Lite作业根配置
