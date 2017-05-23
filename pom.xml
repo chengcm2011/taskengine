@@ -15,7 +15,8 @@
 		<build.skipTests>true</build.skipTests>
 		<source.encoding>UTF-8</source.encoding>
 		<conf.version>0.0.1</conf.version>
-		<latest.release.version>2.1.0</latest.release.version>
+		<latest.release.version>2.1.1</latest.release.version>
+		<lombok.version>1.16.4</lombok.version>
 	</properties>
 
 	<dependencies>
@@ -111,6 +112,12 @@
 			<groupId>com.dangdang</groupId>
 			<artifactId>elastic-job-lite-spring</artifactId>
 			<version>${latest.release.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 

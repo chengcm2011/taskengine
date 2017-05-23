@@ -1,6 +1,7 @@
 package com.wtang.isay;
 
 import com.cheng.lang.TimeToolkit;
+import com.cheng.util.ApplicationLogger;
 import com.dangdang.ddframe.job.api.ShardingContext;
 import com.dangdang.ddframe.job.api.simple.SimpleJob;
 
@@ -10,6 +11,6 @@ import com.dangdang.ddframe.job.api.simple.SimpleJob;
 public class SimpleDemoJob implements SimpleJob {
     @Override
     public void execute(ShardingContext shardingContext) {
-        System.out.println(TimeToolkit.getCurrentTs());
+        ApplicationLogger.info(TimeToolkit.getCurrentTs() + ":" + shardingContext.getJobParameter());
     }
 }

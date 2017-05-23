@@ -2,10 +2,7 @@ package com.application.taskengine.service;
 
 import com.application.taskengine.LogMap;
 import com.application.taskengine.itf.ITaskService;
-import com.application.taskengine.model.TaskDeployModel;
-import com.application.taskengine.model.TaskLogModel;
-import com.application.taskengine.model.TaskParamValueModel;
-import com.application.taskengine.model.TaskPluginModel;
+import com.application.taskengine.model.*;
 import com.application.taskengine.util.DynamicSchedulerFactory;
 import com.application.taskengine.util.SchedulerUtil;
 import com.application.taskengine.vo.ScheduleTaskVo;
@@ -138,8 +135,12 @@ public class TaskServiceImpl implements ITaskService {
     }
 
     @Override
-    public void initTask_test() {
-        new JobScheduler(createRegistryCenter(), createJobConfiguration()).init();
+    public void initElasticTask() throws BusinessException {
+        //读取配置中心配置
+        TaskConfModel taskConfModel = baseDAO.queryOneByClause(TaskConfModel.class, "dr=0");
+
+        JobScheduler jobScheduler = new JobScheduler(createRegistryCenter(taskConfModel), createJobConfiguration());
+        jobScheduler.init();
     }
 
     /**
@@ -147,8 +148,8 @@ public class TaskServiceImpl implements ITaskService {
      *
      * @return
      */
-    private CoordinatorRegistryCenter createRegistryCenter() {
-        CoordinatorRegistryCenter regCenter = new ZookeeperRegistryCenter(new ZookeeperConfiguration("101.200.228.120:2181", "elastic-job-demo"));
+    private CoordinatorRegistryCenter createRegistryCenter(TaskConfModel taskConfModel) {
+        CoordinatorRegistryCenter regCenter = new ZookeeperRegistryCenter(new ZookeeperConfiguration(taskConfModel.getZkAddressList(), taskConfModel.getNamespace()));
         regCenter.init();
         return regCenter;
     }
@@ -161,11 +162,11 @@ public class TaskServiceImpl implements ITaskService {
     private LiteJobConfiguration createJobConfiguration() {
         // 创建作业配置
         // 定义作业核心配置
-        JobCoreConfiguration simpleCoreConfig = JobCoreConfiguration.newBuilder("demoSimpleJob", "0/5 * * * * ?", 1).build();
+        JobCoreConfiguration simpleCoreConfig = JobCoreConfiguration.newBuilder("demoSimpleJob", "0/10 * * * * ?", 2).jobParameter("{\"code\":\"20000\",\"message\":\"success\",\"success\":true}").build();
         // 定义SIMPLE类型配置
         SimpleJobConfiguration simpleJobConfig = new SimpleJobConfiguration(simpleCoreConfig, SimpleDemoJob.class.getCanonicalName());
         // 定义Lite作业根配置
-        LiteJobConfiguration simpleJobRootConfig = LiteJobConfiguration.newBuilder(simpleJobConfig).build();
+        LiteJobConfiguration simpleJobRootConfig = LiteJobConfiguration.newBuilder(simpleJobConfig).overwrite(true).disabled(true).build();
         return simpleJobRootConfig;
     }
 

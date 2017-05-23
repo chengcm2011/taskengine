@@ -10,7 +10,9 @@ import com.cheng.lang.exception.BusinessException;
  */
 public interface ITaskService extends IService {
 
-    public void initTask() throws BusinessException;
+    void initTask() throws BusinessException;
+
+    void initElasticTask() throws BusinessException;
 
     public boolean addTask(TaskDeployModel taskDeployModel) throws BusinessException;
 
@@ -31,5 +33,5 @@ public interface ITaskService extends IService {
 
     public PageVO getTaskLog(String pkTaskdeploy, PageVO pageVO);
 
-    void initTask_test();
+
 }

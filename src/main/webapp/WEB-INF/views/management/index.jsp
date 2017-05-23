@@ -142,6 +142,16 @@
                         <li><a href="management/task/log/index?rel=tasklog" target="navTab" rel="tasklog">任务日志</a></li>
                     </ul>
                 </div>
+                <div class="accordionHeader">
+                    <h2><span>Folder</span>系统设置</h2>
+                </div>
+                <div class="accordionContent">
+                    <ul class="tree treeFolder">
+                        <li><a href="management/task/conf/index?rel=taskregister" target="navTab" rel="taskregister">注册中心设置</a>
+                        </li>
+
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
