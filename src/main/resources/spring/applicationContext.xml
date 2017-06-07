@@ -64,6 +64,40 @@
 				  value="config.decrypt=true;config.decrypt.key=MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJvenY7S36hFQGr3y7QLX4w31buFKhzjaSWg9ndtBB8MwpE7H1ad0eq/OY5F28QUEV/1MWpIb6KtYtBkfYMGSlMCAwEAAQ=="/>
 	</bean>
 
+	<bean id="ams" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="driverClassName">
+			<value>${amsjdbc.driverClass}</value>
+		</property>
+		<property name="url">
+			<value>${amsjdbc.url}</value>
+		</property>
+		<property name="username">
+			<value>${amsjdbc.username}</value>
+		</property>
+		<property name="password">
+			<value>${amsjdbc.password}</value>
+		</property>
+		<property name="maxActive">
+			<value>10</value>
+		</property>
+		<property name="maxWait">
+			<value>10000</value>
+		</property>
+		<property name="initialSize">
+			<value>1</value>
+		</property>
+		<property name="removeAbandoned">
+			<value>true</value>
+		</property>
+		<property name="testWhileIdle">
+			<value>true</value>
+		</property>
+		<property name="testOnBorrow">
+			<value>false</value>
+		</property>
+	</bean>
+
+
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>

@@ -106,7 +106,11 @@
 			<artifactId>elastic-job-lite-core</artifactId>
 			<version>${latest.release.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>ojdbc</groupId>
+			<artifactId>ojdbc</artifactId>
+			<version>14</version>
+		</dependency>
 		<!-- 使用springframework自定义命名空间时引入 -->
 		<dependency>
 			<groupId>com.dangdang</groupId>
@@ -165,10 +169,24 @@
 		</plugins>
 	</build>
 
+	<distributionManagement>
+		<repository>
+			<id>ziroom</id>
+			<url>http://mvn.ziroom.com/ams-release</url>
+		</repository>
+		<snapshotRepository>
+			<id>ziroom</id>
+			<url>http://mvn.ziroom.com/ams-snapshot</url>
+		</snapshotRepository>
+	</distributionManagement>
 	<repositories>
 		<repository>
-			<id>oschina</id>
-			<url>http://maven.oschina.net/content/groups/public/</url>
+			<id>crm-online</id>
+			<url>http://maven.ziroom.com:8081/nexus/content/repositories/crm-online</url>
+		</repository>
+		<repository>
+			<id>artifactory</id>
+			<url>http://mvn.ziroom.com/public</url>
 		</repository>
 	</repositories>
 </project>

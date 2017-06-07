@@ -38,7 +38,7 @@ public abstract class AbstractTaskImpl implements StatefulJob {
             taskLogModel.setIssuccess(false);
             throw new JobExecutionException(e);
         } finally {
-            taskLogModel.setRuntime((System.currentTimeMillis() - b) / 1000 + "s");
+            taskLogModel.setRuntime((System.currentTimeMillis() - b) + " ms");
             taskLogModel.setVdef2(TimeToolkit.getCurrentTs());
             logger.info("task run end time ：" + taskLogModel.getVdef2());
             try {
