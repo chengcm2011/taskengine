@@ -162,7 +162,7 @@ public class TaskServiceImpl implements ITaskService {
     private LiteJobConfiguration createJobConfiguration() {
         // 创建作业配置
         // 定义作业核心配置
-        JobCoreConfiguration simpleCoreConfig = JobCoreConfiguration.newBuilder("demoSimpleJob", "0/10 * * * * ?", 2).jobParameter("{\"code\":\"20000\",\"message\":\"success\",\"success\":true}").build();
+        JobCoreConfiguration simpleCoreConfig = JobCoreConfiguration.newBuilder("demoSimpleJob", "0/10 * * * * ?", 1).jobParameter("{\"code\":\"20000\",\"message\":\"success\",\"success\":true}").build();
         // 定义SIMPLE类型配置
         SimpleJobConfiguration simpleJobConfig = new SimpleJobConfiguration(simpleCoreConfig, SimpleDemoJob.class.getCanonicalName());
         // 定义Lite作业根配置
