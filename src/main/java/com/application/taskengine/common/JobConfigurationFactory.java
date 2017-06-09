@@ -31,7 +31,7 @@ public class JobConfigurationFactory {
         // 定义SIMPLE类型配置
         SimpleJobConfiguration simpleJobConfig = new SimpleJobConfiguration(coreConfiguration, jobInfo.getClass().getCanonicalName());
         // 定义Lite作业根配置
-        LiteJobConfiguration simpleJobRootConfig = LiteJobConfiguration.newBuilder(simpleJobConfig).disabled(true).build();
+        LiteJobConfiguration simpleJobRootConfig = LiteJobConfiguration.newBuilder(simpleJobConfig).disabled(false).build();
 
         return simpleJobRootConfig;
     }

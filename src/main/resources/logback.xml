@@ -45,7 +45,7 @@
             <pattern>%d{H:mm:ss.SSS} [%thread] %-5level [%logger{16}] %msg%n</pattern>
         </encoder>
     </appender>
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="Console"/>
         <appender-ref ref="INFO"></appender-ref>
     </root>

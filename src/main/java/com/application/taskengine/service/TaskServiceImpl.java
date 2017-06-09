@@ -13,6 +13,7 @@ import com.cheng.lang.TimeToolkit;
 import com.cheng.lang.exception.BusinessException;
 import com.cheng.util.ApplicationLogger;
 import com.cheng.util.BeanUtil;
+import com.cheng.web.ApplicationServiceLocator;
 import com.dangdang.ddframe.job.config.JobCoreConfiguration;
 import com.dangdang.ddframe.job.config.dataflow.DataflowJobConfiguration;
 import com.dangdang.ddframe.job.config.script.ScriptJobConfiguration;
@@ -20,8 +21,6 @@ import com.dangdang.ddframe.job.config.simple.SimpleJobConfiguration;
 import com.dangdang.ddframe.job.lite.api.JobScheduler;
 import com.dangdang.ddframe.job.lite.config.LiteJobConfiguration;
 import com.dangdang.ddframe.job.reg.base.CoordinatorRegistryCenter;
-import com.dangdang.ddframe.job.reg.zookeeper.ZookeeperConfiguration;
-import com.dangdang.ddframe.job.reg.zookeeper.ZookeeperRegistryCenter;
 import com.wtang.isay.DataflowDemoJob;
 import com.wtang.isay.SimpleDemoJob;
 import org.apache.commons.lang3.StringUtils;
@@ -149,7 +148,7 @@ public class TaskServiceImpl implements ITaskService {
      * @return
      */
     private CoordinatorRegistryCenter createRegistryCenter(TaskConfModel taskConfModel) {
-        CoordinatorRegistryCenter regCenter = new ZookeeperRegistryCenter(new ZookeeperConfiguration(taskConfModel.getZkAddressList(), taskConfModel.getNamespace()));
+        CoordinatorRegistryCenter regCenter = ApplicationServiceLocator.getBean("zookeeperRegistryCenter");
         regCenter.init();
         return regCenter;
     }
@@ -166,7 +165,7 @@ public class TaskServiceImpl implements ITaskService {
         // 定义SIMPLE类型配置
         SimpleJobConfiguration simpleJobConfig = new SimpleJobConfiguration(simpleCoreConfig, SimpleDemoJob.class.getCanonicalName());
         // 定义Lite作业根配置
-        LiteJobConfiguration simpleJobRootConfig = LiteJobConfiguration.newBuilder(simpleJobConfig).overwrite(true).disabled(true).build();
+        LiteJobConfiguration simpleJobRootConfig = LiteJobConfiguration.newBuilder(simpleJobConfig).overwrite(true).disabled(false).build();
         return simpleJobRootConfig;
     }
 
