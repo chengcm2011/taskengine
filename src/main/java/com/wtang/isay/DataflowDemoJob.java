@@ -7,15 +7,14 @@ import com.dangdang.ddframe.job.api.JobType;
 import com.dangdang.ddframe.job.api.ShardingContext;
 import com.dangdang.ddframe.job.api.dataflow.DataflowJob;
 import com.google.common.collect.Lists;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
  *
  */
-@Component
-@JobConfig(value = "0/5 * * * * ?", jobName = "codett", jobType = JobType.DATAFLOW, shardingTotalCount = 1)
+//@Component
+@JobConfig(value = "0/10 * * * * ?", jobName = "codett", jobType = JobType.DATAFLOW, shardingTotalCount = 1)
 public class DataflowDemoJob implements DataflowJob {
     @Override
     public List fetchData(ShardingContext shardingContext) {

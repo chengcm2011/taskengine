@@ -31,7 +31,7 @@ public class JobConfigurationFactory {
         // 定义SIMPLE类型配置
         SimpleJobConfiguration simpleJobConfig = new SimpleJobConfiguration(coreConfiguration, jobInfo.getClass().getCanonicalName());
         // 定义Lite作业根配置
-        LiteJobConfiguration simpleJobRootConfig = LiteJobConfiguration.newBuilder(simpleJobConfig).build();
+        LiteJobConfiguration simpleJobRootConfig = LiteJobConfiguration.newBuilder(simpleJobConfig).overwrite(true).disabled(false).build();
 
         return simpleJobRootConfig;
     }
@@ -39,9 +39,10 @@ public class JobConfigurationFactory {
     private static LiteJobConfiguration createDataflowJobConfiguration(JobCoreConfiguration coreConfiguration, ElasticJobInit.JobInfo jobInfo) {
 
         // 定义DATAFLOW类型配置
-        DataflowJobConfiguration dataflowJobConfig = new DataflowJobConfiguration(coreConfiguration, jobInfo.getJobClass().getCanonicalName(), true);
+        DataflowJobConfiguration dataflowJobConfig = new DataflowJobConfiguration(coreConfiguration, jobInfo.getJobClass().getCanonicalName(), false);
+
         // 定义Lite作业根配置
-        LiteJobConfiguration dataflowJobRootConfig = LiteJobConfiguration.newBuilder(dataflowJobConfig).build();
+        LiteJobConfiguration dataflowJobRootConfig = LiteJobConfiguration.newBuilder(dataflowJobConfig).overwrite(true).build();
 
         return dataflowJobRootConfig;
     }

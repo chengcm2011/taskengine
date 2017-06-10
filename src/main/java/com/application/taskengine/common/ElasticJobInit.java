@@ -32,8 +32,8 @@ public class ElasticJobInit implements IElasticJobInit {
         List<JobInfo> data = getJobConfig();
         // 启动作业
         for (JobInfo jobInfo : data) {
-            LiteJobConfiguration simpleJobConfiguration = JobConfigurationFactory.createJobConfiguration(jobInfo);
-            new JobScheduler(regCenter, simpleJobConfiguration).init();
+            LiteJobConfiguration liteJobConfiguration = JobConfigurationFactory.createJobConfiguration(jobInfo);
+            new JobScheduler(regCenter, liteJobConfiguration).init();
         }
 
     }
