@@ -2,6 +2,7 @@ package com.web.test;
 
 import com.application.taskengine.AbstractTaskImpl;
 import com.cheng.lang.exception.BusinessException;
+import com.wtang.isay.SimpleDemoJob;
 import org.quartz.JobDataMap;
 
 /**
@@ -22,5 +23,10 @@ public class TestTask extends AbstractTaskImpl {
 //            dataBaseService.insert(accountNOModel);
 //        }
         return SUCCESS;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(SimpleDemoJob.class.getCanonicalName());
+        System.out.println(SimpleDemoJob.class.getName());
     }
 }
