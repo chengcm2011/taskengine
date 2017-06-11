@@ -140,6 +140,9 @@ public class TaskServiceImpl implements ITaskService {
 
         JobScheduler jobScheduler = new JobScheduler(createRegistryCenter(taskConfModel), createJobConfiguration());
         jobScheduler.init();
+
+        JobScheduler jobScheduler2 = new JobScheduler(createRegistryCenter(taskConfModel), createJobConfiguration2());
+        jobScheduler2.init();
     }
 
     /**
@@ -173,7 +176,7 @@ public class TaskServiceImpl implements ITaskService {
         // 定义作业核心配置
         JobCoreConfiguration dataflowCoreConfig = JobCoreConfiguration.newBuilder("demoDataflowJob", "0/30 * * * * ?", 10).build();
         // 定义DATAFLOW类型配置
-        DataflowJobConfiguration dataflowJobConfig = new DataflowJobConfiguration(dataflowCoreConfig, DataflowDemoJob.class.getCanonicalName(), true);
+        DataflowJobConfiguration dataflowJobConfig = new DataflowJobConfiguration(dataflowCoreConfig, DataflowDemoJob.class.getCanonicalName(), false);
         // 定义Lite作业根配置
         LiteJobConfiguration dataflowJobRootConfig = LiteJobConfiguration.newBuilder(dataflowJobConfig).build();
         return dataflowJobRootConfig;
