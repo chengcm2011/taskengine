@@ -6,8 +6,6 @@ import com.dangdang.ddframe.job.config.dataflow.DataflowJobConfiguration;
 import com.dangdang.ddframe.job.config.script.ScriptJobConfiguration;
 import com.dangdang.ddframe.job.config.simple.SimpleJobConfiguration;
 import com.dangdang.ddframe.job.lite.config.LiteJobConfiguration;
-import com.wtang.isay.DataflowDemoJob;
-import com.wtang.isay.SimpleDemoJob;
 
 /**
  * 创建任务
@@ -30,24 +28,22 @@ public class JobConfigurationFactory {
 
 
     private static LiteJobConfiguration createSimpleJobConfiguration(JobCoreConfiguration coreConfiguration, ElasticJobInit.JobInfo jobInfo) {
-        // 创建作业配置
-        // 定义作业核心配置
-        JobCoreConfiguration simpleCoreConfig = JobCoreConfiguration.newBuilder("demoSimpleJob", "0/10 * * * * ?", 1).jobParameter("{\"code\":\"20000\",\"message\":\"success\",\"success\":true}").build();
         // 定义SIMPLE类型配置
-        SimpleJobConfiguration simpleJobConfig = new SimpleJobConfiguration(simpleCoreConfig, SimpleDemoJob.class.getCanonicalName());
+        SimpleJobConfiguration simpleJobConfig = new SimpleJobConfiguration(coreConfiguration, jobInfo.getJobClass().getCanonicalName());
         // 定义Lite作业根配置
         LiteJobConfiguration simpleJobRootConfig = LiteJobConfiguration.newBuilder(simpleJobConfig).overwrite(true).build();
+
         return simpleJobRootConfig;
     }
 
     private static LiteJobConfiguration createDataflowJobConfiguration(JobCoreConfiguration coreConfiguration, ElasticJobInit.JobInfo jobInfo) {
 
-        // 定义作业核心配置
-        JobCoreConfiguration dataflowCoreConfig = JobCoreConfiguration.newBuilder("demoDataflowJob", "0/30 * * * * ?", 10).build();
         // 定义DATAFLOW类型配置
-        DataflowJobConfiguration dataflowJobConfig = new DataflowJobConfiguration(dataflowCoreConfig, DataflowDemoJob.class.getCanonicalName(), false);
+        DataflowJobConfiguration dataflowJobConfig = new DataflowJobConfiguration(coreConfiguration, jobInfo.getJobClass().getCanonicalName(), false);
+
         // 定义Lite作业根配置
-        LiteJobConfiguration dataflowJobRootConfig = LiteJobConfiguration.newBuilder(dataflowJobConfig).build();
+        LiteJobConfiguration dataflowJobRootConfig = LiteJobConfiguration.newBuilder(dataflowJobConfig).overwrite(true).build();
+
         return dataflowJobRootConfig;
     }
 
@@ -58,6 +54,4 @@ public class JobConfigurationFactory {
         LiteJobConfiguration scriptJobRootConfig = LiteJobConfiguration.newBuilder(scriptJobConfig).build();
         return scriptJobRootConfig;
     }
-
-
 }
