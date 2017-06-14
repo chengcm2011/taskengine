@@ -9,16 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 import java.util.Collection;
 
 /**
  * Created by cheng on 17/6/12.
  */
 @RestController
-@RequestMapping("/management/console/")
-public class TestAction extends BusinessCommonAction {
+public class ConsoleAction extends BusinessCommonAction {
 
     private JobAPIService jobAPIService = new JobAPIServiceImpl();
 
@@ -27,7 +24,7 @@ public class TestAction extends BusinessCommonAction {
      *
      * @return 作业总数
      */
-    @RequestMapping("getJobsTotalCount")
+    @RequestMapping("/management/console/getJobsTotalCount")
     public int getJobsTotalCount() {
         return jobAPIService.getJobStatisticsAPI().getJobsTotalCount();
     }
@@ -37,7 +34,7 @@ public class TestAction extends BusinessCommonAction {
      *
      * @return 作业详情集合
      */
-    @RequestMapping("getAllJobsBriefInfo")
+    @RequestMapping("/management/console/getAllJobsBriefInfo")
     public Collection<JobBriefInfo> getAllJobsBriefInfo() {
         return jobAPIService.getJobStatisticsAPI().getAllJobsBriefInfo();
     }
@@ -47,8 +44,8 @@ public class TestAction extends BusinessCommonAction {
      *
      * @param jobName 作业名称
      */
-    @RequestMapping("triggerJob")
-    public void triggerJob(@PathParam("jobName") final String jobName) {
+    @RequestMapping("/management/console/{jobName}/trigger")
+    public void triggerJob(@PathVariable("jobName") final String jobName) {
         jobAPIService.getJobOperatorAPI().trigger(Optional.of(jobName), Optional.<String>absent());
     }
 
@@ -57,10 +54,8 @@ public class TestAction extends BusinessCommonAction {
      *
      * @param jobName 作业名称
      */
-    @POST
-    @Path("/{jobName}/disable")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void disableJob(@PathParam("jobName") final String jobName) {
+    @RequestMapping("/management/console/{jobName}/disable")
+    public void disableJob(@PathVariable("jobName") final String jobName) {
         jobAPIService.getJobOperatorAPI().disable(Optional.of(jobName), Optional.<String>absent());
     }
 
@@ -69,10 +64,8 @@ public class TestAction extends BusinessCommonAction {
      *
      * @param jobName 作业名称
      */
-    @DELETE
-    @Path("/{jobName}/disable")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void enableJob(@PathParam("jobName") final String jobName) {
+    @RequestMapping("/management/console/{jobName}/enableJob")
+    public void enableJob(@PathVariable("jobName") final String jobName) {
         jobAPIService.getJobOperatorAPI().enable(Optional.of(jobName), Optional.<String>absent());
     }
 
@@ -81,9 +74,7 @@ public class TestAction extends BusinessCommonAction {
      *
      * @param jobName 作业名称
      */
-    @POST
-    @Path("/{jobName}/shutdown")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @RequestMapping("/management/console/{jobName}/shutdown")
     public void shutdownJob(@PathVariable("jobName") final String jobName) {
         jobAPIService.getJobOperatorAPI().shutdown(Optional.of(jobName), Optional.<String>absent());
     }
@@ -94,24 +85,18 @@ public class TestAction extends BusinessCommonAction {
      * @param jobName 作业名称
      * @return 分片信息集合
      */
-    @GET
-    @Path("/{jobName}/sharding")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Collection<ShardingInfo> getShardingInfo(@PathParam("jobName") final String jobName) {
+    @RequestMapping("/management/console/{jobName}/sharding")
+    public Collection<ShardingInfo> getShardingInfo(@PathVariable("jobName") final String jobName) {
         return jobAPIService.getShardingStatisticsAPI().getShardingInfo(jobName);
     }
 
-    @POST
-    @Path("/{jobName}/sharding/{item}/disable")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void disableSharding(@PathParam("jobName") final String jobName, @PathParam("item") final String item) {
+    @RequestMapping("/management/console/{jobName}/sharding/{item}/disable")
+    public void disableSharding(@PathVariable("jobName") final String jobName, @PathVariable("item") final String item) {
         jobAPIService.getShardingOperateAPI().disable(jobName, item);
     }
 
-    @DELETE
-    @Path("/{jobName}/sharding/{item}/disable")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void enableSharding(@PathParam("jobName") final String jobName, @PathParam("item") final String item) {
+    @RequestMapping("/management/console/{jobName}/sharding/{item}/enable")
+    public void enableSharding(@PathVariable("jobName") final String jobName, @PathVariable("item") final String item) {
         jobAPIService.getShardingOperateAPI().enable(jobName, item);
     }
 }
