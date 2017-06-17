@@ -125,7 +125,7 @@ public class TaskServiceImpl implements ITaskService {
             TaskLogModel taskLogModel = list.get(i);
             Map<String, Object> mdata = BeanUtil.getValueMap(taskLogModel);
             TaskDeployModel taskDeployModel = baseDAO.queryByPK(TaskDeployModel.class, taskLogModel.getPkTaskdeploy());
-            mdata.put("taskname", taskDeployModel.getTaskname());
+            mdata.put("taskname", taskDeployModel.getTaskName());
             data.add(mdata);
         }
         pageVO.setData(data);
@@ -263,7 +263,7 @@ public class TaskServiceImpl implements ITaskService {
         ScheduleTaskVo scheduleTaskVo = new ScheduleTaskVo();
         scheduleTaskVo.setJobCode(taskDeployModel.getPkTaskdeploy());
         scheduleTaskVo.setJobGroupCode(taskDeployModel.getPkTaskplugin());
-        scheduleTaskVo.setCronExpression(taskDeployModel.getTriggerstr());
+        scheduleTaskVo.setCronExpression(taskDeployModel.getCronExpression());
         TaskPluginModel t = baseDAO.queryByPK(TaskPluginModel.class, taskDeployModel.getPkTaskplugin(), new String[]{"pluginclass"});
         scheduleTaskVo.setJobClass(t.getPluginclass());
         try {

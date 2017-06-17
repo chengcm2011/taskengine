@@ -35,7 +35,7 @@ public class TaskStatusActiom extends BusinessCommonAction {
         }
         for (Map<String, Object> item : data) {
             TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, Predef.toStr(item.get("jobCode")));
-            item.put("jobName", taskDeployModel.getTaskname());
+            item.put("jobName", taskDeployModel.getTaskName());
         }
         model.addAttribute(DATA, data);
         return "/management/task/status/index";

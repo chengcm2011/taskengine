@@ -7,10 +7,11 @@ public class TaskDeployModel extends SuperModel {
 
     private String pkTaskdeploy;
     private String pkTaskplugin;
-    private String taskname;
-    private String taskdescription;
+    private String taskType;
+    private String taskName;
+    private String taskDescription;
 
-    private String triggerstr;
+    private String cronExpression;
 
     private String runnable;// 任务是否可用
     private int dr;
@@ -37,6 +38,77 @@ public class TaskDeployModel extends SuperModel {
         return "pkTaskdeploy";
     }
 
+    public String getPkTaskdeploy() {
+        return pkTaskdeploy;
+    }
+
+    public void setPkTaskdeploy(String pkTaskdeploy) {
+        this.pkTaskdeploy = pkTaskdeploy;
+    }
+
+    public String getPkTaskplugin() {
+        return pkTaskplugin;
+    }
+
+    public void setPkTaskplugin(String pkTaskplugin) {
+        this.pkTaskplugin = pkTaskplugin;
+    }
+
+    public String getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(String taskType) {
+        this.taskType = taskType;
+    }
+
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
+
+    public String getTaskDescription() {
+        return taskDescription;
+    }
+
+    public void setTaskDescription(String taskDescription) {
+        this.taskDescription = taskDescription;
+    }
+
+    public String getCronExpression() {
+        return cronExpression;
+    }
+
+    public void setCronExpression(String cronExpression) {
+        this.cronExpression = cronExpression;
+    }
+
+    public String getRunnable() {
+        return runnable;
+    }
+
+    public void setRunnable(String runnable) {
+        this.runnable = runnable;
+    }
+
+    public int getDr() {
+        return dr;
+    }
+
+    public void setDr(int dr) {
+        this.dr = dr;
+    }
+
+    public String getTs() {
+        return ts;
+    }
+
+    public void setTs(String ts) {
+        this.ts = ts;
+    }
 
     public String getVdef1() {
         return vdef1;
@@ -44,14 +116,6 @@ public class TaskDeployModel extends SuperModel {
 
     public void setVdef1(String vdef1) {
         this.vdef1 = vdef1;
-    }
-
-    public String getTriggerstr() {
-        return triggerstr;
-    }
-
-    public void setTriggerstr(String triggerstr) {
-        this.triggerstr = triggerstr;
     }
 
     public String getVdef2() {
@@ -86,59 +150,8 @@ public class TaskDeployModel extends SuperModel {
         this.vdef5 = vdef5;
     }
 
-    public String getPkTaskdeploy() {
-        return pkTaskdeploy;
-    }
+    public enum JobType {
 
-    public void setPkTaskdeploy(String pkTaskdeploy) {
-        this.pkTaskdeploy = pkTaskdeploy;
-    }
-
-    public String getPkTaskplugin() {
-        return pkTaskplugin;
-    }
-
-    public void setPkTaskplugin(String pkTaskplugin) {
-        this.pkTaskplugin = pkTaskplugin;
-    }
-
-    public String getTaskname() {
-        return taskname;
-    }
-
-    public void setTaskname(String taskname) {
-        this.taskname = taskname;
-    }
-
-    public String getTaskdescription() {
-        return taskdescription;
-    }
-
-    public void setTaskdescription(String taskdescription) {
-        this.taskdescription = taskdescription;
-    }
-
-    public int getDr() {
-        return dr;
-    }
-
-    public void setDr(int dr) {
-        this.dr = dr;
-    }
-
-    public String getTs() {
-        return ts;
-    }
-
-    public void setTs(String ts) {
-        this.ts = ts;
-    }
-
-    public String getRunnable() {
-        return runnable;
-    }
-
-    public void setRunnable(String runnable) {
-        this.runnable = runnable;
+        fix_simple, elastic_simple, elastic_flow
     }
 }

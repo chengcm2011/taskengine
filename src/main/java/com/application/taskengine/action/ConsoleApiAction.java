@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collection;
 
 /**
- * Created by cheng on 17/6/12.
+ *
  */
 @RestController
-public class ConsoleAction extends BusinessCommonAction {
+public class ConsoleApiAction extends BusinessCommonAction {
 
     private JobAPIService jobAPIService = new JobAPIServiceImpl();
 
