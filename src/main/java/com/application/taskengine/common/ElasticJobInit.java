@@ -1,5 +1,12 @@
 package com.application.taskengine.common;
 
+import com.alibaba.fastjson.JSON;
+import com.application.taskengine.model.TaskDeployModel;
+import com.application.taskengine.model.TaskParamValueModel;
+import com.application.taskengine.model.TaskPluginModel;
+import com.cheng.jdbc.SQLParameter;
+import com.cheng.jdbc.itf.IBaseDAO;
+import com.cheng.lang.ClassUtil;
 import com.cheng.web.ApplicationServiceLocator;
 import com.dangdang.ddframe.job.api.JobType;
 import com.dangdang.ddframe.job.lite.api.JobScheduler;
@@ -8,19 +15,22 @@ import com.dangdang.ddframe.job.reg.base.CoordinatorRegistryCenter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import javax.annotation.Resource;
+import java.util.*;
 
 /**
  * job 初始化 替换spring 方式
  */
 @Component
+@Transactional
 public class ElasticJobInit implements IElasticJobInit {
 
-    public void JobInit() {
+    @Resource
+    IBaseDAO baseDAO;
+
+    public void JobInit() throws Exception {
         // 连接注册中心
         CoordinatorRegistryCenter regCenter = ApplicationServiceLocator.getBean("zookeeperRegistryCenter");
         regCenter.init();
@@ -28,8 +38,8 @@ public class ElasticJobInit implements IElasticJobInit {
         initJob(regCenter);
     }
 
-    private void initJob(CoordinatorRegistryCenter regCenter) {
-        List<JobInfo> data = getJobConfig();
+    private void initJob(CoordinatorRegistryCenter regCenter) throws Exception {
+        List<JobInfo> data = getJobConfigFromDB();
         // 启动作业
         for (JobInfo jobInfo : data) {
             LiteJobConfiguration liteJobConfiguration = JobConfigurationFactory.createJobConfiguration(jobInfo);
@@ -38,6 +48,40 @@ public class ElasticJobInit implements IElasticJobInit {
 
     }
 
+    private List<JobInfo> getJobConfigFromDB() throws Exception {
+
+        List<JobInfo> jobInfos = new LinkedList<>();
+        List<TaskDeployModel> tasks = baseDAO.queryByClause(TaskDeployModel.class, " runnable='Y' and dr= 0");
+        for (TaskDeployModel task : tasks) {
+            JobInfo jobInfo = new JobInfo();
+            jobInfo.setCron(task.getCronExpression());
+            jobInfo.setDescription(task.getTaskDescription());
+            TaskPluginModel taskPluginModel = baseDAO.queryByPK(TaskPluginModel.class, task.getPkTaskplugin(), new String[]{"pluginclass"});
+            jobInfo.setJobClass(ClassUtil.initClass1(taskPluginModel.getPluginclass()));
+            jobInfo.setJobName(task.getTaskName());
+            jobInfo.setJobCode(task.getPrimaryKey());
+            jobInfo.setJobParameter(getJobParameter(task));
+            jobInfo.setJobType(JobType.valueOf(task.getTaskType()));
+            jobInfo.setOverwrite(true);
+            jobInfo.setShardingTotalCount(2);
+            jobInfos.add(jobInfo);
+
+        }
+        return jobInfos;
+    }
+
+    private String getJobParameter(TaskDeployModel taskDeployModel) throws Exception {
+        Map<String, Object> taskunitmap = new HashMap<>();
+        SQLParameter sqlParameter = new SQLParameter();
+        sqlParameter.addParam(taskDeployModel.getPrimaryKey());
+        List<TaskParamValueModel> taskParamValueModels = baseDAO.queryByClause(TaskParamValueModel.class, " dr=0 and pkTaskdeploy=?", sqlParameter);
+        for (int j = 0; j < taskParamValueModels.size(); j++) {
+            TaskParamValueModel t = taskParamValueModels.get(j);
+            taskunitmap.put(t.getParamkey(), t.getParamvalue());
+        }
+        taskunitmap.put(taskDeployModel.getPKFieldName(), taskDeployModel.getPrimaryKey());
+        return JSON.toJSONString(taskunitmap);
+    }
 
     /**
      * 获取作业配置
@@ -53,10 +97,15 @@ public class ElasticJobInit implements IElasticJobInit {
             JobInfo jobInfo = new JobInfo();
             Map.Entry<String, Object> objectEntry = set.next();
             JobConfig jobConfig = objectEntry.getValue().getClass().getAnnotation(JobConfig.class);
-            if (StringUtils.isBlank(jobConfig.jobName())) {
-                jobInfo.setJobName(objectEntry.getValue().getClass().getSimpleName());
+            if (StringUtils.isBlank(jobConfig.jobCode())) {
+                jobInfo.setJobCode(objectEntry.getValue().getClass().getSimpleName());
             } else {
-                jobInfo.setJobName(jobConfig.jobName());
+                jobInfo.setJobCode(jobConfig.jobCode());
+            }
+            if (StringUtils.isBlank(jobConfig.jobName())) {
+                jobInfo.setJobName(jobConfig.jobCode());
+            } else {
+                jobInfo.setJobName(jobInfo.getJobCode());
             }
             jobInfo.setCron(jobConfig.value());
             jobInfo.setJobClass(objectEntry.getValue().getClass());
@@ -79,6 +128,10 @@ public class ElasticJobInit implements IElasticJobInit {
          */
         private String jobName;
         /**
+         * 任务编码
+         */
+        private String jobCode;
+        /**
          * 任务类型
          */
         private JobType jobType;
@@ -97,6 +150,19 @@ public class ElasticJobInit implements IElasticJobInit {
          * 分片数
          */
         private int shardingTotalCount;
+
+        /**
+         * 任务参数
+         */
+        private String jobParameter;
+
+        public String getJobParameter() {
+            return jobParameter;
+        }
+
+        public void setJobParameter(String jobParameter) {
+            this.jobParameter = jobParameter;
+        }
 
         private boolean overwrite;
 
@@ -148,6 +214,14 @@ public class ElasticJobInit implements IElasticJobInit {
 
         public String getDescription() {
             return description;
+        }
+
+        public String getJobCode() {
+            return jobCode;
+        }
+
+        public void setJobCode(String jobCode) {
+            this.jobCode = jobCode;
         }
 
         public void setDescription(String description) {

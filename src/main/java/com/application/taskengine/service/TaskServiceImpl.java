@@ -2,7 +2,10 @@ package com.application.taskengine.service;
 
 import com.application.taskengine.LogMap;
 import com.application.taskengine.itf.ITaskService;
-import com.application.taskengine.model.*;
+import com.application.taskengine.model.TaskDeployModel;
+import com.application.taskengine.model.TaskLogModel;
+import com.application.taskengine.model.TaskParamValueModel;
+import com.application.taskengine.model.TaskPluginModel;
 import com.application.taskengine.util.DynamicSchedulerFactory;
 import com.application.taskengine.util.SchedulerUtil;
 import com.application.taskengine.vo.ScheduleTaskVo;
@@ -13,16 +16,6 @@ import com.cheng.lang.TimeToolkit;
 import com.cheng.lang.exception.BusinessException;
 import com.cheng.util.ApplicationLogger;
 import com.cheng.util.BeanUtil;
-import com.cheng.web.ApplicationServiceLocator;
-import com.dangdang.ddframe.job.config.JobCoreConfiguration;
-import com.dangdang.ddframe.job.config.dataflow.DataflowJobConfiguration;
-import com.dangdang.ddframe.job.config.script.ScriptJobConfiguration;
-import com.dangdang.ddframe.job.config.simple.SimpleJobConfiguration;
-import com.dangdang.ddframe.job.lite.api.JobScheduler;
-import com.dangdang.ddframe.job.lite.config.LiteJobConfiguration;
-import com.dangdang.ddframe.job.reg.base.CoordinatorRegistryCenter;
-import com.wtang.isay.DataflowDemoJob;
-import com.wtang.isay.SimpleDemoJob;
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.SchedulerException;
 import org.springframework.stereotype.Component;
@@ -44,29 +37,23 @@ public class TaskServiceImpl implements ITaskService {
     @Resource
     IBaseDAO baseDAO;
 
-    @Override
-    public void initTask() throws BusinessException {
-        SQLParameter sqlParameter = new SQLParameter();
-        sqlParameter.addParam("Y");
-        List<TaskDeployModel> tasks = baseDAO.queryByClause(TaskDeployModel.class, " runnable=? and dr= 0", sqlParameter);
-        for (TaskDeployModel task : tasks) {
-            try {
-                DynamicSchedulerFactory.addTask(createScheduleJobVo(task));
-            } catch (Exception e) {
-                ApplicationLogger.error(e);
-            }
-        }
-    }
+//    @Override
+//    public void initTask() throws BusinessException {
+//        SQLParameter sqlParameter = new SQLParameter();
+//        sqlParameter.addParam("Y");
+//        List<TaskDeployModel> tasks = baseDAO.queryByClause(TaskDeployModel.class, " runnable=? and dr= 0", sqlParameter);
+//        for (TaskDeployModel task : tasks) {
+//            try {
+//                DynamicSchedulerFactory.addTask(createScheduleJobVo(task));
+//            } catch (Exception e) {
+//                ApplicationLogger.error(e);
+//            }
+//        }
+//    }
 
     public boolean addTask(TaskDeployModel taskDeployModel) throws BusinessException {
         if (StringUtils.isBlank(taskDeployModel.getPkTaskdeploy())) {
             baseDAO.insert(taskDeployModel);
-            try {
-                DynamicSchedulerFactory.addTask(createScheduleJobVo(taskDeployModel));
-            } catch (SchedulerException e) {
-                ApplicationLogger.error(e);
-                throw new BusinessException("任务添加失败");
-            }
             return true;
         } else {
             return updateTask(taskDeployModel);
@@ -133,64 +120,8 @@ public class TaskServiceImpl implements ITaskService {
         return pageVO;
     }
 
-    @Override
-    public void initElasticTask() throws BusinessException {
-        //读取配置中心配置
-        TaskConfModel taskConfModel = baseDAO.queryOneByClause(TaskConfModel.class, "dr=0");
 
-        JobScheduler jobScheduler = new JobScheduler(createRegistryCenter(taskConfModel), createJobConfiguration());
-        jobScheduler.init();
 
-        JobScheduler jobScheduler2 = new JobScheduler(createRegistryCenter(taskConfModel), createJobConfiguration2());
-        jobScheduler2.init();
-    }
-
-    /**
-     * 初始化注册中心
-     *
-     * @return
-     */
-    private CoordinatorRegistryCenter createRegistryCenter(TaskConfModel taskConfModel) {
-        CoordinatorRegistryCenter regCenter = ApplicationServiceLocator.getBean("zookeeperRegistryCenter");
-        regCenter.init();
-        return regCenter;
-    }
-
-    /**
-     * 初始化任务
-     *
-     * @return
-     */
-    private LiteJobConfiguration createJobConfiguration() {
-        // 创建作业配置
-        // 定义作业核心配置
-        JobCoreConfiguration simpleCoreConfig = JobCoreConfiguration.newBuilder("demoSimpleJob", "0/10 * * * * ?", 1).jobParameter("{\"code\":\"20000\",\"message\":\"success\",\"success\":true}").build();
-        // 定义SIMPLE类型配置
-        SimpleJobConfiguration simpleJobConfig = new SimpleJobConfiguration(simpleCoreConfig, SimpleDemoJob.class.getCanonicalName());
-        // 定义Lite作业根配置
-        LiteJobConfiguration simpleJobRootConfig = LiteJobConfiguration.newBuilder(simpleJobConfig).overwrite(true).build();
-        return simpleJobRootConfig;
-    }
-
-    private LiteJobConfiguration createJobConfiguration2() {
-        // 定义作业核心配置
-        JobCoreConfiguration dataflowCoreConfig = JobCoreConfiguration.newBuilder("demoDataflowJob", "0/30 * * * * ?", 10).build();
-        // 定义DATAFLOW类型配置
-        DataflowJobConfiguration dataflowJobConfig = new DataflowJobConfiguration(dataflowCoreConfig, DataflowDemoJob.class.getCanonicalName(), false);
-        // 定义Lite作业根配置
-        LiteJobConfiguration dataflowJobRootConfig = LiteJobConfiguration.newBuilder(dataflowJobConfig).build();
-        return dataflowJobRootConfig;
-    }
-
-    private LiteJobConfiguration createJobConfiguration3() {
-        // 定义作业核心配置配置
-        JobCoreConfiguration scriptCoreConfig = JobCoreConfiguration.newBuilder("demoScriptJob", "0/45 * * * * ?", 10).build();
-        // 定义SCRIPT类型配置
-        ScriptJobConfiguration scriptJobConfig = new ScriptJobConfiguration(scriptCoreConfig, "test.sh");
-        // 定义Lite作业根配置
-        LiteJobConfiguration scriptJobRootConfig = LiteJobConfiguration.newBuilder(scriptJobConfig).build();
-        return scriptJobRootConfig;
-    }
     private PageVO init(String key) {
         PageVO pageVO = new PageVO(1, 20);
         List<TaskLogModel> data = LogMap.getLog(key);
@@ -199,31 +130,7 @@ public class TaskServiceImpl implements ITaskService {
     }
 
     public boolean updateTask(TaskDeployModel taskDeployModel) throws BusinessException {
-        TaskDeployModel dbtaskDeployModel = baseDAO.queryByPK(TaskDeployModel.class, taskDeployModel.getPkTaskdeploy());
-        if ("N".equals(dbtaskDeployModel.getRunnable())) {
-            if ("Y".equals(taskDeployModel.getRunnable())) {
-                addTask(taskDeployModel);
-            } else {
-
-            }
-            baseDAO.update(taskDeployModel);
-            return true;
-        } else {
-            if ("Y".equals(taskDeployModel.getRunnable())) {
-                baseDAO.update(taskDeployModel);
-            }
-        }
-
-        if ("N".equals(taskDeployModel.getRunnable())) {
-            disableTask(taskDeployModel);
-            return false;
-        }
-        try {
-            DynamicSchedulerFactory.rescheduleTask(createScheduleJobVo(taskDeployModel));
-        } catch (SchedulerException e) {
-            ApplicationLogger.error(e);
-            throw new BusinessException("任务更新失败");
-        }
+        baseDAO.update(taskDeployModel);
         return true;
     }
 

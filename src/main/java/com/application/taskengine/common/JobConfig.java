@@ -28,6 +28,11 @@ public @interface JobConfig {
     String jobName() default "";
 
     /**
+     * 任务的编码 默认执行类类名首字母小写
+     */
+    String jobCode() default "";
+
+    /**
      * 分片数
      */
     int shardingTotalCount() default 2;

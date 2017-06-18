@@ -12,7 +12,7 @@ import com.dangdang.ddframe.job.lite.config.LiteJobConfiguration;
  */
 public class JobConfigurationFactory {
     public static LiteJobConfiguration createJobConfiguration(ElasticJobInit.JobInfo jobInfo) {
-        JobCoreConfiguration coreConfiguration = JobCoreConfiguration.newBuilder(jobInfo.getJobName(), jobInfo.getCron(), jobInfo.getShardingTotalCount()).build();
+        JobCoreConfiguration coreConfiguration = JobCoreConfiguration.newBuilder(jobInfo.getJobCode(), jobInfo.getCron(), jobInfo.getShardingTotalCount()).jobParameter(jobInfo.getJobParameter()).build();
 
         if (jobInfo.getJobType().equals(JobType.SIMPLE)) {
             return createSimpleJobConfiguration(coreConfiguration, jobInfo);
@@ -30,8 +30,9 @@ public class JobConfigurationFactory {
     private static LiteJobConfiguration createSimpleJobConfiguration(JobCoreConfiguration coreConfiguration, ElasticJobInit.JobInfo jobInfo) {
         // 定义SIMPLE类型配置
         SimpleJobConfiguration simpleJobConfig = new SimpleJobConfiguration(coreConfiguration, jobInfo.getJobClass().getCanonicalName());
+
         // 定义Lite作业根配置
-        LiteJobConfiguration simpleJobRootConfig = LiteJobConfiguration.newBuilder(simpleJobConfig).overwrite(true).build();
+        LiteJobConfiguration simpleJobRootConfig = LiteJobConfiguration.newBuilder(simpleJobConfig).overwrite(jobInfo.isOverwrite()).build();
 
         return simpleJobRootConfig;
     }
@@ -42,7 +43,7 @@ public class JobConfigurationFactory {
         DataflowJobConfiguration dataflowJobConfig = new DataflowJobConfiguration(coreConfiguration, jobInfo.getJobClass().getCanonicalName(), false);
 
         // 定义Lite作业根配置
-        LiteJobConfiguration dataflowJobRootConfig = LiteJobConfiguration.newBuilder(dataflowJobConfig).overwrite(true).build();
+        LiteJobConfiguration dataflowJobRootConfig = LiteJobConfiguration.newBuilder(dataflowJobConfig).overwrite(jobInfo.isOverwrite()).build();
 
         return dataflowJobRootConfig;
     }

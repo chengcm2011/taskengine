@@ -19,9 +19,9 @@
             <p>
                 <label>任务类型：</label>
                 <select name="taskType">
-                    <option value="fix_simple" selected="selected">单机</option>
-                    <option value="elastic_simple">弹性简单</option>
-                    <option value="elastic_flow">弹性流式</option>
+                    <%--<option value="fix_simple" >单机</option>--%>
+                    <option value="SIMPLE" selected="selected">弹性简单</option>
+                    <option value="DATAFLOW">弹性流式</option>
                 </select>
             </p>
 

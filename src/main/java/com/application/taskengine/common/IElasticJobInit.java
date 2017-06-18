@@ -7,5 +7,5 @@ import com.cheng.lang.IService;
  */
 public interface IElasticJobInit extends IService {
 
-    void JobInit();
+    void JobInit() throws Exception;
 }
