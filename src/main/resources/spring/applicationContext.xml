@@ -22,6 +22,7 @@
 		<property name="ignoreResourceNotFound" value="true"/>
 		<property name="locations" value="classpath*:/jdbc.properties"/>
 	</bean>
+
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 		<property name="driverClassName">
 			<value>${jdbc.driverClass}</value>
@@ -70,19 +71,28 @@
 	<!-- 将所有具有@Transactional注解的Bean自动配置为声明式事务支持 -->
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 
-	<bean id="quartzScheduler" lazy-init="false" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-		<!--<property name="dataSource" ref="dataSource"></property>-->
-		<property name="autoStartup" value="true"/>
-		<!--自动启动 -->
-		<property name="startupDelay" value="10"/>
-		<!--延时启动 -->
-		<!--<property name="applicationContextSchedulerContextKey"  value="applicationContextKey" />-->
-		<!--<property name="configLocation" value="classpath:quartz.properties"/>-->
+
+	<bean id="zookeeperConfiguration" class="com.dangdang.ddframe.job.reg.zookeeper.ZookeeperConfiguration">
+		<constructor-arg index="0" value="${zk.serverLists}"/>
+		<constructor-arg index="1" value="${zk.namespace}"/>
 	</bean>
-	<bean id="dynamicSchedulerUtil" class="com.application.taskengine.util.DynamicSchedulerFactory">
-		<!-- (轻易不要变更“调度器名称”, 任务创建时会绑定该“调度器名称”) -->
-		<property name="scheduler" ref="quartzScheduler"/>
+	<bean id="zookeeperRegistryCenter" class="com.dangdang.ddframe.job.reg.zookeeper.ZookeeperRegistryCenter">
+		<constructor-arg index="0" ref="zookeeperConfiguration"/>
 	</bean>
+
+	<!--<bean id="quartzScheduler" lazy-init="false" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">-->
+	<!--&lt;!&ndash;<property name="dataSource" ref="dataSource"></property>&ndash;&gt;-->
+	<!--<property name="autoStartup" value="true"/>-->
+	<!--&lt;!&ndash;自动启动 &ndash;&gt;-->
+	<!--<property name="startupDelay" value="10"/>-->
+	<!--&lt;!&ndash;延时启动 &ndash;&gt;-->
+	<!--&lt;!&ndash;<property name="applicationContextSchedulerContextKey"  value="applicationContextKey" />&ndash;&gt;-->
+	<!--&lt;!&ndash;<property name="configLocation" value="classpath:quartz.properties"/>&ndash;&gt;-->
+	<!--</bean>-->
+	<!--<bean id="dynamicSchedulerUtil" class="com.application.taskengine.util.DynamicSchedulerFactory">-->
+	<!--&lt;!&ndash; (轻易不要变更“调度器名称”, 任务创建时会绑定该“调度器名称”) &ndash;&gt;-->
+	<!--<property name="scheduler" ref="quartzScheduler"/>-->
+	<!--</bean>-->
 
 	<bean id="idGeneratorService" class="com.cheng.jdbc.generator.IdGeneratorService" destroy-method="returnOid">
 		<property name="dataSource" ref="dataSource"></property>

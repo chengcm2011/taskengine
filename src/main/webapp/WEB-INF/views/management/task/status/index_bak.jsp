@@ -15,8 +15,6 @@
         <li class="line">line</li>
         <li><a class="edit" href="management/task/status/trigger?pk={pk}" target="ajaxTodo" title="确定要运行一次吗？"
                rel="trigger"><span>运行一次</span></a></li>
-        <li><a class="edit" href="management/task/status/shardinginfo?pk={pk}" target="navTab" rel="shardinginfo"><span>分片状态</span></a>
-        </li>
     </ul>
 </div>
 
@@ -27,6 +25,7 @@
             <th width="">序号</th>
             <th width="">任务名称</th>
             <th width="">任务cron表达式</th>
+            <th width="">下次执行时间</th>
             <th width="">运行状态</th>
         </tr>
         </thead>
@@ -36,11 +35,25 @@
                 <tr target="pk" rel="${item.jobCode }">
                     <td>${sta.count}</td>
                     <td title="${item.jobClass}">${item.jobName }</td>
-                    <td>${item.cron }</td>
-                    <td>${item.status }</td>
+                    <td>${item.cronExpression }</td>
+                    <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss"
+                                        value="${item.nextFireTime }"></fmt:formatDate></td>
+                    <td>${item.triggerStateName }</td>
                 </tr>
             </c:forEach>
         </c:if>
         </tbody>
     </table>
+
+    <%--<div class="panelBar" >--%>
+    <%--<div class="pages">--%>
+    <%--<span>显示</span>--%>
+    <%--<select name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">--%>
+    <%--<option value="${pageVO.pageSize }">${pageVO.pageSize }</option>--%>
+    <%--</select>--%>
+    <%--<span>条，共${pageVO.totalCount }条</span>--%>
+    <%--</div>--%>
+    <%--<div class="pagination" targetType="navTab" totalCount="${pageVO.totalCount }" numPerPage="${pageVO.pageSize }" pageNumShown="10" currentPage="${pageVO.pageNum}"></div>--%>
+    <%--</div>--%>
+
 </div>

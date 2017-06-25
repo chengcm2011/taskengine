@@ -30,7 +30,7 @@
                     </li>
                     <li>
                         <label>任务名称：</label>
-                        <input type="text" name="taskname" class="textInput"/>
+                        <input type="text" name="taskName" class="textInput"/>
                     </li>
                 </ul>
                 <div class="subBar">
@@ -68,8 +68,6 @@
         <li><a class="edit" href="management/task/deploy/enable?pk={pk}" target="ajaxTodo" title="确定要启用吗？" rel="enable"><span>启用</span></a>
         </li>
         <li class="line">line</li>
-        <%--<li><a class="edit" href="management/task/deploy/resume?pk={pk}" target="ajaxTodo" title="确定要恢复吗？"  rel="resume"><span>恢复</span></a></li>--%>
-        <%--<li class="line">line</li>--%>
         <li><a class="edit" href="management/task/paramvalue/index?pk={pk}" target="navTab" rel="paramvalueindex"><span>任务参数值管理</span></a>
         </li>
     </ul>
@@ -81,10 +79,11 @@
         <tr>
             <th width="">序号</th>
             <th width="">任务插件名称</th>
+            <th width="">任务类型</th>
             <th width="">任务名称</th>
             <th width="">任务描述</th>
             <th width="">任务cron表达式</th>
-            <th width="">运行状态</th>
+            <th width="">状态</th>
         </tr>
         </thead>
         <tbody>
@@ -93,9 +92,10 @@
                 <tr target="pk" rel="${item.pkTaskdeploy }">
                     <td>${(pageVO.pageNum-1)*pageVO.pageSize+sta.count}</td>
                     <td>${item.pluginname }</td>
-                    <td>${item.taskname }</td>
-                    <td>${item.taskdescription }</td>
-                    <td>${item.triggerstr }</td>
+                    <td>${item.taskType }</td>
+                    <td>${item.taskName }</td>
+                    <td>${item.taskDescription }</td>
+                    <td>${item.cronExpression }</td>
                     <td><c:if test="${'Y' eq item.runnable }">已启用</c:if><c:if
                             test="${'N' eq item.runnable }">已禁用</c:if></td>
                 </tr>

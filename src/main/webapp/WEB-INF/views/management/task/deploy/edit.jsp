@@ -16,20 +16,29 @@
                    rel="pkTaskplugin" lookupGroup="orgLookup">查找带回</a>
             </p>
 
+            <p>
+                <label>任务类型：</label>
+                <select name="taskType">
+                    <%--<option value="fix_simple" >单机</option>--%>
+                    <option value="SIMPLE" selected="selected">弹性简单</option>
+                        <%--<option value="DATAFLOW">弹性流式</option>--%>
+                </select>
+            </p>
+
             <p style="height: auto">
                 <label>任务名称：</label>
-                <input type="text" name="taskname" value="${item.taskname}" class="required textInput">
+                <input type="text" name="taskName" value="${item.taskName}" class="required textInput">
             </p>
 
             <p style="height: auto">
                 <label>任务描述：</label>
-                <textarea name="taskdescription" class="required textInput valid"
-                          style="width: 240px">${item.taskdescription}</textarea>
+                <textarea name="taskDescription" class="required textInput valid"
+                          style="width: 240px">${item.taskDescription}</textarea>
             </p>
 
             <p style="height: auto">
                 <label>任务cron表达式：</label>
-                <input type="text" name="triggerstr" value="${item.triggerstr}" class="textInput required"
+                <input type="text" name="cronExpression" value="${item.cronExpression}" class="textInput required"
                        style="float: left"/>
             </p>
 

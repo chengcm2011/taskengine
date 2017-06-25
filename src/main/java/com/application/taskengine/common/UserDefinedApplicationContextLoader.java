@@ -1,6 +1,5 @@
 package com.application.taskengine.common;
 
-import com.application.taskengine.itf.ITaskService;
 import com.cheng.web.ApplicationContextLoaderListener;
 import com.cheng.web.ApplicationServiceLocator;
 import org.slf4j.Logger;
@@ -34,7 +33,10 @@ public class UserDefinedApplicationContextLoader extends ApplicationContextLoade
      */
     private void initTaskCentry(ServletContextEvent event) {
         logger.info("task init");
-        ApplicationServiceLocator.getBean(ITaskService.class).initTask();
-        ApplicationServiceLocator.getBean(ITaskService.class).initElasticTask();
+        try {
+            ApplicationServiceLocator.getBean(IElasticJobInit.class).JobInit();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
