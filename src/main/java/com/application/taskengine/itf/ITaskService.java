@@ -10,28 +10,21 @@ import com.cheng.lang.exception.BusinessException;
  */
 public interface ITaskService extends IService {
 
-//    void initTask() throws BusinessException;
+    boolean saveTask(TaskDeployModel taskDeployModel) throws BusinessException;
 
-//    void initElasticTask() throws BusinessException;
+    boolean removeTask(TaskDeployModel pkTaskdeploy) throws BusinessException;
 
-    public boolean addTask(TaskDeployModel taskDeployModel) throws BusinessException;
+    boolean runOnceTask(TaskDeployModel taskDeployModel);
 
-    public boolean removeTask(TaskDeployModel pkTaskdeploy) throws BusinessException;
+    boolean resume(TaskDeployModel taskDeployModel);
 
-    public boolean updateTask(TaskDeployModel taskDeployModel) throws BusinessException;
+    boolean pause(TaskDeployModel taskDeployModel);
 
-    public boolean runOnceTask(TaskDeployModel taskDeployModel);
+    void disableTask(TaskDeployModel taskDeployModel);
 
+    void enableTask(TaskDeployModel taskDeployModel);
 
-    public boolean resume(TaskDeployModel taskDeployModel);
-
-    public boolean pause(TaskDeployModel taskDeployModel);
-
-    public void disableTask(TaskDeployModel taskDeployModel);
-
-    public void enableTask(TaskDeployModel taskDeployModel);
-
-    public PageVO getTaskLog(String pkTaskdeploy, PageVO pageVO);
+    PageVO getTaskLog(String pkTaskdeploy, PageVO pageVO);
 
 
 }

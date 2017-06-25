@@ -5,10 +5,13 @@ import com.application.console.service.impl.JobAPIServiceImpl;
 import com.application.taskengine.itf.ITaskService;
 import com.application.taskengine.model.TaskDeployModel;
 import com.cheng.common.AjaxDone;
+import com.cheng.jdbcspring.IDataBaseService;
 import com.cheng.util.BeanUtil;
 import com.cheng.util.Predef;
+import com.cheng.web.ApplicationServiceLocator;
 import com.dangdang.ddframe.job.lite.lifecycle.domain.JobBriefInfo;
 import com.dangdang.ddframe.job.lite.lifecycle.domain.ShardingInfo;
+import com.google.common.base.Optional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,16 +56,7 @@ public class TaskStatusActiom extends BusinessCommonAction {
             data.add(item);
         }
         model.addAttribute(DATA, data);
-        return "/management/task/status/index1";
-    }
-
-    @RequestMapping("shardinginfo")
-    public String shardinginfo(HttpServletRequest request, String pk, Model model) throws Exception {
-
-        Collection<ShardingInfo> shardingInfos = jobAPIService.getShardingStatisticsAPI().getShardingInfo(pk);
-
-        model.addAttribute(DATA, shardingInfos);
-        return "/management/task/status/shardinginfo";
+        return "/management/task/status/index";
     }
 
 
@@ -108,6 +102,64 @@ public class TaskStatusActiom extends BusinessCommonAction {
         }
         try {
             taskService.runOnceTask(taskDeployModel);
+            return AjaxDoneSuccNotcloseCurrent("执行成功");
+        } catch (Exception e) {
+            return AjaxDoneSuccNotcloseCurrent("执行失败");
+        }
+    }
+
+
+    @RequestMapping("shardinginfo")
+    public String shardinginfo(String pk, Model model) throws Exception {
+
+        TaskDeployModel taskDeployModel = ApplicationServiceLocator.getService(IDataBaseService.class).queryByPK(TaskDeployModel.class, pk);
+        Collection<ShardingInfo> shardingInfos = jobAPIService.getShardingStatisticsAPI().getShardingInfo(pk);
+
+        model.addAttribute(DATA, shardingInfos);
+        model.addAttribute(ITEM, taskDeployModel);
+        return "/management/task/status/shardinginfo";
+    }
+
+
+    @RequestMapping("/disableSharding")
+    @ResponseBody
+    public AjaxDone disableSharding(String jobCode, String itemindex) throws Exception {
+        try {
+            jobAPIService.getShardingOperateAPI().disable(jobCode, itemindex);
+            return AjaxDoneSuccNotcloseCurrent("执行成功");
+        } catch (Exception e) {
+            return AjaxDoneSuccNotcloseCurrent("执行失败");
+        }
+    }
+
+    @RequestMapping("/enableSharding")
+    @ResponseBody
+    public AjaxDone enableSharding(String jobCode, String itemindex) throws Exception {
+        try {
+            jobAPIService.getShardingOperateAPI().enable(jobCode, itemindex);
+            return AjaxDoneSuccNotcloseCurrent("执行成功");
+        } catch (Exception e) {
+            return AjaxDoneSuccNotcloseCurrent("执行失败");
+        }
+    }
+
+
+    @RequestMapping("/disableServerJob")
+    @ResponseBody
+    public AjaxDone disableServerJob(String jobCode, String serverIp) throws Exception {
+        try {
+            jobAPIService.getJobOperatorAPI().disable(Optional.of(jobCode), Optional.of(serverIp));
+            return AjaxDoneSuccNotcloseCurrent("执行成功");
+        } catch (Exception e) {
+            return AjaxDoneSuccNotcloseCurrent("执行失败");
+        }
+    }
+
+    @RequestMapping("/enableServerJob")
+    @ResponseBody
+    public AjaxDone enableServerJob(String jobCode, String serverIp) throws Exception {
+        try {
+            jobAPIService.getJobOperatorAPI().enable(Optional.of(jobCode), Optional.of(serverIp));
             return AjaxDoneSuccNotcloseCurrent("执行成功");
         } catch (Exception e) {
             return AjaxDoneSuccNotcloseCurrent("执行失败");

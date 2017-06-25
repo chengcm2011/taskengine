@@ -82,7 +82,7 @@ public class TaskDeployAction extends BusinessCommonAction {
             }
             taskDeployModel.setDr(0);
             taskDeployModel.setTs(TimeToolkit.getCurrentTs());
-            taskService.addTask(taskDeployModel);
+            taskService.saveTask(taskDeployModel);
             return AjaxDoneSucc("保存成功");
         } catch (Exception e) {
             return AjaxDoneError("保存失败");
@@ -92,7 +92,7 @@ public class TaskDeployAction extends BusinessCommonAction {
 
     @RequestMapping("deploy/del")
     @ResponseBody
-    public AjaxDone deploydel(HttpServletRequest request, String pk, Model model) {
+    public AjaxDone deploydel(String pk) {
         try {
             TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, pk);
             taskService.removeTask(taskDeployModel);
@@ -104,7 +104,7 @@ public class TaskDeployAction extends BusinessCommonAction {
 
     @RequestMapping("deploy/disable")
     @ResponseBody
-    public AjaxDone disable(HttpServletRequest request, String pk, Model model) {
+    public AjaxDone disable(String pk) {
         try {
             TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, pk);
             taskService.disableTask(taskDeployModel);
@@ -116,7 +116,7 @@ public class TaskDeployAction extends BusinessCommonAction {
 
     @RequestMapping("deploy/enable")
     @ResponseBody
-    public AjaxDone enable(HttpServletRequest request, String pk, Model model) {
+    public AjaxDone enable(String pk) {
         try {
             TaskDeployModel taskDeployModel = dataBaseService.queryByPK(TaskDeployModel.class, pk);
             taskService.enableTask(taskDeployModel);

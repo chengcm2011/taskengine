@@ -1,29 +1,26 @@
 package com.application.taskengine.service;
 
+import com.application.console.service.JobAPIService;
+import com.application.console.service.impl.JobAPIServiceImpl;
 import com.application.taskengine.LogMap;
+import com.application.taskengine.common.IElasticJobInit;
 import com.application.taskengine.itf.ITaskService;
 import com.application.taskengine.model.TaskDeployModel;
 import com.application.taskengine.model.TaskLogModel;
-import com.application.taskengine.model.TaskParamValueModel;
-import com.application.taskengine.model.TaskPluginModel;
-import com.application.taskengine.util.DynamicSchedulerFactory;
-import com.application.taskengine.util.SchedulerUtil;
-import com.application.taskengine.vo.ScheduleTaskVo;
-import com.cheng.jdbc.SQLParameter;
 import com.cheng.jdbc.itf.IBaseDAO;
 import com.cheng.lang.PageVO;
 import com.cheng.lang.TimeToolkit;
 import com.cheng.lang.exception.BusinessException;
 import com.cheng.util.ApplicationLogger;
 import com.cheng.util.BeanUtil;
+import com.cheng.web.ApplicationServiceLocator;
+import com.google.common.base.Optional;
 import org.apache.commons.lang3.StringUtils;
-import org.quartz.SchedulerException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,29 +31,18 @@ import java.util.Map;
 @Transactional(rollbackFor = Exception.class)
 public class TaskServiceImpl implements ITaskService {
 
+    private JobAPIService jobAPIService = new JobAPIServiceImpl();
+
     @Resource
     IBaseDAO baseDAO;
 
-//    @Override
-//    public void initTask() throws BusinessException {
-//        SQLParameter sqlParameter = new SQLParameter();
-//        sqlParameter.addParam("Y");
-//        List<TaskDeployModel> tasks = baseDAO.queryByClause(TaskDeployModel.class, " runnable=? and dr= 0", sqlParameter);
-//        for (TaskDeployModel task : tasks) {
-//            try {
-//                DynamicSchedulerFactory.addTask(createScheduleJobVo(task));
-//            } catch (Exception e) {
-//                ApplicationLogger.error(e);
-//            }
-//        }
-//    }
-
-    public boolean addTask(TaskDeployModel taskDeployModel) throws BusinessException {
+    public boolean saveTask(TaskDeployModel taskDeployModel) throws BusinessException {
         if (StringUtils.isBlank(taskDeployModel.getPkTaskdeploy())) {
             baseDAO.insert(taskDeployModel);
             return true;
         } else {
-            return updateTask(taskDeployModel);
+            baseDAO.update(taskDeployModel);
+            return true;
         }
     }
 
@@ -64,8 +50,9 @@ public class TaskServiceImpl implements ITaskService {
     public boolean removeTask(TaskDeployModel taskdeploy) throws BusinessException {
         baseDAO.deleteByPK(TaskDeployModel.class, taskdeploy.getPrimaryKey());
         try {
-            DynamicSchedulerFactory.removeTask(taskdeploy.getPkTaskdeploy(), taskdeploy.getPkTaskplugin());
-        } catch (SchedulerException s) {
+            jobAPIService.getJobOperatorAPI().shutdown(Optional.of(taskdeploy.getPkTaskdeploy()), Optional.<String>absent());
+            jobAPIService.getJobSettingsAPI().removeJobSettings(taskdeploy.getPkTaskdeploy());
+        } catch (Exception s) {
             ApplicationLogger.error(s);
             throw new BusinessException("删除失败");
         }
@@ -76,25 +63,17 @@ public class TaskServiceImpl implements ITaskService {
         taskdeploy.setRunnable("N");
         taskdeploy.setTs(TimeToolkit.getCurrentTs());
         baseDAO.update(taskdeploy, new String[]{"runnable", "ts"});
-        try {
-            DynamicSchedulerFactory.removeTask(taskdeploy.getPkTaskdeploy(), taskdeploy.getPkTaskplugin());
-        } catch (SchedulerException s) {
-            ApplicationLogger.error(s);
-            throw new BusinessException("禁用失败");
-        }
+        jobAPIService.getJobOperatorAPI().shutdown(Optional.of(taskdeploy.getPkTaskdeploy()), Optional.<String>absent());
+        jobAPIService.getJobSettingsAPI().removeJobSettings(taskdeploy.getPkTaskdeploy());
     }
 
-    @Override
     public void enableTask(TaskDeployModel taskDeployModel) {
         taskDeployModel.setRunnable("Y");
         taskDeployModel.setTs(TimeToolkit.getCurrentTs());
         baseDAO.update(taskDeployModel, new String[]{"runnable", "ts"});
-        try {
-            DynamicSchedulerFactory.addTask(createScheduleJobVo(taskDeployModel));
-        } catch (SchedulerException e) {
-            ApplicationLogger.error(e);
-            throw new BusinessException("任务添加失败");
-        }
+        //从数据库中初始化任务配置
+        ApplicationServiceLocator.getService(IElasticJobInit.class).JobInit(taskDeployModel.getPkTaskdeploy());
+        jobAPIService.getJobOperatorAPI().enable(Optional.of(taskDeployModel.getPkTaskdeploy()), Optional.<String>absent());
     }
 
     @Override
@@ -121,7 +100,6 @@ public class TaskServiceImpl implements ITaskService {
     }
 
 
-
     private PageVO init(String key) {
         PageVO pageVO = new PageVO(1, 20);
         List<TaskLogModel> data = LogMap.getLog(key);
@@ -129,70 +107,46 @@ public class TaskServiceImpl implements ITaskService {
         return pageVO;
     }
 
-    public boolean updateTask(TaskDeployModel taskDeployModel) throws BusinessException {
-        baseDAO.update(taskDeployModel);
-        return true;
-    }
-
     public boolean runOnceTask(TaskDeployModel taskDeployModel) {
         try {
-            DynamicSchedulerFactory.runOnceTask(taskDeployModel.getPkTaskdeploy(), taskDeployModel.getPkTaskplugin());
+            jobAPIService.getJobOperatorAPI().trigger(Optional.of(taskDeployModel.getPkTaskdeploy()), Optional.<String>absent());
             return true;
-        } catch (SchedulerException e) {
+        } catch (Exception e) {
             ApplicationLogger.error("runOnceTask task is error ", e);
             return false;
         }
     }
 
 
+    /**
+     * 暂停
+     *
+     * @param taskDeployModel
+     * @return
+     */
     public boolean pause(TaskDeployModel taskDeployModel) {
         try {
-            DynamicSchedulerFactory.pauseJob(taskDeployModel.getPkTaskdeploy(), taskDeployModel.getPkTaskplugin());    // jobStatus do not store
+            jobAPIService.getJobOperatorAPI().disable(Optional.of(taskDeployModel.getPkTaskdeploy()), Optional.<String>absent());
             return true;
-        } catch (SchedulerException e) {
+        } catch (Exception e) {
             ApplicationLogger.error("pause task is error ", e);
             return false;
         }
     }
 
+    /**
+     * 重新运行
+     *
+     * @param taskDeployModel
+     * @return
+     */
     public boolean resume(TaskDeployModel taskDeployModel) {
         try {
-            DynamicSchedulerFactory.resumeJob(taskDeployModel.getPkTaskdeploy(), taskDeployModel.getPkTaskplugin());
+            jobAPIService.getJobOperatorAPI().enable(Optional.of(taskDeployModel.getPkTaskdeploy()), Optional.<String>absent());
             return true;
-        } catch (SchedulerException e) {
+        } catch (Exception e) {
             ApplicationLogger.error("resume task is error ", e);
             return false;
         }
-    }
-
-
-    private ScheduleTaskVo createScheduleJobVo(TaskDeployModel taskDeployModel) {
-        ScheduleTaskVo scheduleTaskVo = new ScheduleTaskVo();
-        scheduleTaskVo.setJobCode(taskDeployModel.getPkTaskdeploy());
-        scheduleTaskVo.setJobGroupCode(taskDeployModel.getPkTaskplugin());
-        scheduleTaskVo.setCronExpression(taskDeployModel.getCronExpression());
-        TaskPluginModel t = baseDAO.queryByPK(TaskPluginModel.class, taskDeployModel.getPkTaskplugin(), new String[]{"pluginclass"});
-        scheduleTaskVo.setJobClass(t.getPluginclass());
-        try {
-            SchedulerUtil.parse(scheduleTaskVo);
-            scheduleTaskVo.getJobDetail().getJobDataMap().putAll(getParams(taskDeployModel));
-        } catch (Exception e) {
-            ApplicationLogger.error(e);
-            throw new BusinessException(e);
-        }
-        return scheduleTaskVo;
-    }
-
-    private Map<String, Object> getParams(TaskDeployModel taskDeployModel) throws Exception {
-        Map<String, Object> taskunitmap = new HashMap<>();
-        SQLParameter sqlParameter = new SQLParameter();
-        sqlParameter.addParam(taskDeployModel.getPrimaryKey());
-        List<TaskParamValueModel> taskParamValueModels = baseDAO.queryByClause(TaskParamValueModel.class, " dr=0 and pkTaskdeploy=?", sqlParameter);
-        for (int j = 0; j < taskParamValueModels.size(); j++) {
-            TaskParamValueModel t = taskParamValueModels.get(j);
-            taskunitmap.put(t.getParamkey(), t.getParamvalue());
-        }
-        taskunitmap.put(taskDeployModel.getPKFieldName(), taskDeployModel.getPrimaryKey());
-        return taskunitmap;
     }
 }

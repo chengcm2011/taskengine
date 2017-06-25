@@ -21,7 +21,7 @@
                 <select name="taskType">
                     <%--<option value="fix_simple" >单机</option>--%>
                     <option value="SIMPLE" selected="selected">弹性简单</option>
-                    <option value="DATAFLOW">弹性流式</option>
+                        <%--<option value="DATAFLOW">弹性流式</option>--%>
                 </select>
             </p>
 

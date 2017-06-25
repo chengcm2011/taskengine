@@ -68,8 +68,6 @@
         <li><a class="edit" href="management/task/deploy/enable?pk={pk}" target="ajaxTodo" title="确定要启用吗？" rel="enable"><span>启用</span></a>
         </li>
         <li class="line">line</li>
-        <%--<li><a class="edit" href="management/task/deploy/resume?pk={pk}" target="ajaxTodo" title="确定要恢复吗？"  rel="resume"><span>恢复</span></a></li>--%>
-        <%--<li class="line">line</li>--%>
         <li><a class="edit" href="management/task/paramvalue/index?pk={pk}" target="navTab" rel="paramvalueindex"><span>任务参数值管理</span></a>
         </li>
     </ul>
@@ -85,7 +83,7 @@
             <th width="">任务名称</th>
             <th width="">任务描述</th>
             <th width="">任务cron表达式</th>
-            <th width="">运行状态</th>
+            <th width="">状态</th>
         </tr>
         </thead>
         <tbody>

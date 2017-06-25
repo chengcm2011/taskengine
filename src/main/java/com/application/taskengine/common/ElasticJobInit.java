@@ -6,7 +6,10 @@ import com.application.taskengine.model.TaskParamValueModel;
 import com.application.taskengine.model.TaskPluginModel;
 import com.cheng.jdbc.SQLParameter;
 import com.cheng.jdbc.itf.IBaseDAO;
+import com.cheng.jdbc.opt.Condition;
+import com.cheng.jdbc.opt.Query;
 import com.cheng.lang.ClassUtil;
+import com.cheng.lang.exception.BusinessException;
 import com.cheng.web.ApplicationServiceLocator;
 import com.dangdang.ddframe.job.api.JobType;
 import com.dangdang.ddframe.job.lite.api.JobScheduler;
@@ -24,22 +27,33 @@ import java.util.*;
  * job 初始化 替换spring 方式
  */
 @Component
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class ElasticJobInit implements IElasticJobInit {
 
     @Resource
     IBaseDAO baseDAO;
 
-    public void JobInit() throws Exception {
+    public void JobInit() throws BusinessException {
         // 连接注册中心
         CoordinatorRegistryCenter regCenter = ApplicationServiceLocator.getBean("zookeeperRegistryCenter");
         regCenter.init();
         // 启动简单作业
-        initJob(regCenter);
+        initJob(null, regCenter);
     }
 
-    private void initJob(CoordinatorRegistryCenter regCenter) throws Exception {
-        List<JobInfo> data = getJobConfigFromDB();
+    /**
+     * @param pkJob
+     * @throws Exception
+     */
+    public void JobInit(String pkJob) throws BusinessException {
+        // 连接注册中心
+        CoordinatorRegistryCenter regCenter = ApplicationServiceLocator.getBean("zookeeperRegistryCenter");
+        // 启动简单作业
+        initJob(pkJob, regCenter);
+    }
+
+    private void initJob(String pkJob, CoordinatorRegistryCenter regCenter) throws BusinessException {
+        List<JobInfo> data = getJobConfigFromDB(pkJob);
         // 启动作业
         for (JobInfo jobInfo : data) {
             LiteJobConfiguration liteJobConfiguration = JobConfigurationFactory.createJobConfiguration(jobInfo);
@@ -48,10 +62,14 @@ public class ElasticJobInit implements IElasticJobInit {
 
     }
 
-    private List<JobInfo> getJobConfigFromDB() throws Exception {
+    private List<JobInfo> getJobConfigFromDB(String pkJob) throws BusinessException {
 
         List<JobInfo> jobInfos = new LinkedList<>();
-        List<TaskDeployModel> tasks = baseDAO.queryByClause(TaskDeployModel.class, " runnable='Y' and dr= 0");
+        Query query = Query.query(Condition.eq("runnable", "Y")).eq("dr", 0);
+        if (StringUtils.isNotBlank(pkJob)) {
+            query.eq("pkTaskdeploy", pkJob);
+        }
+        List<TaskDeployModel> tasks = baseDAO.queryByClause(TaskDeployModel.class, query);
         for (TaskDeployModel task : tasks) {
             JobInfo jobInfo = new JobInfo();
             jobInfo.setCron(task.getCronExpression());
@@ -70,7 +88,7 @@ public class ElasticJobInit implements IElasticJobInit {
         return jobInfos;
     }
 
-    private String getJobParameter(TaskDeployModel taskDeployModel) throws Exception {
+    private String getJobParameter(TaskDeployModel taskDeployModel) throws BusinessException {
         Map<String, Object> taskunitmap = new HashMap<>();
         SQLParameter sqlParameter = new SQLParameter();
         sqlParameter.addParam(taskDeployModel.getPrimaryKey());
