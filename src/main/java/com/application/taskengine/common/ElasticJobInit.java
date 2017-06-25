@@ -92,7 +92,9 @@ public class ElasticJobInit implements IElasticJobInit {
         Map<String, Object> taskunitmap = new HashMap<>();
         SQLParameter sqlParameter = new SQLParameter();
         sqlParameter.addParam(taskDeployModel.getPrimaryKey());
-        List<TaskParamValueModel> taskParamValueModels = baseDAO.queryByClause(TaskParamValueModel.class, " dr=0 and pkTaskdeploy=?", sqlParameter);
+        Query query = Query.query(Condition.eq("pkTaskdeploy", taskDeployModel.getPrimaryKey()));
+        query.eq("dr", 0);
+        List<TaskParamValueModel> taskParamValueModels = baseDAO.queryByClause(TaskParamValueModel.class, query);
         for (int j = 0; j < taskParamValueModels.size(); j++) {
             TaskParamValueModel t = taskParamValueModels.get(j);
             taskunitmap.put(t.getParamkey(), t.getParamvalue());

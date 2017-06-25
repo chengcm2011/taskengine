@@ -43,12 +43,12 @@
         <tbody>
         <c:forEach items="${data}" var="item">
             <tr>
-                <td>${item.taskname}</td>
-                <td>${item.taskdescription}</td>
-                <td>${item.triggerstr}</td>
+                <td>${item.taskName}</td>
+                <td>${item.taskDescription}</td>
+                <td>${item.cronExpression}</td>
                 <td>
                     <a class="btnSelect"
-                       href="javascript:$.bringBack({${itemkey}:'${item.pkTaskdeploy}', orgName${itemkey}:'${item.taskname}'})"
+                       href="javascript:$.bringBack({${itemkey}:'${item.pkTaskdeploy}', orgName${itemkey}:'${item.taskName}'})"
                        title="查找带回">选择</a>
                 </td>
             </tr>
