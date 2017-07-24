@@ -50,14 +50,16 @@ public class TaskStatusService implements ITaskStatusService {
             Document document = Jsoup.connect(stringBuilder.toString()).cookies(cookies).timeout(30000).get();
             if (!document.outerHtml().contains("操作成功")) {
                 ApplicationLogger.info(document.outerHtml());
+                return false;
             }
+            for (TaskStatusModel taskStatusModel : taskStatusModelList) {
+                taskStatusModel.setClose(UFBoolean.TRUE);
+            }
+            baseDAO.update(taskStatusModelList);
+            return true;
         } catch (Exception e) {
             ApplicationLogger.error("关闭任务异常", e);
         }
-        for (TaskStatusModel taskStatusModel : taskStatusModelList) {
-            taskStatusModel.setClose(UFBoolean.TRUE);
-        }
-        baseDAO.update(taskStatusModelList);
-        return true;
+        return false;
     }
 }

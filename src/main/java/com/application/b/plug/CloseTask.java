@@ -34,6 +34,9 @@ public class CloseTask extends AbstractElasticTaskImpl {
         pageVO.setPageSize(500);
         pageVO.setCondition("close='N'");
         pageVO = dataBaseService.queryByPage(TaskStatusModel.class, pageVO);
+        if (pageVO.getData().size() == 0) {
+            return;
+        }
         taskStatusService.close((List<TaskStatusModel>) pageVO.getData(), jobParameter);
     }
 
