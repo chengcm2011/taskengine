@@ -4,6 +4,7 @@ import com.application.b.TaskStatusModel;
 import com.application.taskengine.action.BusinessCommonAction;
 import com.cheng.jdbcspring.IDataBaseService;
 import com.cheng.lang.TimeToolkit;
+import com.cheng.lang.model.UFBoolean;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,6 +31,7 @@ public class RentPaymentStatusAction extends BusinessCommonAction {
         }
         TaskStatusModel taskStatusModel = new TaskStatusModel();
         taskStatusModel.setTid(tid);
+        taskStatusModel.setClose(UFBoolean.FALSE);
         taskStatusModel.setTs(TimeToolkit.getCurrentTs());
         try {
             String pk = dataBaseService.insert(taskStatusModel);

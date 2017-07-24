@@ -46,12 +46,11 @@ public class TaskStatusService implements ITaskStatusService {
         cookies.put("Hm_lpvt_038002b56790c097b74c818a80e3a68e", "1500860398");
         cookies.put("JSESSIONID", jsonObject.getString("sessionid"));
         cookies.put("gr_user_id", "f427633d-cdd9-4e8a-852f-dc6306eafa47");
-        cookies.put("", "");
-        cookies.put("", "");
-        cookies.put("", "");
         try {
             Document document = Jsoup.connect(stringBuilder.toString()).cookies(cookies).timeout(30000).get();
-            ApplicationLogger.info(document.outerHtml());
+            if (!document.outerHtml().contains("操作成功")) {
+                ApplicationLogger.info(document.outerHtml());
+            }
         } catch (Exception e) {
             ApplicationLogger.error("关闭任务异常", e);
         }
