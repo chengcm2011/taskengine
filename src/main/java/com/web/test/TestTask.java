@@ -15,7 +15,7 @@ public class TestTask extends AbstractTaskImpl {
 //        IDataBaseService dataBaseService = ApplicationServiceLocator.getBean(IDataBaseService.class);
 //        List<String> d = FileUtil.readFileByLines("D:\\用户账户\\Desktop\\init.txt");
 //        for (String dd:d){
-//            AccountNOModel accountNOModel = new AccountNOModel();
+//            RentContractModel accountNOModel = new RentContractModel();
 //            accountNOModel.setSuccess(UFBoolean.FALSE);
 //            accountNOModel.setTs(TimeToolkit.getCurrentTs());
 //            accountNOModel.setDr(0);

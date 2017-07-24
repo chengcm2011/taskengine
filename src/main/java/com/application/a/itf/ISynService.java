@@ -1,10 +1,10 @@
 package com.application.a.itf;
 
-import com.application.a.model.AccountNOModel;
+import com.application.a.model.RentContractModel;
 import com.cheng.lang.IService;
 
 
 public interface ISynService extends IService {
 
-    public String syn(AccountNOModel accountNOModel);
+    public String syn(RentContractModel accountNOModel);
 }
