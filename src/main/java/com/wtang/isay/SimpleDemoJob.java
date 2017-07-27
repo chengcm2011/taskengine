@@ -7,6 +7,8 @@ import com.cheng.util.ApplicationLogger;
 import com.dangdang.ddframe.job.api.ShardingContext;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 /**
  * 简单重复的任务
  */
@@ -16,5 +18,10 @@ public class SimpleDemoJob extends AbstractElasticTaskImpl {
     @Override
     public void execute(ShardingContext shardingContext) {
         ApplicationLogger.info(TimeToolkit.getCurrentTs() + ":" + shardingContext.getJobParameter());
+    }
+
+    @Override
+    public void execute(ShardingContext shardingContext, String taskKey, Map<String, Object> taskParams) {
+
     }
 }

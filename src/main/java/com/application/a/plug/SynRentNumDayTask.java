@@ -5,6 +5,8 @@ import com.cheng.db.DBRunner;
 import com.cheng.lang.TimeToolkit;
 import com.dangdang.ddframe.job.api.ShardingContext;
 
+import java.util.Map;
+
 
 /**
  * 同步户号到mq
@@ -12,14 +14,12 @@ import com.dangdang.ddframe.job.api.ShardingContext;
 class SynRentNumDayTask extends AbstractElasticTaskImpl {
 
     @Override
-    public void execute(ShardingContext shardingContext) {
-
+    public void execute(ShardingContext shardingContext, String taskKey, Map<String, Object> taskParams) {
         try {
             DBRunner db = DBRunner.of("pro", "jdbc:oracle:thin:@10.16.26.79:1521:svdp", "HLASSET", "GTIfZ8RnBY");
             int newc = db.queryInt("select count(1) from bz_rent_contract a where a.lessee_sign_date=to_date(?,'yyyy-mm-dd')", TimeToolkit.getCurrentDate());
         } catch (Exception e) {
 
         }
-
     }
 }

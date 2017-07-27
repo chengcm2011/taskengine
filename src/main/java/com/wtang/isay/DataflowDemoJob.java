@@ -8,6 +8,8 @@ import com.dangdang.ddframe.job.api.JobType;
 import com.dangdang.ddframe.job.api.ShardingContext;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 /**
  *
  */
@@ -15,7 +17,7 @@ import org.springframework.stereotype.Component;
 @JobConfig(value = "0/10 * * * * ?", jobType = JobType.DATAFLOW, shardingTotalCount = 1)
 public class DataflowDemoJob extends AbstractElasticTaskImpl {
     @Override
-    public void execute(ShardingContext shardingContext) {
+    public void execute(ShardingContext shardingContext, String taskKey, Map<String, Object> taskParams) {
         ApplicationLogger.info(TimeToolkit.getCurrentTs() + ":" + shardingContext.getJobParameter());
     }
 }

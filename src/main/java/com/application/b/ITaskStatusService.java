@@ -3,6 +3,7 @@ package com.application.b;
 import com.cheng.lang.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author chengys4
@@ -10,5 +11,5 @@ import java.util.List;
  **/
 public interface ITaskStatusService extends IService {
 
-    boolean close(List<TaskStatusModel> taskStatusModelList, String jobParameter);
+    boolean close(List<TaskStatusModel> taskStatusModelList, Map<String, Object> jobParameter);
 }
