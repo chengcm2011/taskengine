@@ -34,7 +34,7 @@ public class UserDefinedApplicationContextLoader extends ApplicationContextLoade
     private void initTaskCentry(ServletContextEvent event) {
         logger.info("task init");
         try {
-            ApplicationServiceLocator.getBean(IElasticJobInit.class).JobInit();
+            ApplicationServiceLocator.getBean(ElasticJobInit.class).JobInit();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

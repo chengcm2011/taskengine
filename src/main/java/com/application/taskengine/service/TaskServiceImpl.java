@@ -3,7 +3,7 @@ package com.application.taskengine.service;
 import com.application.console.service.JobAPIService;
 import com.application.console.service.impl.JobAPIServiceImpl;
 import com.application.taskengine.LogMap;
-import com.application.taskengine.common.IElasticJobInit;
+import com.application.taskengine.common.ElasticJobInit;
 import com.application.taskengine.itf.ITaskService;
 import com.application.taskengine.model.TaskDeployModel;
 import com.application.taskengine.model.TaskLogModel;
@@ -72,7 +72,7 @@ public class TaskServiceImpl implements ITaskService {
         taskDeployModel.setTs(TimeToolkit.getCurrentTs());
         baseDAO.update(taskDeployModel, new String[]{"runnable", "ts"});
         //从数据库中初始化任务配置
-        ApplicationServiceLocator.getService(IElasticJobInit.class).JobInit(taskDeployModel.getPkTaskdeploy());
+        ApplicationServiceLocator.getService(ElasticJobInit.class).JobInit(taskDeployModel.getPkTaskdeploy());
         jobAPIService.getJobOperatorAPI().enable(Optional.of(taskDeployModel.getPkTaskdeploy()), Optional.<String>absent());
     }
 

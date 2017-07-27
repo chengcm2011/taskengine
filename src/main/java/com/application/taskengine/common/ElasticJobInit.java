@@ -28,7 +28,7 @@ import java.util.*;
  */
 @Component
 @Transactional(rollbackFor = Exception.class)
-public class ElasticJobInit implements IElasticJobInit {
+public class ElasticJobInit {
 
     @Resource
     IBaseDAO baseDAO;

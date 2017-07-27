@@ -1,114 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	   xmlns:mvc="http://www.springframework.org/schema/mvc"
-	   xmlns:tx="http://www.springframework.org/schema/tx"
-	   xmlns:context="http://www.springframework.org/schema/context"
-	   xmlns="http://www.springframework.org/schema/beans"
-	   xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
 
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
 
-	<!-- @Controller, @Service, @Configuration, etc. <mvc:resources mapping="/resources/**" location="/resources/" />-->
-	<context:component-scan base-package="com"/>
-	<mvc:resources mapping="/resources/**" location="/resources/"/>
-	<mvc:view-controller path="/" view-name="index"/>
-	<mvc:annotation-driven/>
-	<context:annotation-config/>
+    <!-- @Controller, @Service, @Configuration, etc. <mvc:resources mapping="/resources/**" location="/resources/" />-->
+    <context:component-scan base-package="com"/>
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
+    <mvc:view-controller path="/" view-name="index"/>
+    <mvc:annotation-driven/>
+    <context:annotation-config/>
 
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="ignoreResourceNotFound" value="true"/>
-		<property name="locations" value="classpath*:/jdbc.properties"/>
-	</bean>
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="locations" value="classpath*:/jdbc.properties"/>
+    </bean>
 
-	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-		<property name="driverClassName">
-			<value>${jdbc.driverClass}</value>
-		</property>
-		<property name="url">
-			<value>${jdbc.url}</value>
-		</property>
-		<property name="username">
-			<value>${jdbc.username}</value>
-		</property>
-		<property name="password">
-			<value>${jdbc.password}</value>
-		</property>
-		<property name="maxActive">
-			<value>10</value>
-		</property>
-		<property name="maxWait">
-			<value>10000</value>
-		</property>
-		<property name="maxIdle">
-			<value>1</value>
-		</property>
-		<property name="initialSize">
-			<value>1</value>
-		</property>
-		<property name="removeAbandoned">
-			<value>true</value>
-		</property>
-		<property name="testWhileIdle">
-			<value>true</value>
-		</property>
-		<property name="testOnBorrow">
-			<value>false</value>
-		</property>
-		<property name="validationQuery">
-			<value>${jdbc.validationQuery}</value>
-		</property>
-		<property name="filters" value="stat,wall,config"/>
-		<property name="connectionProperties"
-				  value="config.decrypt=true;config.decrypt.key=MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJvenY7S36hFQGr3y7QLX4w31buFKhzjaSWg9ndtBB8MwpE7H1ad0eq/OY5F28QUEV/1MWpIb6KtYtBkfYMGSlMCAwEAAQ=="/>
-	</bean>
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="driverClassName">
+            <value>${jdbc.driverClass}</value>
+        </property>
+        <property name="url">
+            <value>${jdbc.url}</value>
+        </property>
+        <property name="username">
+            <value>${jdbc.username}</value>
+        </property>
+        <property name="password">
+            <value>${jdbc.password}</value>
+        </property>
+        <property name="maxActive">
+            <value>10</value>
+        </property>
+        <property name="maxWait">
+            <value>10000</value>
+        </property>
+        <property name="maxIdle">
+            <value>1</value>
+        </property>
+        <property name="initialSize">
+            <value>1</value>
+        </property>
+        <property name="removeAbandoned">
+            <value>true</value>
+        </property>
+        <property name="testWhileIdle">
+            <value>true</value>
+        </property>
+        <property name="testOnBorrow">
+            <value>false</value>
+        </property>
+        <property name="validationQuery">
+            <value>${jdbc.validationQuery}</value>
+        </property>
+        <property name="filters" value="stat,wall,config"/>
+        <property name="connectionProperties"
+                  value="config.decrypt=true;config.decrypt.key=MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJvenY7S36hFQGr3y7QLX4w31buFKhzjaSWg9ndtBB8MwpE7H1ad0eq/OY5F28QUEV/1MWpIb6KtYtBkfYMGSlMCAwEAAQ=="/>
+    </bean>
 
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource"/>
-	</bean>
-	<!-- 将所有具有@Transactional注解的Bean自动配置为声明式事务支持 -->
-	<tx:annotation-driven transaction-manager="transactionManager"/>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!-- 将所有具有@Transactional注解的Bean自动配置为声明式事务支持 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
 
-	<bean id="zookeeperConfiguration" class="com.dangdang.ddframe.job.reg.zookeeper.ZookeeperConfiguration">
-		<constructor-arg index="0" value="${zk.serverLists}"/>
-		<constructor-arg index="1" value="${zk.namespace}"/>
-	</bean>
-	<bean id="zookeeperRegistryCenter" class="com.dangdang.ddframe.job.reg.zookeeper.ZookeeperRegistryCenter">
-		<constructor-arg index="0" ref="zookeeperConfiguration"/>
-	</bean>
+    <bean id="zookeeperConfiguration" class="com.dangdang.ddframe.job.reg.zookeeper.ZookeeperConfiguration">
+        <constructor-arg index="0" value="${zk.serverLists}"/>
+        <constructor-arg index="1" value="${zk.namespace}"/>
+    </bean>
+    <bean id="zookeeperRegistryCenter" class="com.dangdang.ddframe.job.reg.zookeeper.ZookeeperRegistryCenter">
+        <constructor-arg index="0" ref="zookeeperConfiguration"/>
+    </bean>
 
-	<!--<bean id="quartzScheduler" lazy-init="false" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">-->
-	<!--&lt;!&ndash;<property name="dataSource" ref="dataSource"></property>&ndash;&gt;-->
-	<!--<property name="autoStartup" value="true"/>-->
-	<!--&lt;!&ndash;自动启动 &ndash;&gt;-->
-	<!--<property name="startupDelay" value="10"/>-->
-	<!--&lt;!&ndash;延时启动 &ndash;&gt;-->
-	<!--&lt;!&ndash;<property name="applicationContextSchedulerContextKey"  value="applicationContextKey" />&ndash;&gt;-->
-	<!--&lt;!&ndash;<property name="configLocation" value="classpath:quartz.properties"/>&ndash;&gt;-->
-	<!--</bean>-->
-	<!--<bean id="dynamicSchedulerUtil" class="com.application.taskengine.util.DynamicSchedulerFactory">-->
-	<!--&lt;!&ndash; (轻易不要变更“调度器名称”, 任务创建时会绑定该“调度器名称”) &ndash;&gt;-->
-	<!--<property name="scheduler" ref="quartzScheduler"/>-->
-	<!--</bean>-->
+    <bean id="idGeneratorService" class="com.cheng.jdbc.generator.IdGeneratorService" destroy-method="returnOid">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <bean id="dataBaseService" class="com.cheng.jdbcspring.DefaultDataBaseServiceImpl">
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="idGeneratorService" ref="idGeneratorService"></property>
+    </bean>
 
-	<bean id="idGeneratorService" class="com.cheng.jdbc.generator.IdGeneratorService" destroy-method="returnOid">
-		<property name="dataSource" ref="dataSource"></property>
-	</bean>
-	<bean id="dataBaseService" class="com.cheng.jdbcspring.DefaultDataBaseServiceImpl">
-		<property name="dataSource" ref="dataSource"></property>
-		<property name="idGeneratorService" ref="idGeneratorService"></property>
-	</bean>
+    <bean id="baseDAO" class="com.cheng.jdbc.impl.BaseDAO">
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="idGeneratorService" ref="idGeneratorService"></property>
+    </bean>
 
-	<bean id="baseDAO" class="com.cheng.jdbc.impl.BaseDAO">
-		<property name="dataSource" ref="dataSource"></property>
-		<property name="idGeneratorService" ref="idGeneratorService"></property>
-	</bean>
+    <bean class="com.cheng.web.ApplicationServiceLocator"></bean>
 
-	<bean class="com.cheng.web.ApplicationServiceLocator"></bean>
-
-	<bean id="httpClientUtils" class="com.cheng.util.HttpClientUtils"/>
+    <bean id="httpClientUtils" class="com.cheng.util.HttpClientUtils"/>
 
 </beans>
