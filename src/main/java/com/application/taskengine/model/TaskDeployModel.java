@@ -5,6 +5,7 @@ import com.cheng.lang.model.SuperModel;
 
 public class TaskDeployModel extends SuperModel {
 
+    public static final String PK_TASK_DEPLOY = "pkTaskdeploy";
     private String pkTaskdeploy;
     private String pkTaskplugin;
     private String taskType;

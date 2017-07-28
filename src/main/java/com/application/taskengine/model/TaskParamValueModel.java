@@ -7,6 +7,10 @@ import com.cheng.lang.model.SuperModel;
  */
 public class TaskParamValueModel extends SuperModel {
 
+    public static final String PK_TASK_PARAM_KEY = "pkTaskparamkey";
+
+    public static final String PK_TASK_DEPLOY = "pkTaskdeploy";
+
     private String pkTaskparamvalue;
 
     private String pkTaskdeploy;

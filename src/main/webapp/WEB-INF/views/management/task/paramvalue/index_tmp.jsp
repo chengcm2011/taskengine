@@ -21,15 +21,15 @@
                 <ul class="searchContent">
                     <li>
                         <label>任务名称：</label>
-                        <input type="text" class="textInput " value="${item.taskname}" readonly="readonly"/>
+                        <input type="text" class="textInput " value="${item.taskName}" readonly="readonly"/>
                     </li>
                     <li>
                         <label>任务描述：</label>
-                        <input type="text" class="textInput " value="${item.taskdescription}" readonly="readonly"/>
+                        <input type="text" class="textInput " value="${item.taskDescription}" readonly="readonly"/>
                     </li>
                     <li>
                         <label>任务执行策略：</label>
-                        <input type="text" class="textInput " value="${item.triggerstr}" readonly="readonly"/>
+                        <input type="text" class="textInput " value="${item.cronExpression}" readonly="readonly"/>
                     </li>
                 </ul>
             </div>

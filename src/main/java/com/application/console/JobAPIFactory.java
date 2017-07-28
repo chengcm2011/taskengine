@@ -43,9 +43,12 @@ public final class JobAPIFactory {
      * @return 作业配置API对象
      */
     public static JobSettingsAPI createJobSettingsAPI() {
-
-        CoordinatorRegistryCenter regCenter = ApplicationServiceLocator.getBean("zookeeperRegistryCenter");
-        return new JobSettingsAPIImpl(regCenter);
+        JobSettingsAPIImpl jobSettingsAPI = null;
+        if (jobSettingsAPI == null) {
+            CoordinatorRegistryCenter regCenter = ApplicationServiceLocator.getBean("zookeeperRegistryCenter");
+            jobSettingsAPI = new JobSettingsAPIImpl(regCenter);
+        }
+        return jobSettingsAPI;
     }
 
     /**
