@@ -7,9 +7,8 @@ import com.application.taskengine.service.TaskSynService;
 import com.cheng.common.AjaxDone;
 import com.cheng.jdbc.SQLParameter;
 import com.cheng.jdbc.opt.Condition;
+import com.cheng.jdbc.opt.Page;
 import com.cheng.jdbc.opt.Query;
-import com.cheng.lang.PageVO;
-import com.cheng.lang.TimeToolkit;
 import com.cheng.web.ApplicationServiceLocator;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -29,23 +28,30 @@ import java.util.List;
 public class TaskParamValueAction extends BusinessCommonAction {
 
     @RequestMapping("paramvalue/index")
-    public String index(HttpServletRequest request, PageVO pageVO, Model model) throws Exception {
+    public String index(HttpServletRequest request, Model model) throws Exception {
         String pk = request.getParameter("pk");
         if (StringUtils.isBlank(pk)) {
             return "";
         }
         TaskDeployModel deployModel = dataBaseService.queryByPK(TaskDeployModel.class, pk);
 
-        pageVO.setCondition(" dr=0 and pkTaskdeploy ='" + pk + "'");
-        pageVO = dataBaseService.queryByPage(TaskParamValueModel.class, pageVO);
-        if (pageVO.getData() == null || pageVO.getData().isEmpty()) {
+        Page<TaskParamValueModel> valuePage = new Page<>();
+        Query query = Query.query(Condition.eq("dr", 0));
+        query.eq(TaskParamValueModel.PK_TASK_DEPLOY, pk);
+        valuePage.setQuery(query);
+
+        valuePage = dataBaseService.queryByPage(TaskParamValueModel.class, valuePage);
+        //如果为空则从设置的参数里取key
+        if (valuePage.getData() == null || valuePage.getData().isEmpty()) {
             //初始化参数
-            pageVO.setCondition(" dr=0 and pkTaskplugin ='" + deployModel.getPkTaskplugin() + "'");
-            pageVO = dataBaseService.queryByPage(TaskParamKeyModel.class, pageVO);
-            model.addAttribute(ITEM, deployModel);
-            model.addAttribute("pageVO", pageVO);
-            model.addAttribute("pk", pk);
-            List<TaskParamKeyModel> taskParamKeyModels = (List<TaskParamKeyModel>) pageVO.getData();
+            Page<TaskParamKeyModel> keyPage = new Page<>();
+            Query keyquery = Query.query(Condition.eq("dr", 0));
+            keyquery.eq(TaskParamKeyModel.PK_TASK_PLUGIN, deployModel.getPkTaskplugin());
+            keyPage.setQuery(keyquery);
+
+            keyPage = dataBaseService.queryByPage(TaskParamKeyModel.class, keyPage);
+
+            List<TaskParamKeyModel> taskParamKeyModels = keyPage.getData();
             List<TaskParamValueModel> taskParamValueModels = new ArrayList<>();
             for (int i = 0; i < taskParamKeyModels.size(); i++) {
                 TaskParamValueModel taskParamValueModel = new TaskParamValueModel();
@@ -53,15 +59,14 @@ public class TaskParamValueAction extends BusinessCommonAction {
                 taskParamValueModel.setParamname(taskParamKeyModels.get(i).getParamname());
                 taskParamValueModel.setPkTaskdeploy(pk);
                 taskParamValueModel.setPkTaskparamkey(taskParamKeyModels.get(i).getPkTaskparamkey());
-                taskParamValueModel.setDr(0);
-                taskParamValueModel.setTs(TimeToolkit.getCurrentTs());
                 taskParamValueModels.add(taskParamValueModel);
             }
             dataBaseService.insert(taskParamValueModels);
-            return "management/task/paramvalue/index_tmp";
+            valuePage = dataBaseService.queryByPage(TaskParamValueModel.class, valuePage);
         }
+
         model.addAttribute(ITEM, deployModel);
-        model.addAttribute("pageVO", pageVO);
+        model.addAttribute("pageVO", valuePage);
         model.addAttribute("pk", pk);
         return "management/task/paramvalue/index";
     }

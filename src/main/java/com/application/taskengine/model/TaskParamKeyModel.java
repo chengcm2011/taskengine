@@ -6,6 +6,9 @@ import com.cheng.lang.model.SuperModel;
 /**
  */
 public class TaskParamKeyModel extends SuperModel {
+
+    public static final String PK_TASK_PLUGIN = "pkTaskplugin";
+
     private String pkTaskplugin;
     private String pkTaskparamkey;
     private String paramname;
@@ -21,7 +24,7 @@ public class TaskParamKeyModel extends SuperModel {
 
     @Override
     public String getParentPKFieldName() {
-        return "pkTaskplugin";
+        return PK_TASK_PLUGIN;
     }
 
     @Override

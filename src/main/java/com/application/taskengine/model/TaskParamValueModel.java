@@ -1,6 +1,7 @@
 package com.application.taskengine.model;
 
 
+import com.cheng.lang.TimeToolkit;
 import com.cheng.lang.model.SuperModel;
 
 /**
@@ -19,7 +20,7 @@ public class TaskParamValueModel extends SuperModel {
     private String paramname;
     private String paramvalue;
 
-    private String ts;
+    private String ts = TimeToolkit.getCurrentTs();
     private int dr;
 
     @Override
